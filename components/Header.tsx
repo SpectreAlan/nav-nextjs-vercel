@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Slider  } from 'antd';
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -34,7 +35,30 @@ const Header: React.FC = () => {
     </div>
   );
 
-  let right = null;
+  let right = (
+      <div className="right">
+          <Slider range  />
+          <style jsx>{`
+        .bold {
+          font-weight: bold;
+        }
+
+        a {
+          text-decoration: none;
+          color: #000;
+          display: inline-block;
+        }
+
+        .right {
+          width: 200px;
+        }
+
+        a + a {
+          margin-left: 1rem;
+        }
+      `}</style>
+      </div>
+  );;
 
   return (
     <nav>
