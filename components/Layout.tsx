@@ -18,6 +18,14 @@ const App: React.FC<Props> = (props) => {
         token: { colorBgContainer },
     } = theme.useToken();
 
+    const handleClick = (item, key, keyPath)=>{
+        console.log(item, key, keyPath);
+        const anchorElement = document.getElementById(item.key);
+        console.log(anchorElement);
+        // 如果对应id的锚点存在，就跳转到锚点
+        if(anchorElement) { anchorElement.scrollIntoView({block: 'start', behavior: 'smooth'}); }
+    }
+
     return (
         <Layout>
             <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -26,19 +34,20 @@ const App: React.FC<Props> = (props) => {
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
+                    onClick={handleClick}
                     items={[
                         {
-                            key: '1',
+                            key: 'nav1',
                             icon: <UserOutlined />,
                             label: 'nav 1',
                         },
                         {
-                            key: '2',
+                            key: 'nav2',
                             icon: <VideoCameraOutlined />,
                             label: 'nav 2',
                         },
                         {
-                            key: '3',
+                            key: 'nav3',
                             icon: <UploadOutlined />,
                             label: 'nav 3',
                         },

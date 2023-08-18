@@ -3,7 +3,6 @@ import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import prisma from '../lib/prisma';
-
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: { published: true },
@@ -34,6 +33,15 @@ const Blog: React.FC<Props> = (props) => {
               <Post post={post} />
             </div>
           ))}
+          <div id="nav1" className="nav1" style={{height: '800px',background: 'red'}}>
+            nav1
+          </div>
+          <div id="nav2" className="nav2" style={{height: '800px',background: 'green'}}>
+            nav1
+          </div>
+          <div id="nav3" className="nav3" style={{height: '800px',background: 'blue'}}>
+            nav1
+          </div>
         </main>
       </div>
       <style jsx>{`
@@ -45,7 +53,18 @@ const Blog: React.FC<Props> = (props) => {
         .post:hover {
           box-shadow: 1px 1px 3px #aaa;
         }
-
+        .nav1{
+          height: 400px;
+          background: red;
+        }
+        .nav2{
+          height: 400px;
+          background: green;
+        }
+        .nav3{
+          height: 400px;
+          background: blue;
+        }
         .post + .post {
           margin-top: 2rem;
         }
