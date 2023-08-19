@@ -9,10 +9,12 @@ import {
 import { Layout, Menu, Button, theme } from 'antd';
 type Props = {
     children: ReactNode;
+    nav: any
 };
 const { Header, Sider, Content } = Layout;
 
 const App: React.FC<Props> = (props) => {
+    console.log(props.nav);
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
@@ -50,6 +52,18 @@ const App: React.FC<Props> = (props) => {
                             key: 'nav3',
                             icon: <UploadOutlined />,
                             label: 'nav 3',
+                            children: [
+                                {
+                                    key: 'nav33',
+                                    icon: <UserOutlined />,
+                                    label: 'nav33',
+                                },
+                                {
+                                    key: 'nav34',
+                                    icon: <UserOutlined />,
+                                    label: 'nav34',
+                                },
+                            ]
                         },
                     ]}
                 />

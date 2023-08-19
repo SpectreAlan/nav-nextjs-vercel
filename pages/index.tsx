@@ -12,19 +12,22 @@ export const getStaticProps: GetStaticProps = async () => {
       },
     },
   });
+  const nav = await prisma.nav.findMany({
+  });
   return {
-    props: { feed },
+    props: { feed, nav },
     revalidate: 10,
   };
 };
 
 type Props = {
   feed: PostProps[]
+  nav :any
 }
 
 const Blog: React.FC<Props> = (props) => {
   return (
-    <Layout>
+    <Layout nav={props.nav}>
       <div className="page">
         <h1>Public Feed</h1>
         <main>

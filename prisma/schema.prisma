@@ -1,18 +1,18 @@
 // schema.prisma
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Post {
-  id        String     @default(cuid()) @id
+  id        String  @id @default(cuid())
   title     String
   content   String?
   published Boolean @default(false)
@@ -21,11 +21,33 @@ model Post {
 }
 
 model User {
-  id            String       @default(cuid()) @id
-  name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  posts         Post[]
+  id        String   @id @default(cuid())
+  name      String?
+  email     String?  @unique
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
+  posts     Post[]
+  Nav       Nav[]
+
   @@map(name: "users")
+}
+
+model Nav {
+  key      String  @id @default(cuid())
+  label    String
+  icon     String?
+  parentId String
+  links    Links[]
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
+}
+
+model Links {
+  id    String  @id @default(cuid())
+  link  String
+  name  String
+  desc  String
+  icon  String?
+  navId String
+  nav   Nav     @relation(fields: [navId], references: [key])
 }
