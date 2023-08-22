@@ -3,6 +3,8 @@ import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import prisma from '../lib/prisma';
+import {Container} from '../static/style/nav/sideMenu'
+import Icon from "../components/Icon";
 export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: { published: true },
@@ -15,7 +17,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const nav = await prisma.nav.findMany({
   });
   return {
-    props: { feed, nav },
+    props: { feed, nav: [] },
     revalidate: 10,
   };
 };
@@ -28,7 +30,8 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   return (
     <Layout nav={props.nav}>
-      <div className="page">
+      <Container>
+        <Icon content='&#xe606;' className='xxxx' onClick={()=>{console.log(1111)}}/>
         <h1>Public Feed</h1>
         <main>
           {props.feed.map((post) => (
@@ -46,7 +49,7 @@ const Blog: React.FC<Props> = (props) => {
             nav1
           </div>
         </main>
-      </div>
+      </Container>
       <style jsx>{`
         .post {
           background: white;
