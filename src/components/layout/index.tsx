@@ -1,4 +1,4 @@
-import React, { useState, ReactNode  } from 'react';
+import React, { useState } from 'react';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -7,69 +7,69 @@ import {
     VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme } from 'antd';
-type Props = {
-    children: ReactNode;
-    nav: any
-};
+import CustomHeader from './Header'
+
 const { Header, Sider, Content } = Layout;
 
-const App: React.FC<Props> = (props) => {
-    console.log(props.nav);
+const App: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer },
     } = theme.useToken();
 
-    const handleClick = (item, key, keyPath)=>{
-        console.log(item, key, keyPath);
-        const anchorElement = document.getElementById(item.key);
-        console.log(anchorElement);
-        // 如果对应id的锚点存在，就跳转到锚点
-        if(anchorElement) { anchorElement.scrollIntoView({block: 'start', behavior: 'smooth'}); }
-    }
-
     return (
         <Layout>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+            <Sider
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+                style={{
+                    overflow: 'auto',
+                    height: '100vh',
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+            >
                 <div className="demo-logo-vertical" />
                 <Menu
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    onClick={handleClick}
                     items={[
                         {
-                            key: 'nav1',
+                            key: '1',
                             icon: <UserOutlined />,
                             label: 'nav 1',
                         },
                         {
-                            key: 'nav2',
+                            key: '2',
                             icon: <VideoCameraOutlined />,
                             label: 'nav 2',
                         },
                         {
-                            key: 'nav3',
+                            key: '3',
                             icon: <UploadOutlined />,
                             label: 'nav 3',
-                            children: [
-                                {
-                                    key: 'nav33',
-                                    icon: <UserOutlined />,
-                                    label: 'nav33',
-                                },
-                                {
-                                    key: 'nav34',
-                                    icon: <UserOutlined />,
-                                    label: 'nav34',
-                                },
-                            ]
                         },
                     ]}
                 />
             </Sider>
-            <Layout>
-                <Header style={{ padding: 0, background: colorBgContainer }}>
+            <Layout style={{
+                paddingLeft: collapsed ? '80px' : '200px',
+            }}>
+                <Header style={{
+                    padding: 0,
+                    background: colorBgContainer,
+                    position: 'fixed',
+                    left: collapsed ? '80px' : '200px',
+                    top: 0,
+                    width: `calc(100% - ${collapsed ? '80px' : '200px'})`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
                     <Button
                         type="text"
                         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -80,16 +80,17 @@ const App: React.FC<Props> = (props) => {
                             height: 64,
                         }}
                     />
+                    <CustomHeader/>
                 </Header>
                 <Content
                     style={{
-                        margin: '24px 16px',
+                        margin: '84px 16px 24px',
                         padding: 24,
-                        minHeight: 280,
+                        minHeight: 980,
                         background: colorBgContainer,
                     }}
                 >
-                    {props.children}
+                    Content
                 </Content>
             </Layout>
         </Layout>
