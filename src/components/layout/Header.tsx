@@ -75,6 +75,7 @@ const Header: React.FC = () => {
 
   return (
       <Menu
+          theme={'dark'}
           onClick={onClick}
           mode="horizontal"
           items={items}
