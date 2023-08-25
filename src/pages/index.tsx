@@ -35,9 +35,6 @@ const Blog: React.FC<Props> = ({feed, nav}) => {
     }, [nav])
     return (
         <div>
-            <Icon content='&#xe606;' className='xxxx' onClick={() => {
-                console.log(1111)
-            }}/>
             <h1>Public Feed</h1>
             <main>
                 {feed.map((post) => (

@@ -1,12 +1,7 @@
-import React from "react"
+import dynamic from 'next/dynamic';
 
-interface Props {
-    className?: string
-    onClick?: ()=>void
-    content: string
-}
-const Icon: React.FC<Props> = ({className, content, onClick})=>{
-    return <span className={'iconfont ' + className} onClick={onClick}>{content}</span>
-}
+const Icon = dynamic(() => import('@ant-design/icons').then(icons => icons.createFromIconfontCN({
+    scriptUrl: '//at.alicdn.com/t/c/font_4220832_xa493samy4m.js',
+})), { ssr: false });
 
 export default Icon

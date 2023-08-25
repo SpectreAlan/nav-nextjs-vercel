@@ -6,3 +6,8 @@ npx prisma generate
 ```shell
 npx prisma studio
 ```
+
+建表
+```shell
+npx prisma db push
+```

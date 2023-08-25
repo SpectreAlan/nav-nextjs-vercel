@@ -1,33 +1,54 @@
-import React, {useContext} from 'react';
-import {UploadOutlined, UserOutlined, VideoCameraOutlined,} from '@ant-design/icons';
+import React, {useContext, useEffect, useState} from 'react';
 import {Menu} from 'antd';
 import {GlobalContext} from '@/GlobalContext'
+import Icon from '@/components/Icon'
+import {
+    LoadingOutlined,
+} from '@ant-design/icons';
+
 const SideMenu: React.FC = () => {
-    const contextValue =  useContext(GlobalContext)
-    console.log(contextValue.nav);
+    const {nav} = useContext(GlobalContext)
+    const [menu, setMenu] = useState<MenuItem[]>([])
+    const [IconFont, setIconFont] = useState<React.FC | null>(null)
+    useEffect(() => {
+        setMenu(generateMenu())
+    }, [nav])
+
+    const generateMenu = (): MenuItem[] => {
+        const list: MenuItem[] = []
+        const subMenu: Nav[] = []
+        for (let i = 0; i < nav.length; i++) {
+            const {parentId, key, icon, label, sort} = nav[i]
+            if (parentId === '0') {
+                list.push({
+                    sort,
+                    key,
+                    label,
+                    icon: <Icon type={'icon-paihangbang'}/>,
+                    children: []
+                })
+            } else {
+                subMenu.push(nav[i])
+            }
+        }
+        list.sort((a, b) => a.sort - b.sort)
+        for (let i = 0; i < subMenu.length; i++) {
+            const {icon, parentId, authorId, ...res} = subMenu[i]
+            const target: MenuItem = list.find(item => item.key === parentId)!
+            target.children.push({
+                ...res
+            })
+        }
+        return list
+    }
     return (
+        menu.length ?
         <Menu
             theme="dark"
             mode="inline"
             defaultSelectedKeys={['1']}
-            items={[
-                {
-                    key: '1',
-                    icon: <UserOutlined rev={'1.0'}/>,
-                    label: 'nav 1',
-                },
-                {
-                    key: '2',
-                    icon: <VideoCameraOutlined rev={'1.0'}/>,
-                    label: 'nav 2',
-                },
-                {
-                    key: '3',
-                    icon: <UploadOutlined rev={'1.0'}/>,
-                    label: 'nav 3',
-                },
-            ]}
-        />
+            items={menu}
+        /> : <LoadingOutlined rev={'2.0'}/>
     );
 };
 

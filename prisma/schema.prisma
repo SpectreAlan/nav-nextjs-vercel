@@ -35,9 +35,10 @@ model User {
 model Nav {
   key      String  @id @default(cuid())
   label    String
+  sort     Int
   icon     String?
   parentId String
-  links    Links[]
+  link     Links[]
   author   User?   @relation(fields: [authorId], references: [id])
   authorId String?
 }
