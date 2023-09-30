@@ -4,7 +4,7 @@ interface Nav {
     key: string
     label: string
     parentId: string
-    icon?:string
+    icon: JSX.Element | string | null
 }
 
 type MenuItem = Required<MenuProps>['items'];
