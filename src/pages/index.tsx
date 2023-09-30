@@ -2,7 +2,6 @@ import React, {useContext, useEffect} from "react"
 import {GetStaticProps} from "next"
 import Post, {PostProps} from "../components/Post"
 import prisma from '@/lib/prisma';
-import Icon from "@/components/Icon";
 import {GlobalContext} from "@/GlobalContext";
 
 

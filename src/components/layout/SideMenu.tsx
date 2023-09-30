@@ -9,7 +9,6 @@ import {
 const SideMenu: React.FC = () => {
     const {nav} = useContext(GlobalContext)
     const [menu, setMenu] = useState<MenuItem[]>([])
-    const [IconFont, setIconFont] = useState<React.FC | null>(null)
     useEffect(() => {
         setMenu(generateMenu())
     }, [nav])
@@ -24,7 +23,7 @@ const SideMenu: React.FC = () => {
                     sort,
                     key,
                     label,
-                    icon: <Icon type={'icon-paihangbang'}/>,
+                    icon: icon ? <Icon type={icon} className={'text-lg'}/> : null,
                     children: []
                 })
             } else {
@@ -36,7 +35,8 @@ const SideMenu: React.FC = () => {
             const {icon, parentId, authorId, ...res} = subMenu[i]
             const target: MenuItem = list.find(item => item.key === parentId)!
             target.children.push({
-                ...res
+                ...res,
+                icon:  icon ? <Icon type={icon} className={'text-lg'}/> : null,
             })
         }
         return list
