@@ -1,7 +1,8 @@
-import React  from "react";
-import { useRouter } from "next/navigation";
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import React from "react";
+import {useRouter} from "next/navigation";
+import type {MenuProps} from 'antd';
+import {Menu} from 'antd';
+import {signOut, useSession} from 'next-auth/react';
 import {
     AppstoreOutlined,
     MailOutlined,
@@ -10,7 +11,7 @@ import {
 
 const items: MenuProps['items'] = [
     {
-        label: 'Navigation One',
+        label: '登录',
         key: 'mail',
         icon: <MailOutlined rev={''}/>,
     },
@@ -66,21 +67,23 @@ const items: MenuProps['items'] = [
 ];
 
 const Header: React.FC = () => {
-  const router = useRouter();
+    const router = useRouter();
+    const {data: session, status} = useSession();
 
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e);
-        // router.push
+        console.log(session);
+        console.log(status);
     };
 
-  return (
-      <Menu
-          theme={'dark'}
-          onClick={onClick}
-          mode="horizontal"
-          items={items}
-      />
-  );
+    return (
+        <Menu
+            theme={'dark'}
+            onClick={onClick}
+            mode="horizontal"
+            items={items}
+        />
+    );
 };
 
 export default Header;
