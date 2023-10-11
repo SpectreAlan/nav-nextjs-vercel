@@ -1,7 +1,7 @@
 {
-  "name": "blog-nextjs-vercel",
-  "version": "1.0.0",
-  "description": "",
+  "name": "nav-nextjs-vercel",
+  "version": "1.0.1",
+  "description": "A navigate project based on nextjs, hosted on vercel",
   "scripts": {
     "dev": "next",
     "build": "prisma generate && next build",

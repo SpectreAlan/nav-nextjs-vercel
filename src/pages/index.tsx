@@ -30,6 +30,7 @@ const Blog: React.FC<Props> = ({feed, nav}) => {
     const contextValue =  useContext(GlobalContext)
 
     useEffect(()=>{
+        console.log(nav);
         contextValue.setNav(nav)
     }, [nav])
     return (

@@ -18,6 +18,7 @@ const SideMenu: React.FC = () => {
         const subMenu: Nav[] = []
         for (let i = 0; i < nav.length; i++) {
             const {parentId, key, icon:iconType, label, sort} = nav[i]
+            // @ts-ignore
             const icon = iconType ? <Icon type={iconType} className={'text-lg'}/> : null
             if (parentId === '0') {
                 list.push({
