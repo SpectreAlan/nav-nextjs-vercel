@@ -1,14 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Modal, Button, TreeSelect} from 'antd'
+import {Drawer , Button, TreeSelect} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type { DefaultOptionType } from 'antd/es/select';
 
 interface IProps {
-    setAddOrEditVisible: (boolean)=>void
-    info?: any
+    setMenuModal: (boolean)=>void
 }
 
-const AddOrEditLink:React.FC<IProps> = ({setAddOrEditVisible, info})=>{
+const AddOrEditLink:React.FC<IProps> = ({setMenuModal})=>{
     const {nav} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
     const [value, setValue] = useState<string>();
@@ -38,16 +37,16 @@ const AddOrEditLink:React.FC<IProps> = ({setAddOrEditVisible, info})=>{
         }
         return list
     }
-    const handleOk = ()=>{}
-    return <Modal
-        title={info?.id ? '编辑链接' : '新增链接'}
+    const handleOk = async ()=>{
+    }
+    return <Drawer
+        title='编辑菜单'
         open={true}
-        onOk={handleOk}
         maskClosable={false}
-        onCancel={()=>setAddOrEditVisible(false)}
+        onClose={()=>setMenuModal(false)}
         footer={[
-            <Button key="back" onClick={handleOk}>
-                保存
+            <Button key="back" onClick={()=>setMenuModal(false)}>
+                关闭
             </Button>,
         ]}
     >
@@ -60,7 +59,7 @@ const AddOrEditLink:React.FC<IProps> = ({setAddOrEditVisible, info})=>{
             treeDefaultExpandAll
             onChange={(e)=>setValue(e)}
         />
-    </Modal>
+    </Drawer>
 }
 
 

@@ -9,23 +9,26 @@ import {
     EditOutlined,
     SendOutlined
 } from '@ant-design/icons';
-import AddOrEditLink from "@/components/addLink";
+import LinkModal from "../linkModal";
+import MenuModal from "../menuModal";
 
-const items: MenuProps['items'] = [
-    {
-        icon: <AppstoreOutlined rev={''}/>,
-        label: (
-            <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
-                个人博客
-            </a>
-        ),
-        key: '个人博客',
-    }
-];
+
 
 const Header: React.FC = () => {
+    const items: MenuProps['items'] = [
+        {
+            icon: <AppstoreOutlined rev={''}/>,
+            label: (
+                <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
+                    个人博客
+                </a>
+            ),
+            key: 'blog',
+        }
+    ];
     const [menu, setMenu] = useState<MenuProps['items']>(items)
-    const [addOrEditVisible, setAddOrEditVisible] = useState<boolean>(false)
+    const [linkModal, setLinkModal] = useState<boolean>(false)
+    const [menuModal, setMenuModal] = useState<boolean>(false)
     const {data: session, status} = useSession();
 
     useEffect(() => {
@@ -39,7 +42,12 @@ const Header: React.FC = () => {
                     icon: <img src={image!} alt={'avatar'} className={'max-h-4'}/>,
                     children: [
                         {
-                            label: '添加链接',
+                            label: '编辑导航条',
+                            key: 'editMenu',
+                            icon: <EditOutlined rev={''}/>
+                        },
+                        {
+                            label: '新增链接',
                             key: 'addLink',
                             icon: <EditOutlined rev={''}/>
                         },
@@ -78,7 +86,10 @@ const Header: React.FC = () => {
                 await signOut()
                 break
             case 'addLink':
-                setAddOrEditVisible(true)
+                setLinkModal(true)
+                break
+            case 'editMenu':
+                setMenuModal(true)
                 break
         }
     };
@@ -94,7 +105,10 @@ const Header: React.FC = () => {
                 items={menu}
             />
             {
-                addOrEditVisible ? <AddOrEditLink setAddOrEditVisible={setAddOrEditVisible}/> : null
+                linkModal ? <LinkModal setLinkModal={setLinkModal}/> : null
+            }
+            {
+                menuModal ? <MenuModal setMenuModal={setMenuModal}/> : null
             }
         </>
 
