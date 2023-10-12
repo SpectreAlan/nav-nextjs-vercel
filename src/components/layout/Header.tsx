@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
-import {signOut, useSession} from 'next-auth/react';
+import {signOut, useSession, signIn} from 'next-auth/react';
 import {
     AppstoreOutlined,
     LoadingOutlined,
     PoweroffOutlined,
+    EditOutlined,
     SendOutlined
 } from '@ant-design/icons';
+import AddOrEditLink from "@/components/addLink";
 
 const items: MenuProps['items'] = [
     {
@@ -24,65 +25,79 @@ const items: MenuProps['items'] = [
 
 const Header: React.FC = () => {
     const [menu, setMenu] = useState<MenuProps['items']>(items)
-    const router = useRouter();
+    const [addOrEditVisible, setAddOrEditVisible] = useState<boolean>(false)
     const {data: session, status} = useSession();
 
     useEffect(() => {
-        let userInfo: any = null
+        const userMenu: MenuProps['items'] = []
         switch (status) {
             case "authenticated":
                 const {name, image} = session.user!
-                userInfo = {
+                userMenu.push({
                     label: name,
                     key: 'userInfo',
                     icon: <img src={image!} alt={'avatar'} className={'max-h-4'}/>,
                     children: [
+                        {
+                            label: '添加链接',
+                            key: 'addLink',
+                            icon: <EditOutlined rev={''}/>
+                        },
                         {
                             label: '注销登录',
                             key: 'logout',
                             icon: <PoweroffOutlined rev={''}/>
                         }
                     ]
-                }
+                })
                 break
             case "loading":
-                userInfo = {
+                userMenu.push({
                     disabled: true,
                     label: '加载中...',
                     key: 'loading',
                     icon: <LoadingOutlined rev={''}/>
-                }
+                })
                 break
             default:
-                userInfo = {
+                userMenu.push({
                     label: '登录',
                     key: 'login',
                     icon: <SendOutlined rev={''}/>
-                }
+                })
         }
-        setMenu([...items, userInfo])
+        setMenu([...items, ...userMenu])
     }, [status])
 
     const onClick: MenuProps['onClick'] = async ({key}) => {
         switch (key) {
             case 'login':
-                router.push('/api/auth/signin')
+                await signIn()
                 break;
             case 'logout':
                 await signOut()
+                break
+            case 'addLink':
+                setAddOrEditVisible(true)
                 break
         }
     };
 
     return (
-        <Menu
-            selectedKeys={[]}
-            style={{minWidth: 0, flex: "auto", justifyContent: 'end'}}
-            theme={'dark'}
-            onClick={onClick}
-            mode="horizontal"
-            items={menu}
-        />
+        <>
+            <Menu
+                selectedKeys={[]}
+                style={{minWidth: 0, flex: "auto", justifyContent: 'end'}}
+                theme={'dark'}
+                onClick={onClick}
+                mode="horizontal"
+                items={menu}
+            />
+            {
+                addOrEditVisible ? <AddOrEditLink setAddOrEditVisible={setAddOrEditVisible}/> : null
+            }
+        </>
+
     );
 };
 
