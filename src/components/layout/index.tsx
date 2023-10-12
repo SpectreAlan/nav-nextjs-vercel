@@ -4,7 +4,7 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
-import {Layout,  Button, theme} from 'antd';
+import {Layout, Menu, Button, theme} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
 import Logo from '@/static/images/logo.gif'

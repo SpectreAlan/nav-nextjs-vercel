@@ -1,87 +1,87 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
 import {signOut, useSession} from 'next-auth/react';
 import {
     AppstoreOutlined,
-    MailOutlined,
-    SettingOutlined,
+    LoadingOutlined,
+    PoweroffOutlined,
+    SendOutlined
 } from '@ant-design/icons';
 
 const items: MenuProps['items'] = [
     {
-        label: '登录',
-        key: 'mail',
-        icon: <MailOutlined rev={''}/>,
-    },
-    {
-        label: 'Navigation Two',
-        key: 'app',
         icon: <AppstoreOutlined rev={''}/>,
-        disabled: true,
-    },
-    {
-        label: 'Navigation Three - Submenu',
-        key: 'SubMenu',
-        icon: <SettingOutlined rev={''}/>,
-        children: [
-            {
-                type: 'group',
-                label: 'Item 1',
-                children: [
-                    {
-                        label: 'Option 1',
-                        key: 'setting:1',
-                    },
-                    {
-                        label: 'Option 2',
-                        key: 'setting:2',
-                    },
-                ],
-            },
-            {
-                type: 'group',
-                label: 'Item 2',
-                children: [
-                    {
-                        label: 'Option 3',
-                        key: 'setting:3',
-                    },
-                    {
-                        label: 'Option 4',
-                        key: 'setting:4',
-                    },
-                ],
-            },
-        ],
-    },
-    {
         label: (
-            <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-                Navigation Four - Link
+            <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
+                个人博客
             </a>
         ),
-        key: 'alipay',
-    },
+        key: '个人博客',
+    }
 ];
 
 const Header: React.FC = () => {
+    const [menu, setMenu] = useState<MenuProps['items']>(items)
     const router = useRouter();
     const {data: session, status} = useSession();
 
-    const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
-        console.log(session);
-        console.log(status);
+    useEffect(() => {
+        let userInfo: any = null
+        switch (status) {
+            case "authenticated":
+                const {name, image} = session.user!
+                userInfo = {
+                    label: name,
+                    key: 'userInfo',
+                    icon: <img src={image!} alt={'avatar'} className={'max-h-4'}/>,
+                    children: [
+                        {
+                            label: '注销登录',
+                            key: 'logout',
+                            icon: <PoweroffOutlined rev={''}/>
+                        }
+                    ]
+                }
+                break
+            case "loading":
+                userInfo = {
+                    disabled: true,
+                    label: '加载中...',
+                    key: 'loading',
+                    icon: <LoadingOutlined rev={''}/>
+                }
+                break
+            default:
+                userInfo = {
+                    label: '登录',
+                    key: 'login',
+                    icon: <SendOutlined rev={''}/>
+                }
+        }
+        setMenu([...items, userInfo])
+    }, [status])
+
+    const onClick: MenuProps['onClick'] = async ({key}) => {
+        switch (key) {
+            case 'login':
+                router.push('/api/auth/signin')
+                break;
+            case 'logout':
+                await signOut()
+                break
+        }
     };
 
     return (
         <Menu
+            selectedKeys={[]}
+            style={{minWidth: 0, flex: "auto", justifyContent: 'end'}}
             theme={'dark'}
             onClick={onClick}
             mode="horizontal"
-            items={items}
+            items={menu}
         />
     );
 };
