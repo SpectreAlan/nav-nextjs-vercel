@@ -1,13 +1,10 @@
 import React, {useState, ReactNode } from 'react';
 import Image from 'next/image'
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-} from '@ant-design/icons';
 import {Layout,  Button, theme} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
 import Logo from '@/static/images/logo.gif'
+import Icon from '@/components/Icon'
 
 
 type Props = {
@@ -53,7 +50,7 @@ const App: React.FC<Props> = ({children}) => {
                 >
                     <Button
                         type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined rev={'1.0'}/> : <MenuFoldOutlined rev={'1.0'}/>}
+                        icon={collapsed ? <Icon type={'icon-zhankai'}/> : <Icon type={'icon-zhedie-shouqi'}/>}
                         onClick={() => setCollapsed(!collapsed)}
                         className={'text-xl text-white'}
                     />

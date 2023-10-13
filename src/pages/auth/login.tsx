@@ -1,14 +1,15 @@
 import React from "react";
 import {getCsrfToken} from "next-auth/react";
 import {Tabs, Form, Input, Button, Divider} from 'antd';
-import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import Github from "@/components/Icon/github";
+import Google from "@/components/Icon/google";
+import Icon from '@/components/Icon'
 
 export default ({csrfToken}) => {
     const loginWithMail = () => {
     }
     return <Tabs
-        className='w-1/5 mx-auto'
+        className='mx-auto login-page'
         defaultActiveKey="login"
         centered
         items={[
@@ -16,7 +17,7 @@ export default ({csrfToken}) => {
                 label: '登录',
                 key: 'login',
                 children: [<Form
-                    className='w-4/5 mx-auto border'
+                    className={'login'}
                     key={'mail-form'}
                     labelCol={{span: 8}}
                     wrapperCol={{span: 16}}
@@ -26,28 +27,29 @@ export default ({csrfToken}) => {
                 >
                     <Form.Item
                         name="email"
-                        rules={[{required: true, message: 'Please input your Username!'}]}
+                        rules={[{required: true, message: 'Please input your Email!'}]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" rev=''/>} placeholder="Username"/>
+                        <Input prefix={<Icon type={'icon-icon-email'}/>} placeholder="Email"/>
                     </Form.Item>
                     <Form.Item
                         name="password"
                         rules={[{required: true, message: 'Please input your Password!'}]}
                     >
                         <Input
-                            prefix={<LockOutlined className="site-form-item-icon" rev=''/>}
+                            prefix={<Icon type={'icon-tianchongxing-'}/>}
                             type="password"
                             placeholder="Password"
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Button htmlType="submit" className="login-form-button">
+                        <Button type={'primary'} htmlType="submit" className="login-form-button">
                             Login
                         </Button>
                     </Form.Item>
                 </Form>,
-                    <Divider key={'mail-Divider'}>Or</Divider>,
-                    <Github  key={'Github'} />
+                    <Divider key={'mail-Divider'}>OR CONTINUE WITH</Divider>,
+                    <Github  key={'Github'} />,
+                    <Google  key={'Google'} />
                 ],
 
             },

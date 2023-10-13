@@ -2,13 +2,7 @@ import React, {useEffect, useState} from "react";
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
 import {signOut, useSession, signIn} from 'next-auth/react';
-import {
-    AppstoreOutlined,
-    LoadingOutlined,
-    PoweroffOutlined,
-    EditOutlined,
-    SendOutlined
-} from '@ant-design/icons';
+import Icon from '@/components/Icon'
 import LinkModal from "../linkModal";
 import NavModal from "../navModal";
 
@@ -17,7 +11,7 @@ import NavModal from "../navModal";
 const Header: React.FC = () => {
     const items: MenuProps['items'] = [
         {
-            icon: <AppstoreOutlined rev={''}/>,
+            icon: <Icon type='icon-blog-solid'/>,
             label: (
                 <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
                     个人博客
@@ -44,17 +38,17 @@ const Header: React.FC = () => {
                         {
                             label: '编辑导航条',
                             key: 'editMenu',
-                            icon: <EditOutlined rev={''}/>
+                            icon: <Icon type='icon-caidan'/>
                         },
                         {
                             label: '新增链接',
                             key: 'addLink',
-                            icon: <EditOutlined rev={''}/>
+                            icon: <Icon type='icon-lianjie'/>
                         },
                         {
                             label: '注销登录',
                             key: 'logout',
-                            icon: <PoweroffOutlined rev={''}/>
+                            icon: <Icon type='icon-tuichu'/>
                         }
                     ]
                 })
@@ -64,14 +58,14 @@ const Header: React.FC = () => {
                     disabled: true,
                     label: '加载中...',
                     key: 'loading',
-                    icon: <LoadingOutlined rev={''}/>
+                    icon: <Icon type=''/>
                 })
                 break
             default:
                 userMenu.push({
                     label: '登录',
                     key: 'login',
-                    icon: <SendOutlined rev={''}/>
+                    icon: <Icon type='icon-denglu'/>
                 })
         }
         setMenu([...items, ...userMenu])
