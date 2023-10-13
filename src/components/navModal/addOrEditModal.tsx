@@ -3,12 +3,10 @@ import {Button, Modal, Form, Input, InputNumber, TreeSelect} from 'antd'
 import type {FormInstance} from 'antd/es/form';
 import {GlobalContext} from "@/GlobalContext";
 import {DefaultOptionType} from "antd/es/select";
-
 interface IProps {
     setModalVisible: (boolean) => void
     info?: Nav
 }
-
 const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     const formRef = React.useRef<FormInstance>(null);
     const {nav} = useContext(GlobalContext)
@@ -23,8 +21,10 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
             }
         ])
     }, [])
+
     const onFinish = () => {
     }
+
     return <Modal
         width={500}
         title={info?.key ? '编辑导航' : '添加导航'}

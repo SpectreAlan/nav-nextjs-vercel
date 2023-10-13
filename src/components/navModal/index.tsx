@@ -3,11 +3,9 @@ import {Drawer , Button, TreeSelect} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type { DefaultOptionType } from 'antd/es/select';
 import AddOrEditModal from "@/components/navModal/addOrEditModal";
-
 interface IProps {
     setNavModal: (boolean)=>void
 }
-
 const AddOrEditLink:React.FC<IProps> = ({setNavModal})=>{
     const {nav} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])

@@ -2,14 +2,10 @@ import React, {useContext, useEffect, useState} from 'react'
 import {Modal, Button, TreeSelect} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type { DefaultOptionType } from 'antd/es/select';
-
-
-
 interface IProps {
     setLinkModal: (boolean)=>void
     info?: any
 }
-
 const AddOrEditLink:React.FC<IProps> = ({setLinkModal, info})=>{
     const {nav} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
@@ -42,6 +38,7 @@ const AddOrEditLink:React.FC<IProps> = ({setLinkModal, info})=>{
     }
     const handleOk = async ()=>{
     }
+
     return <Modal
         title={info?.id ? '编辑链接' : '添加链接'}
         open={true}

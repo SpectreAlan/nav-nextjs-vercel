@@ -11,6 +11,9 @@ export const authOptions = {
             clientSecret: process.env.GITHUB_SECRET!,
         }),
     ],
+    pages: {
+        signIn: "/auth/login",
+    },
     adapter: PrismaAdapter(prisma),
     secret: process.env.SECRET,
 };

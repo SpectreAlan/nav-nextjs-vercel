@@ -28,7 +28,7 @@ const Header: React.FC = () => {
     ];
     const [menu, setMenu] = useState<MenuProps['items']>(items)
     const [linkModal, setLinkModal] = useState<boolean>(false)
-    const [navModal, setNavModal] = useState<boolean>(true)
+    const [navModal, setNavModal] = useState<boolean>(false)
     const {data: session, status} = useSession();
 
     useEffect(() => {
