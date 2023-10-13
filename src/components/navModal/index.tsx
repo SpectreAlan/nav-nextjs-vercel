@@ -2,15 +2,18 @@ import React, {useContext, useEffect, useState} from 'react'
 import {Drawer , Button, TreeSelect} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type { DefaultOptionType } from 'antd/es/select';
+import AddOrEditModal from "@/components/navModal/addOrEditModal";
 
 interface IProps {
-    setMenuModal: (boolean)=>void
+    setNavModal: (boolean)=>void
 }
 
-const AddOrEditLink:React.FC<IProps> = ({setMenuModal})=>{
+const AddOrEditLink:React.FC<IProps> = ({setNavModal})=>{
     const {nav} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
     const [value, setValue] = useState<string>();
+    const [info, setInfo] = useState<Nav>();
+    const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     useEffect(()=>{
         setTreeData(generateMenu())
@@ -43,9 +46,9 @@ const AddOrEditLink:React.FC<IProps> = ({setMenuModal})=>{
         title='编辑菜单'
         open={true}
         maskClosable={false}
-        onClose={()=>setMenuModal(false)}
+        onClose={()=>setNavModal(false)}
         footer={[
-            <Button key="back" onClick={()=>setMenuModal(false)}>
+            <Button key="back" onClick={()=>setModalVisible(true)}>
                 关闭
             </Button>,
         ]}
@@ -59,6 +62,9 @@ const AddOrEditLink:React.FC<IProps> = ({setMenuModal})=>{
             treeDefaultExpandAll
             onChange={(e)=>setValue(e)}
         />
+        {
+            modalVisible ? <AddOrEditModal setModalVisible={setModalVisible} info={info}/> : null
+        }
     </Drawer>
 }
 

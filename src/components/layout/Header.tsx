@@ -10,7 +10,7 @@ import {
     SendOutlined
 } from '@ant-design/icons';
 import LinkModal from "../linkModal";
-import MenuModal from "../menuModal";
+import NavModal from "../navModal";
 
 
 
@@ -28,7 +28,7 @@ const Header: React.FC = () => {
     ];
     const [menu, setMenu] = useState<MenuProps['items']>(items)
     const [linkModal, setLinkModal] = useState<boolean>(false)
-    const [menuModal, setMenuModal] = useState<boolean>(false)
+    const [navModal, setNavModal] = useState<boolean>(true)
     const {data: session, status} = useSession();
 
     useEffect(() => {
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 setLinkModal(true)
                 break
             case 'editMenu':
-                setMenuModal(true)
+                setNavModal(true)
                 break
         }
     };
@@ -108,7 +108,7 @@ const Header: React.FC = () => {
                 linkModal ? <LinkModal setLinkModal={setLinkModal}/> : null
             }
             {
-                menuModal ? <MenuModal setMenuModal={setMenuModal}/> : null
+                navModal ? <NavModal setNavModal={setNavModal}/> : null
             }
         </>
 
