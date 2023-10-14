@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react";
 import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
-import {signOut, useSession, signIn} from 'next-auth/react';
+import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
 import LinkModal from "../linkModal";
 import NavModal from "../navModal";
+import {useRouter} from "next/navigation";
 
 
 
 const Header: React.FC = () => {
+    const router = useRouter();
     const items: MenuProps['items'] = [
         {
             icon: <Icon type='icon-blog-solid'/>,
@@ -69,12 +71,12 @@ const Header: React.FC = () => {
                 })
         }
         setMenu([...items, ...userMenu])
-    }, [status])
+    }, [status, session ])
 
     const onClick: MenuProps['onClick'] = async ({key}) => {
         switch (key) {
             case 'login':
-                await signIn()
+                router.push('/auth/login');
                 break;
             case 'logout':
                 await signOut()

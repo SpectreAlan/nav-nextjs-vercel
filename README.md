@@ -11,3 +11,8 @@ npx prisma studio
 ```shell
 npx prisma db push
 ```
+
+> 谷歌pai
+> 
+
+https://console.cloud.google.com/apis/credentials?project=nav-vercel&supportedpurview=project
