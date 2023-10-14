@@ -3,6 +3,7 @@ import {getCsrfToken, useSession, getSession} from "next-auth/react";
 import {Tabs, Form, Input, Button, Divider} from 'antd';
 import Github from "@/components/Icon/github";
 import Google from "@/components/Icon/google";
+import Twitter from "@/components/Icon/twitter";
 import Icon from '@/components/Icon'
 import {FormInstance} from "antd/es/form";
 import { signIn } from "next-auth/react";
@@ -77,7 +78,8 @@ export default ({csrfToken}) => {
                 </Form>,
                     <Divider key={'mail-Divider'}>OR CONTINUE WITH</Divider>,
                     <Github  key={'Github'} />,
-                    <Google  key={'Google'} />
+                    <Google  key={'Google'} />,
+                    <Twitter  key={'Twitter'} />
                 ],
 
             },
