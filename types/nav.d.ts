@@ -2,6 +2,7 @@ interface Nav {
     authorId: string
     sort: number
     key: string
+    type: string
     label: string
     parentId: string
     icon: JSX.Element | string | null

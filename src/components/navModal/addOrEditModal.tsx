@@ -1,14 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Button, Modal, Form, Input, InputNumber, TreeSelect} from 'antd'
-import type {FormInstance} from 'antd/es/form';
 import {GlobalContext} from "@/GlobalContext";
 import {DefaultOptionType} from "antd/es/select";
+import {useSession} from "next-auth/react";
+import { NextResponse } from 'next/server';
+
 interface IProps {
     setModalVisible: (boolean) => void
     info?: Nav
 }
+
 const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
-    const formRef = React.useRef<FormInstance>(null);
+    const {data: session} = useSession();
+    const [form] = Form.useForm();
     const {nav} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
 
@@ -23,27 +27,41 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     }, [])
 
     const onFinish = () => {
+        form.validateFields().then(async (values)=>{
+            const type = session?.user?.role === 'admin' ? 'base' : 'custom'
+            const res = await fetch('/api/nav/save', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    ...values,
+                    type,
+                    authorId: session?.user?.id
+                }),
+            })
+            console.log(res.ok);
+        })
     }
 
     return <Modal
+        className={'edit-nav-modal'}
         width={500}
         title={info?.key ? '编辑导航' : '添加导航'}
         open={true}
         maskClosable={false}
         onCancel={() => setModalVisible(false)}
         footer={[
-            <Button key="back" onClick={onFinish}>
-                保存
-            </Button>,
+            <Button key="back" onClick={onFinish} type='primary'> 保存 </Button>,
         ]}
     >
         <Form
-            ref={formRef}
+            form={form}
             labelCol={{span: 6}}
             wrapperCol={{span: 16}}
         >
             <Form.Item name="label" label="名称" rules={[{required: true, message: '名称不能为空'}]}>
-                <Input/>
+                <Input placeholder='请输入名称'/>
             </Form.Item>
             <Form.Item name='parentId' label='上级目录' rules={[{required: true, message: '上级目录不能为空'}]}>
                 <TreeSelect
@@ -55,7 +73,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                 />
             </Form.Item>
             <Form.Item name='sort' label='序号' rules={[{required: true, message: '序号不能为空'}]}>
-                <InputNumber min={0}/>
+                <InputNumber min={0} className={'sort'} placeholder={'请输入排序号'}/>
             </Form.Item>
         </Form>
     </Modal>

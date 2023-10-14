@@ -1,8 +1,13 @@
 @import "login.scss";
+@import "nav.scss";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ant-btn-primary{
+    background-color: #6499E9!important;
+}
 
 :root {
     --foreground-rgb: 0, 0, 0;
@@ -27,4 +32,3 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-

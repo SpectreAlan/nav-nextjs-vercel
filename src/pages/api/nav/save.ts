@@ -1,13 +1,15 @@
 import prisma from '@/lib/prisma';
-export default async function handle(req, res) {
-    const { parentId, label, sort, icon } = req.body;
+export default async (req, res)=> {
+    const { parentId, label, sort, icon, type, authorId } = req.body;
     const result = await prisma.nav.create({
         data: {
+            authorId,
+            type,
             parentId,
             label,
             sort,
             icon
         },
     });
-    res.json(result);
+    return res.json(result);
 }
