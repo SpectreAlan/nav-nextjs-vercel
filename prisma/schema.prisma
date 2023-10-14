@@ -21,6 +21,7 @@ model Post {
 model Nav {
   key      String  @id @default(cuid())
   label    String
+  type     String
   sort     Int
   icon     String?
   parentId String
@@ -30,13 +31,16 @@ model Nav {
 }
 
 model Links {
-  id    String  @id @default(cuid())
-  link  String
-  name  String
-  desc  String
-  icon  String?
-  navId String
-  nav   Nav     @relation(fields: [navId], references: [key])
+  id       String  @id @default(cuid())
+  link     String
+  name     String
+  desc     String
+  icon     String?
+  userName String?
+  password String?
+  hot      Boolean
+  navId    String
+  nav      Nav     @relation(fields: [navId], references: [key])
 }
 
 model Account {
