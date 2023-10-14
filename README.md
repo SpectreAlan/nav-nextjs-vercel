@@ -12,7 +12,8 @@ npx prisma studio
 npx prisma db push
 ```
 
-> 谷歌pai
-> 
+> Google API
+> https://console.cloud.google.com/apis/credentials
 
-https://console.cloud.google.com/apis/credentials?project=nav-vercel&supportedpurview=project
+> Twitter API
+> https://developer.twitter.com/en/portal/projects-and-apps

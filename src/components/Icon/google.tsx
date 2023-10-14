@@ -12,7 +12,7 @@ export default () => {
     return (
         <Spin spinning={loading}>
             <button
-                className="mb-4 mx-auto flex rounded-md border border-gray-800 bg-black px-4 py-3 text-sm font-semibold text-neutral-200 transition-all hover:text-white"
+                className="mb-4 mx-auto flex rounded-md border border-[#001529] bg-white text-[#001529]  px-4 py-3 text-sm font-semibold  transition-all hover:font-bold"
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 onClick={() => signIn("google", {
                     callbackUrl: 'http://localhost:3000/'
