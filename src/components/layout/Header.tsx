@@ -16,7 +16,7 @@ const Header: React.FC = () => {
             icon: <Icon type='icon-blog-solid'/>,
             label: (
                 <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
-                    个人博客
+                    站长博客
                 </a>
             ),
             key: 'blog',
@@ -28,6 +28,7 @@ const Header: React.FC = () => {
     const {data: session, status} = useSession();
 
     useEffect(() => {
+        console.log(session);
         const userMenu: MenuProps['items'] = []
         switch (status) {
             case "authenticated":

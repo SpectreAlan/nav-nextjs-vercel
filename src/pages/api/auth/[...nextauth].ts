@@ -49,6 +49,26 @@ export const authOptions = {
     session: {
         strategy: 'jwt'
     },
+    jwt: {
+        secret: "nav",
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+                token.id = user.id;
+                token.role = user.role;
+            }
+
+            return token;
+        },
+        session: async ({ session, token }) => {
+            if (session?.user && token) {
+                session.user.id = token.id as string;
+                session.user.role = token.role
+            }
+            return session;
+        },
+    },
     adapter: PrismaAdapter(prisma),
     secret: process.env.SECRET,
 };
