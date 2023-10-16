@@ -1,11 +1,14 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useSession} from "next-auth/react";
 import {message} from "antd";
+import httpRequest from "@/utils/httpRequest";
 
-const initState:InitState = {
+const initState: InitState = {
     nav: [],
-    setNav: (nav:Nav):void=>{},
-    refreshNav: ():void=>{},
+    setNav: (nav: Nav): void => {
+    },
+    refreshNav: (): void => {
+    },
 }
 
 export const GlobalContext = createContext(initState);
@@ -13,26 +16,15 @@ export const GlobalContext = createContext(initState);
 export function GlobalProvider({children}) {
     const [nav, setNav] = useState<Nav[]>([]);
     const {data: session} = useSession();
-    const refreshNav = async ()=>{
-        const queryParams = {
+    const refreshNav = async () => {
+        httpRequest.get('/api/nav/list', {
             authorId: session?.user?.id || '',
             type: 'all',
-        };
-
-        const queryString = new URLSearchParams(queryParams).toString();
-        const response:Response = await fetch(`/api/nav/list?${queryString}`, {
-            method: "GET",
+        }).then(res=>{
+            setNav(res);
         })
-        const {statusText, ok} = response
-        if(ok){
-            response.json().then(res=>{
-                setNav(res);
-            })
-        }else{
-            message.error(statusText)
-        }
     }
-    useEffect(()=>{
+    useEffect(() => {
         refreshNav()
     }, [session])
     return (

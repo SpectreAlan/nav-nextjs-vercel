@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Button, Modal, Form, Input, InputNumber, TreeSelect, message} from 'antd'
+import {Button, Modal, Form, Input, InputNumber, TreeSelect, message, Radio} from 'antd'
 import {GlobalContext} from "@/GlobalContext";
 import {DefaultOptionType} from "antd/es/select";
 import {useSession} from "next-auth/react";
-import { NextResponse } from 'next/server';
+import httpRequest from "@/utils/httpRequest";
 
 interface IProps {
     setModalVisible: (boolean) => void
@@ -18,6 +18,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
 
     useEffect(() => {
+        console.log(info);
         setTreeData([
             {
                 value: '0',
@@ -31,26 +32,18 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
         form.validateFields().then(async (values)=>{
             const type = session?.user?.role === 'admin' ? 'base' : 'custom'
             setLoading(true)
-            const res:Response = await fetch('/api/nav/save', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...values,
-                    type,
-                    authorId: session?.user?.id
-                }),
-            })
-            const {statusText, ok} = res
-            if(ok){
+            httpRequest.post('/api/nav/save', {
+                ...values,
+                type,
+                authorId: session?.user?.id
+            }).then(()=>{
                 refreshNav()
                 message.success('添加成功')
                 setLoading(false)
                 setModalVisible(false)
-            }else{
-                message.error(statusText)
-            }
+            }).catch(e=>{
+                setLoading(false)
+            })
         })
     }
 
@@ -69,9 +62,18 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
             form={form}
             labelCol={{span: 6}}
             wrapperCol={{span: 16}}
+            initialValues={{
+                navType: 0
+            }}
         >
             <Form.Item name="label" label="名称" rules={[{required: true, message: '名称不能为空'}]}>
                 <Input placeholder='请输入名称'/>
+            </Form.Item>
+            <Form.Item name="navType" label="类型" rules={[{required: true, message: '类型不能为空'}]}>
+                <Radio.Group>
+                    <Radio value={0}>目录</Radio>
+                    <Radio value={1}>菜单</Radio>
+                </Radio.Group>
             </Form.Item>
             <Form.Item name='parentId' label='上级目录' rules={[{required: true, message: '上级目录不能为空'}]}>
                 <TreeSelect

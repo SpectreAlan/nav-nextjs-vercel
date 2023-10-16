@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Drawer, Button, Tree, Dropdown, Space } from 'antd'
+import {Drawer, Button, Tree, Dropdown, Space, Menu, Modal } from 'antd'
 import {GlobalContext} from '@/GlobalContext'
-import type {DefaultOptionType} from 'antd/es/select';
 import AddOrEditModal from "@/components/navModal/addOrEditModal";
 import Icon from "@/components/Icon";
 import type {MenuProps} from 'antd';
+import {useSession} from "next-auth/react";
 
 interface IProps {
     setNavModal: (boolean) => void
@@ -12,10 +12,11 @@ interface IProps {
 
 const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
     const {nav} = useContext(GlobalContext)
-    const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
-    const [value, setValue] = useState<string>();
+    const [treeData, setTreeData] = useState<Nav[]>([])
     const [info, setInfo] = useState<Nav>();
     const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const {data: session} = useSession();
+    const [modal] = Modal.useModal();
     const items: MenuProps['items'] = [
         {
             label: '编辑',
@@ -29,27 +30,39 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
     useEffect(() => {
         setTreeData(generateMenu())
     }, [nav])
-    const generateMenu = (): Omit<DefaultOptionType, 'label'>[] => {
-        const list: Omit<DefaultOptionType, 'label'>[] = []
-        const subMenu: Omit<DefaultOptionType, 'label'>[] = []
-        for (let i = 0; i < nav.length; i++) {
-            const {parentId, key: value, label: title,} = nav[i]
-            const target = {
-                parentId,
-                value,
-                title
-            }
-            parentId === '0' ? list.push({...target}) : subMenu.push({...target})
+    const generateMenu = (): Nav[] => {
+        const list: Nav[] = []
+        const subMenu: Nav[] = []
+        const filterNav:Nav[] = nav.filter(item=>item.type === (session?.user?.role === 'admin' ? 'base' : 'custom'))
+        for (let i = 0; i < filterNav.length; i++) {
+            const {parentId} = filterNav[i]
+            parentId === '0' ? list.push(filterNav[i]) : subMenu.push(filterNav[i])
         }
         for (let i = 0; i < subMenu.length; i++) {
             const {parentId, ...res} = subMenu[i]
-            const target: Omit<DefaultOptionType, 'label'> = list.find(item => item.value === parentId)!
+            const target: Nav = list.find(item => item.key === parentId)!
             if (!target.children) {
                 target.children = []
             }
             target.children.push(subMenu[i])
         }
         return list
+    }
+    const handleMenuItemClick = (key:string, nav:Nav)=>{
+        if(key === 'del'){
+            modal.confirm({
+                title: '温馨提示',
+                content: `确定要删除${nav.label}吗？`,
+                okText: '删除',
+                cancelText: '取消',
+                onOk: ()=>{
+
+                }
+            })
+        }else{
+            setInfo(nav)
+            setModalVisible(true)
+        }
     }
     return <Drawer
         title='编辑菜单'
@@ -72,11 +85,16 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
         <Tree
             className='rounded-lg border border-black-600 border-solid'
             treeData={treeData}
+            fieldNames={{
+                title: 'label',
+                key: 'key',
+                children: 'children',
+            }}
             titleRender={
-                (nodeData) => <Dropdown
-                    menu={{items}}
+                (nav:Nav) => <Dropdown
+                    overlay={<Menu items={items}  onClick={(event)=>handleMenuItemClick(event.key, nav)}/>}
                 >
-                    <Space>{nodeData.title}<Icon type='icon-xiangxia'/></Space>
+                    <Space>{nav.label}<Icon type='icon-xiangxia'/></Space>
                 </Dropdown>
             }
         />

@@ -22,6 +22,7 @@ model Nav {
   key      String  @id @default(cuid())
   label    String
   type     String
+  navType  Int
   sort     Int
   icon     String?
   parentId String

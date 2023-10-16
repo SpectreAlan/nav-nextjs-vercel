@@ -8,7 +8,6 @@ import NavModal from "../navModal";
 import {useRouter} from "next/navigation";
 
 
-
 const Header: React.FC = () => {
     const router = useRouter();
     const items: MenuProps['items'] = [
@@ -71,7 +70,7 @@ const Header: React.FC = () => {
                 })
         }
         setMenu([...items, ...userMenu])
-    }, [status, session ])
+    }, [status, session])
 
     const onClick: MenuProps['onClick'] = async ({key}) => {
         switch (key) {
@@ -107,7 +106,6 @@ const Header: React.FC = () => {
                 navModal ? <NavModal setNavModal={setNavModal}/> : null
             }
         </>
-
     );
 };
 

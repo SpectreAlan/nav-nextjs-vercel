@@ -5,6 +5,7 @@ interface Nav {
     type: string
     label: string
     parentId: string
+    children?: any
     icon: JSX.Element | string | null
 }
 
