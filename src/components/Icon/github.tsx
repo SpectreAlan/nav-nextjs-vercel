@@ -8,6 +8,7 @@ export default () => {
     const login = async () => {
         setLoading(true)
         await signIn("github", {callbackUrl: '/'})
+
     }
     return (
         <Spin spinning={loading}>

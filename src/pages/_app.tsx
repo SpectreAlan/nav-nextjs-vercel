@@ -8,15 +8,15 @@ import {ConfigProvider} from 'antd';
 
 const App = ({Component, pageProps}: AppProps) => {
     return (
-        <GlobalProvider>
-            <SessionProvider session={pageProps.session}>
+        <SessionProvider session={pageProps.session}>
+            <GlobalProvider>
                 <ConfigProvider theme={theme}>
                     <Layout>
                         <Component {...pageProps} />
                     </Layout>
                 </ConfigProvider>
-            </SessionProvider>
-        </GlobalProvider>
+            </GlobalProvider>
+        </SessionProvider>
     );
 };
 

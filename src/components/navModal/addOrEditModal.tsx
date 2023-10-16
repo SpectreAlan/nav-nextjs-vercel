@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Button, Modal, Form, Input, InputNumber, TreeSelect} from 'antd'
+import {Button, Modal, Form, Input, InputNumber, TreeSelect, message} from 'antd'
 import {GlobalContext} from "@/GlobalContext";
 import {DefaultOptionType} from "antd/es/select";
 import {useSession} from "next-auth/react";
@@ -13,7 +13,8 @@ interface IProps {
 const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     const {data: session} = useSession();
     const [form] = Form.useForm();
-    const {nav} = useContext(GlobalContext)
+    const {nav,refreshNav} = useContext(GlobalContext)
+    const [loading, setLoading] = useState<boolean>(false)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
 
     useEffect(() => {
@@ -29,7 +30,8 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     const onFinish = () => {
         form.validateFields().then(async (values)=>{
             const type = session?.user?.role === 'admin' ? 'base' : 'custom'
-            const res = await fetch('/api/nav/save', {
+            setLoading(true)
+            const res:Response = await fetch('/api/nav/save', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +42,15 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                     authorId: session?.user?.id
                 }),
             })
-            console.log(res.ok);
+            const {statusText, ok} = res
+            if(ok){
+                refreshNav()
+                message.success('添加成功')
+                setLoading(false)
+                setModalVisible(false)
+            }else{
+                message.error(statusText)
+            }
         })
     }
 
@@ -52,7 +62,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
         maskClosable={false}
         onCancel={() => setModalVisible(false)}
         footer={[
-            <Button key="back" onClick={onFinish} type='primary'> 保存 </Button>,
+            <Button key="back" onClick={onFinish} type='primary' loading={loading}> 保存 </Button>,
         ]}
     >
         <Form

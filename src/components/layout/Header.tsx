@@ -28,7 +28,6 @@ const Header: React.FC = () => {
     const {data: session, status} = useSession();
 
     useEffect(() => {
-        console.log(session);
         const userMenu: MenuProps['items'] = []
         switch (status) {
             case "authenticated":
