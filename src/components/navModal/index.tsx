@@ -94,7 +94,7 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
                 (nav:Nav) => <Dropdown
                     overlay={<Menu items={items}  onClick={(event)=>handleMenuItemClick(event.key, nav)}/>}
                 >
-                    <Space>{nav.label}<Icon type='icon-xiangxia'/></Space>
+                    <span>{nav.label}</span>
                 </Dropdown>
             }
         />
