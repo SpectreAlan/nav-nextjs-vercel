@@ -3,6 +3,7 @@ interface Nav {
     sort: number
     key: string
     type: string
+    navType: number
     label: string
     parentId: string
     children?: any
