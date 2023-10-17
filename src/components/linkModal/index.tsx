@@ -33,7 +33,7 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
         })
     }
 
-    const del = (link: Link)=>{
+    const del = (link: Link) => {
         Modal.confirm({
             title: '温馨提示',
             content: `确定要删除${link.name}吗？`,
@@ -52,12 +52,12 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
         })
     }
 
-    const edit = (link: Link)=>{
+    const edit = (link: Link) => {
         setInfo(link)
         setLinkModalVisible(true)
     }
 
-    const add = ()=>{
+    const add = () => {
         setInfo(null)
         setLinkModalVisible(true)
     }
@@ -79,25 +79,23 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
             <Button
                 type='primary'
                 icon={<Icon type='icon-lianjie'/>}
-                className='add'
+                className='mb-2'
                 onClick={add}
             >添加链接</Button>
-            <div className="cards">
-                <Space direction="vertical" size={16}>
-                    {
-                        links.map((link: Link) => <Card
-                            title={link.name}
-                            extra={<Space>
-                                <Icon type={'icon-bianji'} onClick={()=>edit(link)}/>
-                                <Icon type={'icon-shanchu'} onClick={()=>del(link)}/>
+            <div className="flex justify-evenly">
+                {
+                    links.map((link: Link) => <Card
+                        title={link.name}
+                        extra={<Space>
+                            <Icon type={'icon-bianji'} onClick={() => edit(link)}/>
+                            <Icon type={'icon-shanchu'} onClick={() => del(link)}/>
                         </Space>}
-                            className='link-card'
-                        >
-                            <p>{link.link}</p>
-                            <p>{link.desc}</p>
-                        </Card>)
-                    }
-                </Space>
+                        className='link-card'
+                    >
+                        <p>{link.link}</p>
+                        <p>{link.desc}</p>
+                    </Card>)
+                }
             </div>
         </Spin>
         {
