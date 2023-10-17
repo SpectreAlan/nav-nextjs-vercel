@@ -18,20 +18,40 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
 
     useEffect(() => {
-        console.log(info);
+        if (info?.key) {
+            const {label, type, navType, sort, parentId, icon} = info
+            form.setFieldsValue({label, type, navType, sort, parentId, icon})
+        }
         setTreeData([
             {
                 value: '0',
                 title: '顶级目录',
-                children: nav.filter(item => item.parentId === '0' && item.navType === 0).map(item => ({value: item.key, title: item.label}))
+                children: nav.filter(item => item.parentId === '0' && item.navType === 0).map(item => ({
+                    value: item.key,
+                    title: item.label
+                }))
             }
         ])
     }, [])
 
     const onFinish = () => {
         form.validateFields().then(async (values) => {
-            const type = session?.user?.role === 'admin' ? 'base' : 'custom'
             setLoading(true)
+            if (info?.key) {
+                httpRequest.post('/api/nav/update', {
+                    ...values,
+                    key: info?.key,
+                }).then(() => {
+                    refreshNav()
+                    message.success('编辑成功')
+                    setLoading(false)
+                    setModalVisible(false)
+                }).catch(e => {
+                    setLoading(false)
+                })
+                return
+            }
+            const type = session?.user?.role === 'admin' ? 'base' : 'custom'
             httpRequest.post('/api/nav/save', {
                 ...values,
                 type,
@@ -71,7 +91,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                 <Input placeholder='请输入名称'/>
             </Form.Item>
             <Form.Item name="navType" label="类型" rules={[{required: true, message: '类型不能为空'}]}>
-                <Radio.Group>
+                <Radio.Group disabled={info?.key !== undefined}>
                     <Radio value={0}>目录</Radio>
                     <Radio value={1}>菜单</Radio>
                 </Radio.Group>
@@ -83,6 +103,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                         message: '上级目录不能为空'
                     }]}>
                         <TreeSelect
+                            disabled={info?.key !== undefined}
                             style={{width: '100%'}}
                             dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                             treeData={treeData}
