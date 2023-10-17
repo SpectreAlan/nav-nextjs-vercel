@@ -6,14 +6,14 @@ import {useSession} from "next-auth/react";
 import httpRequest from "@/utils/httpRequest";
 
 interface IProps {
-    setModalVisible: (boolean) => void
+    setNavModalVisible: (boolean) => void
     info?: Nav
 }
 
-const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
+const AddOrEditNav: React.FC<IProps> = ({setNavModalVisible, info}) => {
     const {data: session} = useSession();
     const [form] = Form.useForm();
-    const {nav, refreshNav} = useContext(GlobalContext)
+    const {nav, refreshNavs} = useContext(GlobalContext)
     const [loading, setLoading] = useState<boolean>(false)
     const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
 
@@ -42,10 +42,10 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                     ...values,
                     key: info?.key,
                 }).then(() => {
-                    refreshNav()
+                    refreshNavs()
                     message.success('编辑成功')
                     setLoading(false)
-                    setModalVisible(false)
+                    setNavModalVisible(false)
                 }).catch(e => {
                     setLoading(false)
                 })
@@ -58,10 +58,10 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
                 authorId: session?.user?.id,
                 parentId: values?.parentId || '0'
             }).then(() => {
-                refreshNav()
+                refreshNavs()
                 message.success('添加成功')
                 setLoading(false)
-                setModalVisible(false)
+                setNavModalVisible(false)
             }).catch(e => {
                 setLoading(false)
             })
@@ -74,7 +74,7 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
         title={info?.key ? '编辑导航' : '添加导航'}
         open={true}
         maskClosable={false}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => setNavModalVisible(false)}
         footer={[
             <Button key="back" onClick={onFinish} type='primary' loading={loading}> 保存 </Button>,
         ]}
@@ -120,4 +120,4 @@ const AddOrEditModal: React.FC<IProps> = ({setModalVisible, info}) => {
     </Modal>
 }
 
-export default AddOrEditModal
+export default AddOrEditNav

@@ -1,67 +1,116 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {Modal, Button, TreeSelect} from 'antd'
-import {GlobalContext} from '@/GlobalContext'
-import type { DefaultOptionType } from 'antd/es/select';
+import React, {useEffect, useState} from 'react'
+import {Drawer, Button, Card, Spin, Modal, Space, message} from 'antd'
+import AddOrEditLink from "@/components/linkModal/addOrEditLink";
+import Icon from "@/components/Icon";
+import httpRequest from "@/utils/httpRequest";
+
 interface IProps {
-    setLinkModal: (boolean)=>void
-    info?: any
+    setLinkDrawerVisible: (boolean) => void
+    navId: string
 }
-const AddOrEditLink:React.FC<IProps> = ({setLinkModal, info})=>{
-    const {nav} = useContext(GlobalContext)
-    const [treeData, setTreeData] = useState<Omit<DefaultOptionType, 'label'>[]>([])
-    const [value, setValue] = useState<string>();
 
-    useEffect(()=>{
-        setTreeData(generateMenu())
-    }, [nav])
-    const generateMenu = (): Omit<DefaultOptionType, 'label'>[] => {
-        const list: Omit<DefaultOptionType, 'label'>[] = []
-        const subMenu: Omit<DefaultOptionType, 'label'>[] = []
-        for (let i = 0; i < nav.length; i++) {
-            const {parentId, key:value, label:title,} = nav[i]
-            const target = {
-                parentId,
-                value,
-                title
-            }
-            parentId === '0' ? list.push({...target, disabled: true}) : subMenu.push({...target, disabled: false})
-        }
-        for (let i = 0; i < subMenu.length; i++) {
-            const {parentId, ...res} = subMenu[i]
-            const target: Omit<DefaultOptionType, 'label'> = list.find(item => item.value === parentId)!
-            if(!target.children){
-                target.children = []
-            }
-            target.children.push(subMenu[i])
-        }
-        return list
-    }
-    const handleOk = async ()=>{
+const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
+    const [info, setInfo] = useState<Link>();
+    const [links, setLinks] = useState<Link[]>([]);
+    const [linkModalVisible, setLinkModalVisible] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        queryLinks()
+    }, [])
+
+    const queryLinks = () => {
+        setLoading(true)
+        httpRequest.get('/api/link/list', {
+            navId,
+            type: 'nav',
+        }).then(res => {
+            setLinks(res);
+            setLoading(false)
+        }).catch(() => {
+            setLoading(false)
+        })
     }
 
-    return <Modal
-        title={info?.id ? '编辑链接' : '添加链接'}
+    const del = (link: Link)=>{
+        Modal.confirm({
+            title: '温馨提示',
+            content: `确定要删除${link.name}吗？`,
+            okText: '删除',
+            cancelText: '取消',
+            onOk: () => {
+                setLoading(true)
+                httpRequest.post('/api/link/delete', link).then(() => {
+                    queryLinks()
+                    message.success('删除成功')
+                    setLoading(false)
+                }).catch(e => {
+                    setLoading(false)
+                })
+            }
+        })
+    }
+
+    const edit = (link: Link)=>{
+        setInfo(link)
+        setLinkModalVisible(true)
+    }
+
+    const add = ()=>{
+        setInfo(null)
+        setLinkModalVisible(true)
+    }
+
+    return <Drawer
+        width={900}
+        title='链接管理'
         open={true}
-        onOk={handleOk}
         maskClosable={false}
-        onCancel={()=>setLinkModal(false)}
+        onClose={() => setLinkDrawerVisible(false)}
+        className='link-manage-drawer'
         footer={[
-            <Button key="back" onClick={handleOk}>
-                保存
+            <Button type='primary' key="back" onClick={() => setLinkDrawerVisible(false)}>
+                关闭
             </Button>,
         ]}
     >
-        <TreeSelect
-            style={{ width: '100%' }}
-            value={value}
-            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-            treeData={treeData}
-            placeholder="Please select"
-            treeDefaultExpandAll
-            onChange={(e)=>setValue(e)}
-        />
-    </Modal>
+        <Spin spinning={loading}>
+            <Button
+                type='primary'
+                icon={<Icon type='icon-lianjie'/>}
+                className='add'
+                onClick={add}
+            >添加链接</Button>
+            <div className="cards">
+                <Space direction="vertical" size={16}>
+                    {
+                        links.map((link: Link) => <Card
+                            title={link.name}
+                            extra={<Space>
+                                <Icon type={'icon-bianji'} onClick={()=>edit(link)}/>
+                                <Icon type={'icon-shanchu'} onClick={()=>del(link)}/>
+                        </Space>}
+                            className='link-card'
+                        >
+                            <p>{link.link}</p>
+                            <p>{link.desc}</p>
+                        </Card>)
+                    }
+                </Space>
+            </div>
+        </Spin>
+        {
+            linkModalVisible ? <AddOrEditLink
+                setLinkModalVisible={setLinkModalVisible}
+                info={info}
+                navId={navId}
+                refreshLinks={queryLinks}
+            /> : null
+        }
+
+    </Drawer>
 }
 
 
-export default AddOrEditLink
+export default LinkDrawer

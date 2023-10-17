@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Drawer, Button, Tree, Dropdown, Spin, Menu, Modal, message} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
-import AddOrEditModal from "@/components/navModal/addOrEditModal";
+import AddOrEditNav from "@/components/navModal/addOrEditNav";
+import LinkDrawer from "@/components/linkModal";
 import Icon from "@/components/Icon";
 import type {MenuProps} from 'antd';
 import {useSession} from "next-auth/react";
@@ -11,27 +12,39 @@ interface IProps {
     setNavModal: (boolean) => void
 }
 
-const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
-    const {nav, refreshNav} = useContext(GlobalContext)
+const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
+    const {nav, refreshNavs} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Nav[]>([])
     const [info, setInfo] = useState<Nav>();
-    const [modalVisible, setModalVisible] = useState<boolean>(false);
+    const [navModalVisible, setNavModalVisible] = useState<boolean>(false);
+    const [linkDrawerVisible, setLinkDrawerVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const {data: session} = useSession();
-    const items: MenuProps['items'] = [
-        {
-            label: '编辑',
-            key: 'edit',
-        },
-        {
-            label: '删除',
-            key: 'del',
+
+    const generateMenuItems = (nav: Nav): MenuProps['items'] => {
+        const items: MenuProps['items'] = [
+            {
+                label: '编辑',
+                key: 'edit',
+            },
+            {
+                label: '删除',
+                key: 'del',
+            }
+        ]
+        if (nav.navType === 1) {
+            items.unshift({
+                label: '链接管理',
+                key: 'linkManage',
+            },)
         }
-    ]
+        return items
+    }
+
     useEffect(() => {
-        setTreeData(generateMenu())
+        setTreeData(generateMenu(JSON.parse(JSON.stringify(nav))))
     }, [nav])
-    const generateMenu = (): Nav[] => {
+    const generateMenu = (nav: Nav[]): Nav[] => {
         const list: Nav[] = []
         const subMenu: Nav[] = []
         const filterNav: Nav[] = nav.filter(item => item.type === (session?.user?.role === 'admin' ? 'base' : 'custom'))
@@ -50,26 +63,33 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
         return list
     }
     const handleMenuItemClick = (key: string, nav: Nav) => {
-        if (key === 'del') {
-            Modal.confirm({
-                title: '温馨提示',
-                content: `确定要删除${nav.label}吗？`,
-                okText: '删除',
-                cancelText: '取消',
-                onOk: () => {
-                    setLoading(true)
-                    httpRequest.post('/api/nav/delete', nav).then(() => {
-                        refreshNav()
-                        message.success('删除成功')
-                        setLoading(false)
-                    }).catch(e => {
-                        setLoading(false)
-                    })
-                }
-            })
-        } else {
-            setInfo(nav)
-            setModalVisible(true)
+        switch (key) {
+            case 'del':
+                Modal.confirm({
+                    title: '温馨提示',
+                    content: `确定要删除${nav.label}吗？`,
+                    okText: '删除',
+                    cancelText: '取消',
+                    onOk: () => {
+                        setLoading(true)
+                        httpRequest.post('/api/nav/delete', nav).then(() => {
+                            refreshNavs()
+                            message.success('删除成功')
+                            setLoading(false)
+                        }).catch(e => {
+                            setLoading(false)
+                        })
+                    }
+                })
+                break
+            case 'linkManage':
+                setInfo(nav)
+                setLinkDrawerVisible(true)
+                break
+            case 'edit':
+                setInfo(nav)
+                setNavModalVisible(true)
+                break
         }
     }
     return <Drawer
@@ -89,7 +109,7 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
                 type='primary'
                 icon={<Icon type='icon-tianjia'/>}
                 className='add'
-                onClick={() => setModalVisible(true)}
+                onClick={() => setNavModalVisible(true)}
             >添加菜单</Button>
             <Tree
                 className='rounded-lg border border-black-600 border-solid'
@@ -101,7 +121,8 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
                 }}
                 titleRender={
                     (nav: Nav) => <Dropdown
-                        overlay={<Menu items={items} onClick={(event) => handleMenuItemClick(event.key, nav)}/>}
+                        overlay={<Menu items={generateMenuItems(nav)}
+                                       onClick={(event) => handleMenuItemClick(event.key, nav)}/>}
                     >
                         <span>{nav.label}</span>
                     </Dropdown>
@@ -109,11 +130,14 @@ const AddOrEditLink: React.FC<IProps> = ({setNavModal}) => {
             />
         </Spin>
         {
-            modalVisible ? <AddOrEditModal setModalVisible={setModalVisible} info={info}/> : null
+            navModalVisible ? <AddOrEditNav setNavModalVisible={setNavModalVisible} info={info}/> : null
+        }
+        {
+            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info?.key}/> : null
         }
 
     </Drawer>
 }
 
 
-export default AddOrEditLink
+export default NavDrawer

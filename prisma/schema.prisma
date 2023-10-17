@@ -36,12 +36,15 @@ model Links {
   link     String
   name     String
   desc     String
+  type     String
   icon     String?
   userName String?
   password String?
   hot      Boolean
   navId    String
   nav      Nav     @relation(fields: [navId], references: [key])
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
 }
 
 model Account {
@@ -84,6 +87,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   Nav           Nav[]
+  Links         Links[]
 }
 
 model VerificationToken {
