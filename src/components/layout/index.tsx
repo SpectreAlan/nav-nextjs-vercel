@@ -61,7 +61,9 @@ const App: React.FC<Props> = ({children}) => {
                         margin: '84px 16px 24px',
                         padding: 24,
                         minHeight: 980,
+                        height: `calc(100vh - 84px)`,
                         background: colorBgContainer,
+                        overflow: 'scroll'
                     }}
                 >
                     {children}
