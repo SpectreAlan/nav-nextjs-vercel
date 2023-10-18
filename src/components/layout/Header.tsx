@@ -3,7 +3,6 @@ import type {MenuProps} from 'antd';
 import {Menu} from 'antd';
 import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
-import LinkModal from "../linkModal";
 import NavModal from "../navModal";
 import {useRouter} from "next/navigation";
 
@@ -22,7 +21,6 @@ const Header: React.FC = () => {
         }
     ];
     const [menu, setMenu] = useState<MenuProps['items']>(items)
-    const [linkModal, setLinkModal] = useState<boolean>(false)
     const [navModal, setNavModal] = useState<boolean>(false)
     const {data: session, status} = useSession();
 
@@ -80,9 +78,6 @@ const Header: React.FC = () => {
             case 'logout':
                 await signOut()
                 break
-            case 'addLink':
-                setLinkModal(true)
-                break
             case 'editMenu':
                 setNavModal(true)
                 break
@@ -99,9 +94,6 @@ const Header: React.FC = () => {
                 mode="horizontal"
                 items={menu}
             />
-            {
-                linkModal ? <LinkModal setLinkModal={setLinkModal}/> : null
-            }
             {
                 navModal ? <NavModal setNavModal={setNavModal}/> : null
             }
