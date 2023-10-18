@@ -7,7 +7,7 @@ import httpRequest from "@/utils/httpRequest";
 
 interface IProps {
     setNavModalVisible: (boolean) => void
-    info?: Nav
+    info: Nav | null
 }
 
 const AddOrEditNav: React.FC<IProps> = ({setNavModalVisible, info}) => {

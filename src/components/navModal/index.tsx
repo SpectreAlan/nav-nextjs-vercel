@@ -15,7 +15,7 @@ interface IProps {
 const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
     const {nav, refreshNavs} = useContext(GlobalContext)
     const [treeData, setTreeData] = useState<Nav[]>([])
-    const [info, setInfo] = useState<Nav>();
+    const [info, setInfo] = useState<Nav | null>(null);
     const [navModalVisible, setNavModalVisible] = useState<boolean>(false);
     const [linkDrawerVisible, setLinkDrawerVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -133,7 +133,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             navModalVisible ? <AddOrEditNav setNavModalVisible={setNavModalVisible} info={info}/> : null
         }
         {
-            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info?.key}/> : null
+            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info!.key}/> : null
         }
 
     </Drawer>
