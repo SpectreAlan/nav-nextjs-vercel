@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Modal, Button, TreeSelect, Form, Input, Radio, message} from 'antd'
+import {Modal, Button, TreeSelect, Form, Input, Radio, message, Upload } from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type {DefaultOptionType} from 'antd/es/select';
 import httpRequest from "@/utils/httpRequest";

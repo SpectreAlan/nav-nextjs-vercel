@@ -1,16 +1,17 @@
 import React, {useContext, useEffect, useState} from "react"
 import {GlobalContext} from "@/GlobalContext";
 import Icon from "@/components/Icon";
-import {Card, Divider, Avatar, Space, Spin} from 'antd'
-
-
+import {Card, Divider, Avatar, Space, Spin, Upload, Button} from 'antd'
+const OSS = require('ali-oss');
+import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 const NavPage: React.FC = () => {
     const {nav, links, globalLoading} = useContext(GlobalContext)
-
     const [grid, setGrid] = useState<NavGrid[]>([])
+
     useEffect(() => {
         generateGrid()
     }, [nav, links])
+
     const generateGrid = () => {
         let gridList: NavGrid[] = [
             {
@@ -54,8 +55,55 @@ const NavPage: React.FC = () => {
         })
         setGrid(gridList)
     }
+    const [fileList, setFileList] = useState<UploadFile[]>([]);
+    const [uploading, setUploading] = useState(false);
+    const props: any = {
+        onRemove: (file) => {
+            const index = fileList.indexOf(file);
+            const newFileList = fileList.slice();
+            newFileList.splice(index, 1);
+            setFileList(newFileList);
+        },
+        beforeUpload: async (file) => {
+            const oss = new OSS({
+                region: 'oss-cn-hongkong',
+                accessKeyId: 'LTAI5tLRK1oJKXy3aJR61txA',
+                accessKeySecret: 'CnfwvwbO5wNLd3btXnZGa9LgTv8xxL',
+                bucket: 'nav-vercel',
+            });
+            const result = await oss.put('avator.png', file);
+            console.log(result.url);
+        },
+        fileList,
+    };
+    const handleUpload =async () => {
+        setUploading(true);
+
+        const oss = new OSS({
+            region: 'oss-cn-hongkong',
+            accessKeyId: 'LTAI5tLRK1oJKXy3aJR61txA',
+            accessKeySecret: 'CnfwvwbO5wNLd3btXnZGa9LgTv8xxL',
+            bucket: 'nav-vercel',
+        });
+        const result = await oss.put('avator.png', fileList[0]);
+        console.log(result);
+        return result.url;
+
+    };
     return (
         <Spin spinning={globalLoading}>
+            <Upload {...props}>
+                <Button>Select File</Button>
+            </Upload>
+            <Button
+                type="primary"
+                onClick={handleUpload}
+                disabled={fileList.length === 0}
+                loading={uploading}
+                style={{ marginTop: 16 }}
+            >
+                {uploading ? 'Uploading' : 'Start Upload'}
+            </Button>
             {
                 grid.map((item: NavGrid) =>
                     <div key={item.key}>
