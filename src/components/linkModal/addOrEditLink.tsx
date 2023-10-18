@@ -8,7 +8,7 @@ import {useSession} from "next-auth/react";
 interface IProps {
     setLinkModalVisible: (boolean) => void
     refreshLinks: () => void
-    info?: any
+    info: Link | null
     navId: string
 }
 

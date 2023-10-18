@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
-    const [info, setInfo] = useState<Link>();
+    const [info, setInfo] = useState<Link | null>(null);
     const [links, setLinks] = useState<Link[]>([]);
     const [linkModalVisible, setLinkModalVisible] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -44,8 +44,7 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                 httpRequest.post('/api/link/delete', link).then(() => {
                     queryLinks()
                     message.success('删除成功')
-                    setLoading(false)
-                }).catch(e => {
+                }).catch(() => {
                     setLoading(false)
                 })
             }
@@ -70,7 +69,7 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
         onClose={() => setLinkDrawerVisible(false)}
         className='link-manage-drawer'
         footer={[
-            <Button type='primary' key="back" onClick={() => setLinkDrawerVisible(false)}>
+            <Button type='primary' onClick={() => setLinkDrawerVisible(false)}>
                 关闭
             </Button>,
         ]}
@@ -82,7 +81,7 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                 className='mb-2'
                 onClick={add}
             >添加链接</Button>
-            <div className="flex justify-evenly">
+            <div className="grid gap-x-8 gap-y-4 grid-cols-3">
                 {
                     links.map((link: Link) => <Card
                         title={link.name}
@@ -90,7 +89,6 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                             <Icon type={'icon-bianji'} onClick={() => edit(link)}/>
                             <Icon type={'icon-shanchu'} onClick={() => del(link)}/>
                         </Space>}
-                        className='link-card'
                     >
                         <p>{link.link}</p>
                         <p>{link.desc}</p>
@@ -106,7 +104,6 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                 refreshLinks={queryLinks}
             /> : null
         }
-
     </Drawer>
 }
 
