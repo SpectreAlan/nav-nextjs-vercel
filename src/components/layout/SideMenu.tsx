@@ -14,7 +14,14 @@ const SideMenu: React.FC = () => {
     }, [nav])
 
     const generateMenu = (): MenuItem[] => {
-        const list: MenuItem[] = []
+        const list: MenuItem[] = [
+            {
+                sort: 0,
+                key: 'hot',
+                label: '热门推荐',
+                icon: <Icon type={'icon-paihangbang'}/>
+            }
+        ]
         const subMenu: Nav[] = []
         for (let i = 0; i < nav.length; i++) {
             const {parentId, key, icon:iconType, label, sort} = nav[i]
@@ -42,6 +49,9 @@ const SideMenu: React.FC = () => {
                 ...res
             })
         }
+        for (let i = 0; i < list.length; i++) {
+            list[i]?.children?.sort((a, b) => a.sort - b.sort)
+        }
         return list
     }
     return (
@@ -49,7 +59,7 @@ const SideMenu: React.FC = () => {
         <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={['hot']}
             items={menu}
         /> : <LoadingOutlined rev={'2.0'}/>
     );

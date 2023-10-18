@@ -40,11 +40,6 @@ const Header: React.FC = () => {
                             icon: <Icon type='icon-caidan'/>
                         },
                         {
-                            label: '新增链接',
-                            key: 'addLink',
-                            icon: <Icon type='icon-lianjie'/>
-                        },
-                        {
                             label: '注销登录',
                             key: 'logout',
                             icon: <Icon type='icon-tuichu'/>

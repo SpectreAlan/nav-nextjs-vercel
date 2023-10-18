@@ -52,6 +52,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             const {parentId} = filterNav[i]
             parentId === '0' ? list.push(filterNav[i]) : subMenu.push(filterNav[i])
         }
+        list.sort((a, b) => a.sort - b.sort)
         for (let i = 0; i < subMenu.length; i++) {
             const {parentId, ...res} = subMenu[i]
             const target: Nav = list.find(item => item.key === parentId)!
@@ -59,6 +60,9 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                 target.children = []
             }
             target.children.push(subMenu[i])
+        }
+        for (let i = 0; i < list.length; i++) {
+            list[i]?.children?.sort((a, b) => a.sort - b.sort)
         }
         return list
     }
@@ -92,6 +96,10 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                 break
         }
     }
+    const addNav = ()=>{
+        setInfo(null)
+        setNavModalVisible(true)
+    }
     return <Drawer
         title='编辑菜单'
         open={true}
@@ -109,7 +117,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                 type='primary'
                 icon={<Icon type='icon-tianjia'/>}
                 className='add'
-                onClick={() => setNavModalVisible(true)}
+                onClick={addNav}
             >添加菜单</Button>
             <Tree
                 className='rounded-lg border border-black-600 border-solid'
