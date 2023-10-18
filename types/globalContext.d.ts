@@ -1,5 +1,6 @@
 interface InitState {
     nav: Nav[]
-    setNav: (Nav)=>void
+    links: Link[]
     refreshNavs: ()=>void
+    refreshLinks: ()=>void
 }
