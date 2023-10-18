@@ -1,0 +1,19 @@
+.login-page {
+  width: 400px;
+  margin: 0 auto;
+
+  .login {
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding-top: 24px;
+    .ant-form-item-control {
+      margin: 0 auto;
+
+    }
+
+    .login-form-button {
+      width: 100%;
+      background-color: #001529;
+    }
+  }
+}
