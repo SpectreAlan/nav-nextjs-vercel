@@ -33,6 +33,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
             const target = {...nav[i], disabled: nav[i].navType === 0}
             target.parentId === '0' ? list.push(target) : subMenu.push(target)
         }
+        list.sort((a, b) => a.sort - b.sort)
         for (let i = 0; i < subMenu.length; i++) {
             const target: Nav = list.find(item => item.key === subMenu[i].parentId)!
             if (!target.children) {
@@ -40,6 +41,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
             }
             target.children.push(subMenu[i])
         }
+        list.map(item => item?.children?.sort((a, b) => a.sort - b.sort))
         return list
     }
     const handleOk = async () => {

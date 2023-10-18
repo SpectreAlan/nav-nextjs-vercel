@@ -61,9 +61,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             }
             target.children.push(subMenu[i])
         }
-        for (let i = 0; i < list.length; i++) {
-            list[i]?.children?.sort((a, b) => a.sort - b.sort)
-        }
+        list.map(item => item?.children?.sort((a, b) => a.sort - b.sort))
         return list
     }
     const handleMenuItemClick = (key: string, nav: Nav) => {

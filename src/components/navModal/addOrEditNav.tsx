@@ -26,7 +26,7 @@ const AddOrEditNav: React.FC<IProps> = ({setNavModalVisible, info}) => {
             {
                 value: '0',
                 title: '顶级目录',
-                children: nav.filter(item => item.parentId === '0' && item.navType === 0).map(item => ({
+                children: nav.filter(item => item.parentId === '0' && item.navType === 0).sort((a, b) => a.sort - b.sort).map(item => ({
                     value: item.key,
                     title: item.label
                 }))

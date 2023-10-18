@@ -1,10 +1,11 @@
-import React from "react"
+import React, {useContext} from "react"
+import {GlobalContext} from "@/GlobalContext";
 
 
-const Blog: React.FC = () => {
+const NavPage: React.FC = () => {
+    const {nav, links} = useContext(GlobalContext)
     return (
         <div>
-            <h1>Public Feed</h1>
             <main>
                 <div id="nav1" className="nav1" style={{height: '800px', background: 'white'}}>
                     nav1
@@ -20,4 +21,4 @@ const Blog: React.FC = () => {
     )
 }
 
-export default Blog
+export default NavPage
