@@ -5,6 +5,7 @@ import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
 import NavModal from "../navModal";
 import {useRouter} from "next/navigation";
+import {LoadingOutlined} from '@ant-design/icons';
 
 
 const Header: React.FC = () => {
@@ -52,7 +53,7 @@ const Header: React.FC = () => {
                     disabled: true,
                     label: '加载中...',
                     key: 'loading',
-                    icon: <Icon type=''/>
+                    icon: <LoadingOutlined rev=''/>
                 })
                 break
             default:
