@@ -2,15 +2,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Menu} from 'antd';
 import {GlobalContext} from '@/GlobalContext'
 import Icon from '@/components/Icon'
-import type { MenuProps } from 'antd';
-import {
-    LoadingOutlined,
-} from '@ant-design/icons';
+import type {MenuProps} from 'antd';
 
 const SideMenu: React.FC = () => {
     const {nav} = useContext(GlobalContext)
     const [menu, setMenu] = useState<MenuItem[]>([])
-    const [current, setCurrent] = useState('hot');
+    const [active, setActive] = useState<string>('hot');
     useEffect(() => {
         setMenu(generateMenu())
     }, [nav])
@@ -47,19 +44,16 @@ const SideMenu: React.FC = () => {
 
     const handleClick: MenuProps['onClick'] = (e) => {
         const key = e.key
-        setCurrent(key)
-        document.getElementById(key)?.scrollIntoView({ behavior: 'smooth' })
+        setActive(key)
+        document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
     };
-    return (
-        menu.length ?
-            <Menu
-                selectedKeys={[current]}
-                theme="dark"
-                mode="inline"
-                items={menu}
-                onClick={handleClick}
-            /> : <LoadingOutlined rev={'2.0'}/>
-    );
+    return <Menu
+        selectedKeys={[active]}
+        theme="dark"
+        mode="inline"
+        items={menu}
+        onClick={handleClick}
+    />
 };
 
 export default SideMenu;

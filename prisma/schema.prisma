@@ -10,12 +10,14 @@ datasource db {
 }
 
 model Post {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   title     String
   content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
+  scan      Int      @default(0)
+  published Boolean  @default(false)
+  author    User?    @relation(fields: [authorId], references: [id])
   authorId  String?
+  updateAt  DateTime @default(now())
 }
 
 model Nav {
@@ -32,19 +34,40 @@ model Nav {
 }
 
 model Links {
-  id       String  @id @default(cuid())
+  id       String   @id @default(cuid())
   link     String
   name     String
   desc     String
+  scan     Int      @default(0)
   type     String
   icon     String?
   userName String?
   password String?
   hot      Boolean
   navId    String
-  nav      Nav     @relation(fields: [navId], references: [key])
-  author   User?   @relation(fields: [authorId], references: [id])
+  updateAt DateTime @default(now())
+  nav      Nav      @relation(fields: [navId], references: [key])
+  author   User?    @relation(fields: [authorId], references: [id])
   authorId String?
+}
+
+model Like {
+  id         Int     @id @default(autoincrement())
+  author     User?   @relation(fields: [authorId], references: [id])
+  authorId   String?
+  relegation String
+  type       String
+}
+
+model Comments {
+  id          Int      @id @default(autoincrement())
+  userName    String
+  userAvatar  String
+  content     String
+  updateAt    DateTime @default(now())
+  replyUser   String
+  replyAvatar String
+  relegation  String
 }
 
 model Account {
@@ -88,6 +111,7 @@ model User {
   sessions      Session[]
   Nav           Nav[]
   Links         Links[]
+  Like          Like[]
 }
 
 model VerificationToken {
