@@ -13,7 +13,7 @@ const EditLink:React.FC<IProps> = ({link})=>{
         setLinkModalVisible(true)
     }
     return <>
-        <Icon type='icon-bianji' key="edit" onClick={editLink}/>
+        <Icon type='icon-bianji' key="edit" onClick={editLink} title='编辑链接'/>
         {
             linkModalVisible ? <AddOrEditLink
                 setLinkModalVisible={setLinkModalVisible}

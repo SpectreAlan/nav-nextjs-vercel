@@ -1,6 +1,6 @@
-import React, {useState, ReactNode } from 'react';
+import React, {useState, ReactNode} from 'react';
 import Image from 'next/image'
-import {Layout,  Button, theme} from 'antd';
+import {Layout, Button, theme} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
 import Logo from '@/static/images/logo.gif'
@@ -57,13 +57,9 @@ const App: React.FC<Props> = ({children}) => {
                     <CustomHeader/>
                 </Header>
                 <Content
+                    className={'app-content'}
                     style={{
-                        margin: '84px 16px 24px',
-                        padding: 24,
-                        minHeight: 980,
-                        height: `calc(100vh - 84px)`,
                         background: colorBgContainer,
-                        overflow: 'scroll'
                     }}
                 >
                     {children}

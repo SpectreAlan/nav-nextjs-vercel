@@ -8,4 +8,5 @@ interface Link {
     password?: string
     hot: boolean
     navId: string
+    authorId: string
 }

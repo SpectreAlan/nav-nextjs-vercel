@@ -71,7 +71,7 @@ const AddOrEditNav: React.FC<IProps> = ({setNavModalVisible, info}) => {
     return <Modal
         className={'edit-nav-modal'}
         width={500}
-        title={info?.key ? '编辑导航' : '添加导航'}
+        title={info?.key ? '编辑菜单' : '添加菜单'}
         open={true}
         maskClosable={false}
         onCancel={() => setNavModalVisible(false)}

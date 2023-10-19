@@ -27,7 +27,7 @@ const DeleteLink:React.FC<IProps> = ({link,refreshLinks, setLoading})=>{
         })
     }
     return <>
-        <Icon type={'icon-shanchu'} onClick={del}/>
+        <Icon type={'icon-shanchu'} onClick={del} title='删除链接'/>
     </>
 }
 export default DeleteLink

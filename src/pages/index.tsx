@@ -1,13 +1,15 @@
-import React, {useContext, useEffect, useState} from "react"
+import React, {ReactNode, useContext, useEffect, useState} from "react"
 import {GlobalContext} from "@/GlobalContext";
 import Icon from "@/components/Icon";
 import {Card, Divider, Image, Space, Spin} from 'antd'
 import EditLink from "@/components/navModal/editLink";
 import DeleteLink from "@/components/navModal/deleteLink";
+import {useSession} from "next-auth/react";
 
 const NavPage: React.FC = () => {
     const {nav, links, globalLoading, refreshLinks, setGlobalLoading} = useContext(GlobalContext)
     const [grid, setGrid] = useState<NavGrid[]>([])
+    const {data: session} = useSession();
 
     useEffect(() => {
         generateGrid()
@@ -56,6 +58,26 @@ const NavPage: React.FC = () => {
         })
         setGrid(gridList)
     }
+
+    const generateControls = (link: Link): JSX.Element[] => {
+        let controls =
+            [
+                <Icon type='icon-pinglun' key="comment" title='吐槽一下'/>,
+                <Icon type='icon-dianzan' key="like" title='点这个赞'/>,
+                <Icon type='icon-xiangqing' key="detail" title='链接详情'/>,
+            ]
+        if (session?.user?.id === link.authorId) {
+            controls.splice(2, 0,
+                <EditLink link={link}/>,
+                <DeleteLink
+                    link={link}
+                    setLoading={setGlobalLoading}
+                    refreshLinks={refreshLinks}
+                />
+            )
+        }
+        return controls
+    }
     return (
         <Spin spinning={globalLoading}>
             {
@@ -74,20 +96,11 @@ const NavPage: React.FC = () => {
                                 item.links.map(link => <Card
                                     key={link.id}
                                     style={{width: 300}}
-                                    actions={[
-                                        <Icon type='icon-pinglun' key="comment"/>,
-                                        <Icon type='icon-love' key="like"/>,
-                                        <EditLink link={link}/>,
-                                        <DeleteLink
-                                            link={link}
-                                            setLoading={setGlobalLoading}
-                                            refreshLinks={refreshLinks}
-                                        />
-                                    ]}
+                                    actions={generateControls(link)}
                                 >
                                     <Card.Meta
                                         avatar={<Image width={40} src={link.icon}/>}
-                                        title={link.name}
+                                        title={<a href={link.link} target='_blank'>{link.name}</a>}
                                         description={link.desc}
                                     />
                                 </Card>)
