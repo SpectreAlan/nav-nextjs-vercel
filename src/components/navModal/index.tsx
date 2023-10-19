@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Drawer, Button, Tree, Dropdown, Spin, Menu, Modal, message} from 'antd'
+import {Drawer, Button, Tree, Dropdown, Spin, Menu, Modal, message, Empty} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import AddOrEditNav from "@/components/navModal/addOrEditNav";
 import LinkDrawer from "@/components/linkModal";
@@ -94,7 +94,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                 break
         }
     }
-    const addNav = ()=>{
+    const addNav = () => {
         setInfo(null)
         setNavModalVisible(true)
     }
@@ -118,29 +118,33 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                 className='add'
                 onClick={addNav}
             >添加菜单</Button>
-            <Tree
-                className='rounded-lg border border-black-600 border-solid'
-                treeData={treeData}
-                fieldNames={{
-                    title: 'label',
-                    key: 'key',
-                    children: 'children',
-                }}
-                titleRender={
-                    (nav: Nav) => <Dropdown
-                        overlay={<Menu items={generateMenuItems(nav)}
-                                       onClick={(event) => handleMenuItemClick(event.key, nav)}/>}
-                    >
-                        <span>{nav.label}</span>
-                    </Dropdown>
-                }
-            />
+            {
+                treeData.length ? <Tree
+                    className='rounded-lg border border-black-600 border-solid'
+                    treeData={treeData}
+                    fieldNames={{
+                        title: 'label',
+                        key: 'key',
+                        children: 'children',
+                    }}
+                    titleRender={
+                        (nav: Nav) => <Dropdown
+                            overlay={<Menu items={generateMenuItems(nav)}
+                                           onClick={(event) => handleMenuItemClick(event.key, nav)}/>}
+                        >
+                            <span>{nav.label}</span>
+                        </Dropdown>
+                    }
+                /> : <Empty description='暂无数据'/>
+            }
+
         </Spin>
         {
             navModalVisible ? <AddOrEditNav setNavModalVisible={setNavModalVisible} info={info}/> : null
         }
         {
-            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info!.key} key='linkDrawer'/> : null
+            linkDrawerVisible ?
+                <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info!.key} key='linkDrawer'/> : null
         }
 
     </Drawer>

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Drawer, Button, Card, Spin, Modal, Space, message} from 'antd'
+import {Drawer, Button, Card, Spin, Modal, Space, message, Empty} from 'antd'
 import AddOrEditLink from "@/components/linkModal/addOrEditLink";
 import Icon from "@/components/Icon";
 import httpRequest from "@/utils/httpRequest";
@@ -64,28 +64,30 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                 className='mb-2'
                 onClick={add}
             >添加链接</Button>
-            <div className="grid gap-x-8 gap-y-4 grid-cols-3">
-                {
-                    links.map((link: Link) => <Card
-                        key={link.id}
-                        title={link.name}
-                        extra={<Space>
-                            <EditLink link={link}/>
-                            <DeleteLink
-                                link={link}
-                                setLoading={setLoading}
-                                refreshLinks={() => {
-                                    queryLinks()
-                                    refreshLinks()
-                                }}
-                            />
-                        </Space>}
-                    >
-                        <p>{link.link}</p>
-                        <p>{link.desc}</p>
-                    </Card>)
-                }
-            </div>
+            {
+                links.length ? <div className="grid gap-x-8 gap-y-4 grid-cols-3">
+                    {
+                        links.map((link: Link) => <Card
+                            key={link.id}
+                            title={link.name}
+                            extra={<Space>
+                                <EditLink link={link}/>
+                                <DeleteLink
+                                    link={link}
+                                    setLoading={setLoading}
+                                    refreshLinks={() => {
+                                        queryLinks()
+                                        refreshLinks()
+                                    }}
+                                />
+                            </Space>}
+                        >
+                            <p>{link.link}</p>
+                            <p>{link.desc}</p>
+                        </Card>)
+                    }
+                </div> : <Empty description='暂无数据'/>
+            }
         </Spin>
         {
             linkModalVisible ? <AddOrEditLink

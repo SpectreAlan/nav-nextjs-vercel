@@ -82,7 +82,7 @@ const NavPage: React.FC = () => {
         <Spin spinning={globalLoading}>
             {
                 grid.map((item: NavGrid) =>
-                    <div key={item.key} className={'nav-page'}>
+                    <div key={item.key} className={'nav-page'} id={item.key}>
                         <Divider orientation="left" orientationMargin="0">
                             <Space>
                                 {
