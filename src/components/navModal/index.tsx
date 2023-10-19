@@ -99,6 +99,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
         setNavModalVisible(true)
     }
     return <Drawer
+        key='navDrawer'
         title='编辑菜单'
         open={true}
         maskClosable={false}
@@ -139,7 +140,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             navModalVisible ? <AddOrEditNav setNavModalVisible={setNavModalVisible} info={info}/> : null
         }
         {
-            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info!.key}/> : null
+            linkDrawerVisible ? <LinkDrawer setLinkDrawerVisible={setLinkDrawerVisible} navId={info!.key} key='linkDrawer'/> : null
         }
 
     </Drawer>

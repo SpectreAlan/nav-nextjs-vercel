@@ -1,9 +1,12 @@
 import React, {useContext, useEffect, useState} from "react"
 import {GlobalContext} from "@/GlobalContext";
 import Icon from "@/components/Icon";
-import {Card, Divider, Avatar, Space, Spin} from 'antd'
+import {Card, Divider, Image, Space, Spin} from 'antd'
+import EditLink from "@/components/navModal/editLink";
+import DeleteLink from "@/components/navModal/deleteLink";
+
 const NavPage: React.FC = () => {
-    const {nav, links, globalLoading} = useContext(GlobalContext)
+    const {nav, links, globalLoading, refreshLinks, setGlobalLoading} = useContext(GlobalContext)
     const [grid, setGrid] = useState<NavGrid[]>([])
 
     useEffect(() => {
@@ -57,7 +60,7 @@ const NavPage: React.FC = () => {
         <Spin spinning={globalLoading}>
             {
                 grid.map((item: NavGrid) =>
-                    <div key={item.key}>
+                    <div key={item.key} className={'nav-page'}>
                         <Divider orientation="left" orientationMargin="0">
                             <Space>
                                 {
@@ -74,12 +77,16 @@ const NavPage: React.FC = () => {
                                     actions={[
                                         <Icon type='icon-pinglun' key="comment"/>,
                                         <Icon type='icon-love' key="like"/>,
-                                        <Icon type='icon-bianji' key="edit"/>,
-                                        <Icon type='icon-shanchu' key="del"/>,
+                                        <EditLink link={link}/>,
+                                        <DeleteLink
+                                            link={link}
+                                            setLoading={setGlobalLoading}
+                                            refreshLinks={refreshLinks}
+                                        />
                                     ]}
                                 >
                                     <Card.Meta
-                                        avatar={<Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel"/>}
+                                        avatar={<Image width={40} src={link.icon}/>}
                                         title={link.name}
                                         description={link.desc}
                                     />

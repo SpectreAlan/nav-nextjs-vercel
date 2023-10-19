@@ -15,20 +15,23 @@ const UploadAliOSS: React.FC<IProps> = ({icon, form}) => {
     const [imageUrl, setImageUrl] = useState<string>(icon || '');
 
     const beforeUpload = async (file: RcFile) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        console.log(file.type);
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'|| file.type === 'image/x-icon';
         if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
+            message.error('You can only upload JPG/PNG/ICO file!');
+            return
         }
         const isLt2M = file.size / 1024  < 500;
         if (!isLt2M) {
             message.error('Image must smaller than 500k!');
+            return
         }
         setLoading(true)
         const oss = new OSS({
-            region: process.env.OSS_ALIYUN_REGION,
-            accessKeyId: process.env.LTAI5tLRK1oJKXy3aJR61txA,
-            accessKeySecret: process.env.OSS_ALIYUN_SECRET,
-            bucket: process.env.OSS_ALIYUN_BUCKET,
+            region: process.env.NEXT_PUBLIC_OSS_ALIYUN_REGION,
+            accessKeyId: process.env.NEXT_PUBLIC_OSS_ALIYUN_RKEY,
+            accessKeySecret: process.env.NEXT_PUBLIC_OSS_ALIYUN_SECRET,
+            bucket: process.env.NEXT_PUBLIC_OSS_ALIYUN_BUCKET,
         });
         const result = await oss.put(`/nav/favicon/${new Date().getTime()}.${file.type.split('/')[1]}`, file);
         setImageUrl(result.url);
@@ -38,7 +41,7 @@ const UploadAliOSS: React.FC<IProps> = ({icon, form}) => {
 
     const uploadButton = (
         <div>
-            {loading ? <LoadingOutlined rev/> : <PlusOutlined rev/>}
+            {loading ? <LoadingOutlined rev={''}/> : <PlusOutlined rev={''}/>}
             <div style={{marginTop: 8}}>Upload</div>
         </div>
     );

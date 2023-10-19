@@ -4,6 +4,7 @@ import {GlobalContext} from '@/GlobalContext'
 import type {DefaultOptionType} from 'antd/es/select';
 import httpRequest from "@/utils/httpRequest";
 import {useSession} from "next-auth/react";
+import UploadAliOSS from "@/components/upload";
 
 
 interface IProps {
@@ -113,6 +114,9 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
             </Form.Item>
             <Form.Item name="link" label="链接地址" rules={[{required: true, message: '链接不能为空'}]}>
                 <Input placeholder='格式：https://google.com'/>
+            </Form.Item>
+            <Form.Item name="icon" label="网站图标" rules={[{required: true, message: '图标不能为空'}]}>
+                <UploadAliOSS form={form} icon={info?.icon}/>
             </Form.Item>
             <Form.Item name="desc" label="描述" rules={[{required: true, message: '描述不能为空'}]}>
                 <Input.TextArea placeholder='描述'/>

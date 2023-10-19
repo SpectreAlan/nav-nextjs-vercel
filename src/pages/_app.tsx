@@ -5,7 +5,6 @@ import '../static/style/global.scss'
 import Layout from "@/components/layout";
 import theme from '../../theme/themeConfig';
 import {ConfigProvider} from 'antd';
-
 const App = ({Component, pageProps}: AppProps) => {
     return (
         <SessionProvider session={pageProps.session}>

@@ -1,8 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {Drawer, Button, Card, Spin, Modal, Space, message} from 'antd'
 import AddOrEditLink from "@/components/linkModal/addOrEditLink";
 import Icon from "@/components/Icon";
 import httpRequest from "@/utils/httpRequest";
+import {GlobalContext} from "@/GlobalContext";
+import EditLink from "@/components/navModal/editLink";
+import DeleteLink from "@/components/navModal/deleteLink";
 
 interface IProps {
     setLinkDrawerVisible: (boolean) => void
@@ -10,6 +13,7 @@ interface IProps {
 }
 
 const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
+    const {refreshLinks} = useContext(GlobalContext)
     const [info, setInfo] = useState<Link | null>(null);
     const [links, setLinks] = useState<Link[]>([]);
     const [linkModalVisible, setLinkModalVisible] = useState<boolean>(false);
@@ -33,28 +37,6 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
         })
     }
 
-    const del = (link: Link) => {
-        Modal.confirm({
-            title: '温馨提示',
-            content: `确定要删除${link.name}吗？`,
-            okText: '删除',
-            cancelText: '取消',
-            onOk: () => {
-                setLoading(true)
-                httpRequest.post('/api/link/delete', link).then(() => {
-                    queryLinks()
-                    message.success('删除成功')
-                }).catch(() => {
-                    setLoading(false)
-                })
-            }
-        })
-    }
-
-    const edit = (link: Link) => {
-        setInfo(link)
-        setLinkModalVisible(true)
-    }
 
     const add = () => {
         setInfo(null)
@@ -62,6 +44,7 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
     }
 
     return <Drawer
+        key='link-manage-drawer'
         width={900}
         title='链接管理'
         open={true}
@@ -84,10 +67,18 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
             <div className="grid gap-x-8 gap-y-4 grid-cols-3">
                 {
                     links.map((link: Link) => <Card
+                        key={link.id}
                         title={link.name}
                         extra={<Space>
-                            <Icon type={'icon-bianji'} onClick={() => edit(link)}/>
-                            <Icon type={'icon-shanchu'} onClick={() => del(link)}/>
+                            <EditLink link={link}/>
+                            <DeleteLink
+                                link={link}
+                                setLoading={setLoading}
+                                refreshLinks={() => {
+                                    queryLinks()
+                                    refreshLinks()
+                                }}
+                            />
                         </Space>}
                     >
                         <p>{link.link}</p>
@@ -101,7 +92,10 @@ const LinkDrawer: React.FC<IProps> = ({setLinkDrawerVisible, navId}) => {
                 setLinkModalVisible={setLinkModalVisible}
                 info={info}
                 navId={navId}
-                refreshLinks={queryLinks}
+                refreshLinks={() => {
+                    queryLinks()
+                    refreshLinks()
+                }}
             /> : null
         }
     </Drawer>

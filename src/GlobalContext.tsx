@@ -8,6 +8,7 @@ const initState: InitState = {
     refreshNavs: (): void => {},
     links: [],
     refreshLinks: (): void => {},
+    setGlobalLoading: (): void => {},
 }
 
 export const GlobalContext = createContext(initState);
@@ -42,7 +43,7 @@ export function GlobalProvider({children}) {
         refreshLinks()
     }, [session])
     return (
-        <GlobalContext.Provider value={{nav, refreshNavs, refreshLinks, links, globalLoading}}>
+        <GlobalContext.Provider value={{nav, refreshNavs, refreshLinks, links, globalLoading, setGlobalLoading}}>
             {children}
         </GlobalContext.Provider>
     );

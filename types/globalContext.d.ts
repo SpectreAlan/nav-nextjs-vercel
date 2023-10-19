@@ -4,4 +4,5 @@ interface InitState {
     links: Link[]
     refreshNavs: ()=>void
     refreshLinks: ()=>void
+    setGlobalLoading: (boolean)=>void
 }
