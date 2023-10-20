@@ -4,6 +4,7 @@ import {GlobalContext} from "@/GlobalContext";
 import {DefaultOptionType} from "antd/es/select";
 import {useSession} from "next-auth/react";
 import httpRequest from "@/utils/httpRequest";
+import IconSelect from "@/components/navModal/iconSelect";
 
 interface IProps {
     setNavModalVisible: (boolean) => void
@@ -112,6 +113,9 @@ const AddOrEditNav: React.FC<IProps> = ({setNavModalVisible, info}) => {
                         />
                     </Form.Item> : null
                 }}
+            </Form.Item>
+            <Form.Item name='icon' label='图标' rules={[{required: true, message: '图标不能为空'}]}>
+                <IconSelect/>
             </Form.Item>
             <Form.Item name='sort' label='序号' rules={[{required: true, message: '序号不能为空'}]}>
                 <InputNumber min={0} className={'sort'} placeholder={'请输入排序号'}/>
