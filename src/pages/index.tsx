@@ -1,12 +1,14 @@
-import React, {ReactNode, useContext, useEffect, useState} from "react"
+import React, { useContext, useEffect, useState} from "react"
 import {GlobalContext} from "@/GlobalContext";
 import Icon from "@/components/Icon";
-import {Card, Divider, Image, Space, Spin} from 'antd'
+import {Card, Divider, Image, Space, Spin, Empty} from 'antd'
 import EditLink from "@/components/navModal/editLink";
 import DeleteLink from "@/components/navModal/deleteLink";
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 const NavPage: React.FC = () => {
+    const router = useRouter();
     const {nav, links, globalLoading, refreshLinks, setGlobalLoading} = useContext(GlobalContext)
     const [grid, setGrid] = useState<NavGrid[]>([])
     const {data: session} = useSession();
@@ -64,7 +66,7 @@ const NavPage: React.FC = () => {
             [
                 <Icon type='icon-pinglun' key="comment" title='吐槽一下'/>,
                 <Icon type='icon-dianzan' key="like" title='点这个赞'/>,
-                <Icon type='icon-xiangqing' key="detail" title='链接详情'/>,
+                <Icon type='icon-xiangqing' key="detail" title='链接详情' onClick={()=>router.push(`/link/${link.id}`)}/>,
             ]
         if (session?.user?.id === link.authorId) {
             controls.splice(2, 0,
@@ -93,7 +95,7 @@ const NavPage: React.FC = () => {
                         </Divider>
                         <div className="grid gap-x-4 gap-y-4 grid-cols-5">
                             {
-                                item.links.map(link => <Card
+                                item.links.length ? item.links.map(link => <Card
                                     key={link.id}
                                     style={{width: 300}}
                                     actions={generateControls(link)}
@@ -103,7 +105,7 @@ const NavPage: React.FC = () => {
                                         title={<a href={link.link} target='_blank'>{link.name}</a>}
                                         description={link.desc}
                                     />
-                                </Card>)
+                                </Card>) : <div><Icon type='icon-dialogue_sad'/> 暂无链接</div>
                             }
                         </div>
                     </div>

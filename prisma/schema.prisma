@@ -34,20 +34,20 @@ model Nav {
 }
 
 model Links {
-  id       String   @id @default(cuid())
+  id       String  @id @default(cuid())
   link     String
   name     String
   desc     String
-  scan     Int      @default(0)
+  scan     Int     @default(0)
   type     String
   icon     String?
   userName String?
   password String?
   hot      Boolean
   navId    String
-  updateAt DateTime @default(now())
-  nav      Nav      @relation(fields: [navId], references: [key])
-  author   User?    @relation(fields: [authorId], references: [id])
+  updateAt String
+  nav      Nav     @relation(fields: [navId], references: [key])
+  author   User?   @relation(fields: [authorId], references: [id])
   authorId String?
 }
 

@@ -19,6 +19,17 @@ export default async (req, res)=> {
             }
     }
     const result = await prisma.links.findMany({
+        select: {
+            id: true,
+            link: true,
+            name: true,
+            desc: true,
+            type: true,
+            icon: true,
+            hot: true,
+            navId: true,
+            authorId: true,
+        },
         where: {
             OR
         }

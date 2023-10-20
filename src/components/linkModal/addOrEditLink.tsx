@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {Modal, Button, TreeSelect, Form, Input, Radio, message, Upload } from 'antd'
+import {Modal, Button, TreeSelect, Form, Input, Radio, message, Spin} from 'antd'
 import {GlobalContext} from '@/GlobalContext'
 import type {DefaultOptionType} from 'antd/es/select';
 import httpRequest from "@/utils/httpRequest";
 import {useSession} from "next-auth/react";
 import UploadAliOSS from "@/components/upload";
-
+import dayjs from "dayjs";
 
 interface IProps {
     setLinkModalVisible: (boolean) => void
@@ -22,12 +22,25 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if (info?.id) {
-            const {link, name, desc, icon, userName, password, hot, navId} = info
-            form.setFieldsValue({link, name, desc, icon, userName, password, hot, navId})
-        }
+        queryInfo()
         setTreeData(generateMenu(JSON.parse(JSON.stringify(nav))))
     }, [])
+
+    const queryInfo = () => {
+        if (!info?.id) {
+            return
+        }
+        setLoading(true)
+        httpRequest.get('/api/link/search', {
+            id: info.id,
+        }).then((res) => {
+            const {link, name, desc, icon, userName, password, hot, navId} = res
+            form.setFieldsValue({link, name, desc, icon, userName, password, hot, navId})
+            setLoading(false)
+        }).catch(e => {
+            setLoading(false)
+        })
+    }
     const generateMenu = (nav: Nav[]): Nav[] => {
         const list: Nav[] = []
         const subMenu: Nav[] = []
@@ -49,9 +62,11 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
     const handleOk = async () => {
         form.validateFields().then(async (values) => {
             setLoading(true)
+            const updateAt = dayjs().format('yyyy-MM-dd HH:mm:ss')
             if (info?.id) {
                 httpRequest.post('/api/link/update', {
                     ...values,
+                    updateAt,
                     id: info?.id,
                 }).then(() => {
                     refreshLinks()
@@ -66,6 +81,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
             const type = session?.user?.role === 'admin' ? 'base' : 'custom'
             httpRequest.post('/api/link/save', {
                 ...values,
+                updateAt,
                 type,
                 authorId: session?.user?.id
             }).then(() => {
@@ -86,54 +102,56 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
         maskClosable={false}
         onCancel={() => setLinkModalVisible(false)}
         footer={[
-            <Button type={'primary'} onClick={handleOk}  loading={loading}>
+            <Button type={'primary'} onClick={handleOk} loading={loading}>
                 保存
             </Button>,
         ]}
     >
-        <Form
-            form={form}
-            labelCol={{span: 6}}
-            wrapperCol={{span: 16}}
-            initialValues={{hot: false, navId}}
-        >
-            <Form.Item name="name" label="名称" rules={[{required: true, message: '名称不能为空'}]}>
-                <Input placeholder='请输入名称'/>
-            </Form.Item>
+        <Spin spinning={loading}>
+            <Form
+                form={form}
+                labelCol={{span: 6}}
+                wrapperCol={{span: 16}}
+                initialValues={{hot: false, navId}}
+            >
+                <Form.Item name="name" label="名称" rules={[{required: true, message: '名称不能为空'}]}>
+                    <Input placeholder='请输入名称'/>
+                </Form.Item>
 
-            <Form.Item name="navId" label="链接归属" rules={[{required: true, message: '链接归属不能为空'}]}>
-                <TreeSelect
-                    fieldNames={{
-                        value: 'key'
-                    }}
-                    style={{width: '100%'}}
-                    dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
-                    treeData={treeData}
-                    placeholder="请选择链接归属"
-                />
-            </Form.Item>
-            <Form.Item name="link" label="链接地址" rules={[{required: true, message: '链接不能为空'}]}>
-                <Input placeholder='格式：https://google.com'/>
-            </Form.Item>
-            <Form.Item name="icon" label="网站图标" rules={[{required: true, message: '图标不能为空'}]}>
-                <UploadAliOSS form={form} icon={info?.icon}/>
-            </Form.Item>
-            <Form.Item name="desc" label="描述" rules={[{required: true, message: '描述不能为空'}]}>
-                <Input.TextArea placeholder='描述'/>
-            </Form.Item>
-            <Form.Item name="hot" label="是否热门">
-                <Radio.Group>
-                    <Radio value={false}>否</Radio>
-                    <Radio value={true}>是</Radio>
-                </Radio.Group>
-            </Form.Item>
-            <Form.Item name="userName" label="网站用户名">
-                <Input placeholder='网站用户名'/>
-            </Form.Item>
-            <Form.Item name="password" label="网站密码">
-                <Input placeholder='网站密码'/>
-            </Form.Item>
-        </Form>
+                <Form.Item name="navId" label="链接归属" rules={[{required: true, message: '链接归属不能为空'}]}>
+                    <TreeSelect
+                        fieldNames={{
+                            value: 'key'
+                        }}
+                        style={{width: '100%'}}
+                        dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
+                        treeData={treeData}
+                        placeholder="请选择链接归属"
+                    />
+                </Form.Item>
+                <Form.Item name="link" label="链接地址" rules={[{required: true, message: '链接不能为空'}]}>
+                    <Input placeholder='格式：https://google.com'/>
+                </Form.Item>
+                <Form.Item name="icon" label="网站图标" rules={[{required: true, message: '图标不能为空'}]}>
+                    <UploadAliOSS form={form} icon={info?.icon}/>
+                </Form.Item>
+                <Form.Item name="desc" label="描述" rules={[{required: true, message: '描述不能为空'}]}>
+                    <Input.TextArea placeholder='描述'/>
+                </Form.Item>
+                <Form.Item name="hot" label="是否热门">
+                    <Radio.Group>
+                        <Radio value={false}>否</Radio>
+                        <Radio value={true}>是</Radio>
+                    </Radio.Group>
+                </Form.Item>
+                <Form.Item name="userName" label="网站用户名">
+                    <Input placeholder='网站用户名'/>
+                </Form.Item>
+                <Form.Item name="password" label="网站密码">
+                    <Input placeholder='网站密码'/>
+                </Form.Item>
+            </Form>
+        </Spin>
     </Modal>
 }
 
