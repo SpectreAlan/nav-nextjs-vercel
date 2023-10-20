@@ -12,7 +12,7 @@ export const getServerSideProps = async ({ params }) => {
     };
 };
 
-const LinkDetail: React.FC<{link: Link}> = ({link }) => {
+const LinkDetail: React.FC<Link> = (link) => {
     return <Descriptions
         title="Responsive Descriptions"
         bordered

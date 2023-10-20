@@ -3,14 +3,22 @@ import {Menu} from 'antd';
 import {GlobalContext} from '@/GlobalContext'
 import Icon from '@/components/Icon'
 import type {MenuProps} from 'antd';
+import { useRouter } from 'next/router';
 
 const SideMenu: React.FC = () => {
+    const router = useRouter();
     const {nav} = useContext(GlobalContext)
     const [menu, setMenu] = useState<MenuItem[]>([])
     const [active, setActive] = useState<string>('hot');
     useEffect(() => {
         setMenu(generateMenu())
     }, [nav])
+
+    useEffect(()=>{
+        if(router.pathname!== '/'){
+            setActive('')
+        }
+    }, [router.pathname])
 
     const generateMenu = (): MenuItem[] => {
         const list: MenuItem[] = [
@@ -45,7 +53,13 @@ const SideMenu: React.FC = () => {
     const handleClick: MenuProps['onClick'] = (e) => {
         const key = e.key
         setActive(key)
-        document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
+        if(router.pathname !== '/'){
+            router.push('/').then(()=>{
+                document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
+            })
+        }else{
+            document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
+        }
     };
     return <Menu
         selectedKeys={[active]}
