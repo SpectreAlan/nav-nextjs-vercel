@@ -60,13 +60,13 @@ model Like {
 }
 
 model Comments {
-  id          Int      @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   userName    String
   userAvatar  String
   content     String
-  updateAt    DateTime @default(now())
-  replyUser   String
-  replyAvatar String
+  updateAt    String
+  replyUser   String?
+  replyAvatar String?
   relegation  String
 }
 

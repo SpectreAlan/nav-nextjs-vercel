@@ -9,4 +9,17 @@ interface Link {
     hot: boolean
     navId: string
     authorId: string
+    updateAt: string
+    scan: number
+}
+
+interface Comment {
+    id: string
+    userName: string
+    userAvatar: string
+    content: string
+    updateAt: string
+    replyUser?: string
+    replyAvatar?: string
+    relegation: boolean
 }
