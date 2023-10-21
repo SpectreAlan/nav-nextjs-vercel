@@ -9,7 +9,7 @@ import {useRouter} from "next/navigation";
 
 const NavPage: React.FC = () => {
     const router = useRouter();
-    const {nav, links, globalLoading, refreshLinks, setGlobalLoading} = useContext(GlobalContext)
+    const {nav, links, refreshLinks, setGlobalLoading} = useContext(GlobalContext)
     const [grid, setGrid] = useState<NavGrid[]>([])
     const {data: session} = useSession();
 
@@ -81,7 +81,7 @@ const NavPage: React.FC = () => {
         return controls
     }
     return (
-        <Spin spinning={globalLoading}>
+        <>
             {
                 grid.map((item: NavGrid) =>
                     <div key={item.key} className={'nav-page'} id={item.key}>
@@ -111,7 +111,7 @@ const NavPage: React.FC = () => {
                     </div>
                 )
             }
-        </Spin>
+        </>
     )
 }
 

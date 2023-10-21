@@ -4,7 +4,7 @@ import {GlobalContext} from '@/GlobalContext'
 import type {DefaultOptionType} from 'antd/es/select';
 import httpRequest from "@/utils/httpRequest";
 import {useSession} from "next-auth/react";
-import UploadAliOSS from "@/components/upload";
+import UploadAliOSS from "@/components/Upload";
 import dayjs from "dayjs";
 
 interface IProps {
