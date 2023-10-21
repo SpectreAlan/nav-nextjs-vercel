@@ -1,8 +1,10 @@
 import React from 'react';
-import {Descriptions, Image, Space, Avatar, List} from 'antd';
+import {Descriptions, Image, Space} from 'antd';
 import prisma from '@/lib/prisma';
 import Copy from "@/components/Icon/copy";
 import type {DescriptionsProps} from 'antd';
+import Comments from "@/components/Comments";
+import Link from '@/components/linkModal/link'
 
 interface IProps {
     link: Link
@@ -32,25 +34,29 @@ const LinkDetail: React.FC<IProps> = ({link, comments}) => {
     let items: DescriptionsProps['items'] = [
         {
             label: '网站名称',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
             children: link.name
         },
         {
             label: '链接',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
             children: <Space>
-                <a href={link.link} target='_blank'>{link.link}</a>
+                <Link link={link}/>
                 <Copy title='链接' val={link.link}/>
             </Space>
         },
         {
+            label: '所属分类',
+            children: link.updateAt
+        },
+        {
             label: '最后更新',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
             children: link.updateAt
         },
         {
             label: '跳转量',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
+            children: link.scan
+        },
+        {
+            label: '收藏',
             children: link.scan
         },
         {
@@ -62,14 +68,12 @@ const LinkDetail: React.FC<IProps> = ({link, comments}) => {
     if (link.userName) {
         items.splice(4, 0, {
             label: '用户名',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
             children: <Space>
                 <span>{link.userName}</span>
                 <Copy title='用户名' val={link?.userName}/>
             </Space>
         }, {
             label: '密码',
-            span: {xs: 1, sm: 2, md: 3, lg: 3, xl: 2, xxl: 2},
             children: <Space>
                 <span>{link.password}</span>
                 <Copy title='密码' val={link?.password}/>
@@ -78,29 +82,14 @@ const LinkDetail: React.FC<IProps> = ({link, comments}) => {
     }
     return <>
         <Descriptions
-            title={<Image width={60} src={link.icon}/>}
+            title={<Space>
+                <span>{link.name}</span>
+                <Image width={40} src={link.icon}/>
+            </Space>}
             bordered
-            column={{xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4}}
             items={items}
         />
-        <List
-            itemLayout="horizontal"
-            dataSource={comments}
-            renderItem={(item, index) => (
-                <List.Item>
-                    <List.Item.Meta
-                        avatar={<Avatar src={item.userAvatar}/>}
-                        title={item.userName}
-                        description={
-                            <div>
-                                <p>{item.content}</p>
-                                <span>{item.updateAt}</span>
-                            </div>
-                        }
-                    />
-                </List.Item>
-            )}
-        />
+        <Comments comments={comments} relegation={link.id}/>
     </>
 }
 

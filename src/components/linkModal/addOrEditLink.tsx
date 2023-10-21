@@ -62,7 +62,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
     const handleOk = async () => {
         form.validateFields().then(async (values) => {
             setLoading(true)
-            const updateAt = dayjs().format('yyyy-MM-dd HH:mm:ss')
+            const updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss')
             if (info?.id) {
                 httpRequest.post('/api/link/update', {
                     ...values,

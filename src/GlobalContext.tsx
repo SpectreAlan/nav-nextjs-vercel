@@ -38,6 +38,16 @@ export function GlobalProvider({children}) {
             setGlobalLoading(false)
         }).catch(()=>setGlobalLoading(false))
     }
+    const refreshLikes = async () => {
+        setGlobalLoading(true)
+        httpRequest.get('/api/like/list', {
+            authorId: session?.user?.id || '',
+            type: 'all',
+        }).then(res=>{
+            setLinks(res);
+            setGlobalLoading(false)
+        }).catch(()=>setGlobalLoading(false))
+    }
     useEffect(() => {
         refreshNavs()
         refreshLinks()

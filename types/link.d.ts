@@ -20,6 +20,13 @@ interface Comment {
     content: string
     updateAt: string
     replyUser?: string
+    replyId?: string
     replyAvatar?: string
     relegation: boolean
+}
+
+interface IReplay {
+    replyId: string
+    replyUser: string
+    replyAvatar: string
 }

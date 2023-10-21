@@ -52,7 +52,7 @@ model Links {
 }
 
 model Like {
-  id         Int     @id @default(autoincrement())
+  id         String  @id @default(cuid())
   author     User?   @relation(fields: [authorId], references: [id])
   authorId   String?
   relegation String
@@ -60,14 +60,16 @@ model Like {
 }
 
 model Comments {
-  id          Int     @id @default(autoincrement())
+  id          String  @id @default(cuid())
   userName    String
   userAvatar  String
   content     String
   updateAt    String
+  replyId     String?
   replyUser   String?
   replyAvatar String?
   relegation  String
+  parentId    String  @default("0")
 }
 
 model Account {
