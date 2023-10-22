@@ -5,9 +5,11 @@ import Copy from "@/components/Icon/copy";
 import type {DescriptionsProps} from 'antd';
 import Comments from "@/components/Comments";
 import Link from '@/components/linkModal/link'
+import LikeIcon from "@/components/LikeIcon";
 
 interface IProps {
     link: Link
+    likes: Like[]
     comments: Comment[]
 }
 
@@ -22,15 +24,22 @@ export const getServerSideProps = async ({params}) => {
             relegation: String(params?.id),
         }
     });
+    const likes = await prisma.like.findMany({
+        where: {
+            relegation: String(params?.id),
+        }
+    });
     return {
         props: {
             link,
+            likes,
             comments
         },
     };
 };
 
-const LinkDetail: React.FC<IProps> = ({link, comments}) => {
+const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
+    console.log(link);
     let items: DescriptionsProps['items'] = [
         {
             label: '网站名称',
@@ -57,7 +66,10 @@ const LinkDetail: React.FC<IProps> = ({link, comments}) => {
         },
         {
             label: '收藏',
-            children: link.scan
+            children: <Space>
+                <LikeIcon target={link} type='nav' refresh={() => window.location.reload()}/>
+                <span>{likes.length}</span>
+            </Space>
         },
         {
             label: '描述',

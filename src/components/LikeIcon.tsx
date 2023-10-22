@@ -8,9 +8,10 @@ import {useSession} from "next-auth/react";
 interface IProps {
     target: Link | Post
     type: string
+    refresh?: ()=>void
 }
 
-const Like: React.FC<IProps> = ({target, type}) => {
+const Like: React.FC<IProps> = ({target, type, refresh}) => {
     const {data: session} = useSession();
     const {likes, refreshLikes, setGlobalLoading} = useContext(GlobalContext)
     const like = likes.find(item => item.relegation === target.id)
@@ -21,7 +22,7 @@ const Like: React.FC<IProps> = ({target, type}) => {
                 id: like.id,
             }).then((res) => {
                 message.success('已取消点赞')
-                refreshLikes()
+                refresh ? refresh() : refreshLikes()
             }).catch(e => {
                 setGlobalLoading(false)
             })
@@ -32,7 +33,7 @@ const Like: React.FC<IProps> = ({target, type}) => {
                 type,
             }).then((res) => {
                 message.success('点赞成功')
-                refreshLikes()
+                refresh ? refresh() : refreshLikes()
             }).catch(e => {
                 setGlobalLoading(false)
             })
