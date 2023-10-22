@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import prisma from '@/lib/prisma';
 import Comments from "@/components/Comments";
 import Icon from '@/components/Icon'
@@ -26,7 +26,6 @@ const marked = new Marked(
 );
 
 const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
-
     return <>
         <h3 className='text-center font-bold mb-1 text-xl'>{post.title}</h3>
         <div className="flex justify-center space-x-4 mb-2">
@@ -46,12 +45,16 @@ const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
 }
 
 export default LinkDetail;
-export const getServerSideProps = async ({params}) => {
+export const getServerSideProps = async ({params, res}) => {
     const post = await prisma.post.findUnique({
         where: {
             id: String(params?.id),
         }
     });
+    if(!post){
+        res.writeHead(302, { Location: '/post' });
+        res.end();
+    }
     const comments = await prisma.comments.findMany({
         where: {
             relegation: String(params?.id),

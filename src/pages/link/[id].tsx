@@ -81,12 +81,16 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
         <Comments comments={comments} relegation={link.id}/>
     </>
 }
-export const getServerSideProps = async ({params}) => {
+export const getServerSideProps = async ({params, res}) => {
     const link = await prisma.links.findUnique({
         where: {
             id: String(params?.id),
         }
     });
+    if(!link){
+        res.writeHead(302, { Location: '/' });
+        res.end();
+    }
     const comments = await prisma.comments.findMany({
         where: {
             relegation: String(params?.id),
