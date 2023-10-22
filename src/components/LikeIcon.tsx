@@ -16,6 +16,10 @@ const Like: React.FC<IProps> = ({target, type, refresh}) => {
     const {likes, refreshLikes, setGlobalLoading} = useContext(GlobalContext)
     const like = likes.find(item => item.relegation === target.id)
     const handleClick = () => {
+        if(!session?.user.id){
+            message.warning('请登录后再执行该操作')
+            return
+        }
         setGlobalLoading(true)
         if (like) {
             httpRequest.post(`/api/like/delete`, {
@@ -27,10 +31,6 @@ const Like: React.FC<IProps> = ({target, type, refresh}) => {
                 setGlobalLoading(false)
             })
         } else {
-            if(!session?.user.id){
-                message.warning('请登录后再执行该操作')
-                return
-            }
             httpRequest.post(`/api/like/save`, {
                 relegation: target.id,
                 authorId: session?.user.id,

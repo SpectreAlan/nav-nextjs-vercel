@@ -65,7 +65,7 @@ const NavPage: React.FC = () => {
     const generateControls = (link: Link): JSX.Element[] => {
         let controls =
             [
-                <Icon type='icon-pinglun' key="comment" title='吐槽一下'/>,
+                <Icon type='icon-pinglun' key="comment" title='吐槽一下' onClick={()=>router.push(`/link/${link.id}`)}/>,
                 <Like target={link} type='nav'/>,
                 <Icon type='icon-xiangqing' key="detail" title='链接详情' onClick={()=>router.push(`/link/${link.id}`)}/>,
             ]
