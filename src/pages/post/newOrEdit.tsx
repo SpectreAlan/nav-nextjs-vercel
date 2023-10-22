@@ -90,7 +90,7 @@ const NewOrEditPost: React.FC<IProps> = ({post}) => {
             name="content"
             rules={[{required: true, message: '请输入内容'}]}
         >
-            <Input.TextArea placeholder='请输入内容'/>
+            <Input.TextArea placeholder='请输入内容' autoSize/>
         </Form.Item>
         <Form.Item className='flex justify-center'>
             <Button type="default" className='mr-5'>取消</Button>

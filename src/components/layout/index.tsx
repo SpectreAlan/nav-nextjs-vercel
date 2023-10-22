@@ -3,10 +3,11 @@ import Image from 'next/image'
 import {Layout, Button, theme, Spin} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
-import Logo from '@/static/images/logo.gif'
+import Logo from '@/static/images/logo.png'
 import Icon from '@/components/Icon'
 import {GlobalContext} from "@/GlobalContext";
 import GlobalLoading from '@/components/GlobalLoading'
+import Head from 'next/head';
 
 
 type Props = {
