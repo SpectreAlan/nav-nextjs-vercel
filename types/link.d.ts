@@ -24,7 +24,12 @@ interface Comment {
     replyAvatar?: string
     relegation: boolean
 }
-
+interface Like {
+    id: string
+    authorId: string
+    relegation: string
+    type: string
+}
 interface IReplay {
     replyId: string
     replyUser: string

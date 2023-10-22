@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState} from "react"
 import {GlobalContext} from "@/GlobalContext";
 import Icon from "@/components/Icon";
-import {Card, Divider, Image, Space, Spin, Empty} from 'antd'
+import {Card, Divider, Image, Space } from 'antd'
 import EditLink from "@/components/navModal/editLink";
 import DeleteLink from "@/components/navModal/deleteLink";
+import Like from "@/components/LikeIcon";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 
@@ -65,7 +66,7 @@ const NavPage: React.FC = () => {
         let controls =
             [
                 <Icon type='icon-pinglun' key="comment" title='吐槽一下'/>,
-                <Icon type='icon-dianzan' key="like" title='点这个赞'/>,
+                <Like target={link} type='nav'/>,
                 <Icon type='icon-xiangqing' key="detail" title='链接详情' onClick={()=>router.push(`/link/${link.id}`)}/>,
             ]
         if (session?.user?.id === link.authorId) {
