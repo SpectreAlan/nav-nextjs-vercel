@@ -1,10 +1,10 @@
 import prisma from '@/lib/prisma';
 export default async (req, res)=> {
-    const {relegation} = req.query
-    const result = await prisma.like.findMany({
+    const { id } = req.body;
+    const result = await prisma.post.delete({
         where: {
-            relegation
-        }
+            id
+        },
     });
     return res.json(result);
 }

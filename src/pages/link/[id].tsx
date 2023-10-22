@@ -12,34 +12,7 @@ interface IProps {
     likes: Like[]
     comments: Comment[]
 }
-
-export const getServerSideProps = async ({params}) => {
-    const link = await prisma.links.findUnique({
-        where: {
-            id: String(params?.id),
-        }
-    });
-    const comments = await prisma.comments.findMany({
-        where: {
-            relegation: String(params?.id),
-        }
-    });
-    const likes = await prisma.like.findMany({
-        where: {
-            relegation: String(params?.id),
-        }
-    });
-    return {
-        props: {
-            link,
-            likes,
-            comments
-        },
-    };
-};
-
 const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
-    console.log(link);
     let items: DescriptionsProps['items'] = [
         {
             label: '网站名称',
@@ -70,6 +43,10 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
                 <LikeIcon target={link} type='nav' refresh={() => window.location.reload()}/>
                 <span>{likes.length}</span>
             </Space>
+        },
+        {
+            label: '评论',
+            children: comments.length
         },
         {
             label: '描述',
@@ -104,5 +81,28 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
         <Comments comments={comments} relegation={link.id}/>
     </>
 }
-
+export const getServerSideProps = async ({params}) => {
+    const link = await prisma.links.findUnique({
+        where: {
+            id: String(params?.id),
+        }
+    });
+    const comments = await prisma.comments.findMany({
+        where: {
+            relegation: String(params?.id),
+        }
+    });
+    const likes = await prisma.like.findMany({
+        where: {
+            relegation: String(params?.id),
+        }
+    });
+    return {
+        props: {
+            link,
+            likes,
+            comments
+        },
+    };
+};
 export default LinkDetail;

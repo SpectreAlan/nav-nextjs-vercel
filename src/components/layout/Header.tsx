@@ -1,16 +1,22 @@
 import React, {useEffect, useState} from "react";
 import type {MenuProps} from 'antd';
-import {Menu} from 'antd';
+import {Menu, message} from 'antd';
 import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
 import NavModal from "../navModal";
 import {useRouter} from "next/navigation";
 import {LoadingOutlined} from '@ant-design/icons';
+import Link from 'next/link';
 
 
 const Header: React.FC = () => {
     const router = useRouter();
     const items: MenuProps['items'] = [
+        {
+            icon: <Icon type='icon-blog-solid'/>,
+            label: (<Link href='/post'>趣集精选</Link>),
+            key: 'post',
+        },
         {
             icon: <Icon type='icon-blog-solid'/>,
             label: (
@@ -38,6 +44,11 @@ const Header: React.FC = () => {
                         {
                             label: '编辑导航条',
                             key: 'editMenu',
+                            icon: <Icon type='icon-caidan'/>
+                        },
+                        {
+                            label: '创建趣集',
+                            key: 'newPost',
                             icon: <Icon type='icon-caidan'/>
                         },
                         {
@@ -70,6 +81,14 @@ const Header: React.FC = () => {
         switch (key) {
             case 'login':
                 router.push('/auth/login');
+                break;
+            case 'newPost':
+                if (session?.user.role === 'admin') {
+                    router.push('/post/newOrEdit');
+                } else {
+                    message.warning('暂未开放此权限')
+                }
+
                 break;
             case 'logout':
                 await signOut()

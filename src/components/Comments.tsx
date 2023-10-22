@@ -1,4 +1,4 @@
-import {Avatar, List, Input, Divider, Space, Button} from 'antd';
+import {Avatar, List, Input, Divider, Space, Button, Empty} from 'antd';
 import React, {ReactNode, useState} from "react";
 import Icon from '@/components/Icon'
 import {useSession} from "next-auth/react";
@@ -98,6 +98,9 @@ const Comments: React.FC<IProps> = ({comments, relegation}) => {
                    </List.Item>
                </>
             )}
+            locale={{
+                emptyText: <Empty description='暂无数据'/>
+            }}
         />
     </>
 }

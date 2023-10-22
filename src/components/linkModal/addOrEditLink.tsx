@@ -94,6 +94,9 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
             })
         })
     }
+    const setUrl = (icon: string) => {
+        form.setFieldsValue({icon})
+    }
 
     return <Modal
         title={info?.id ? '编辑链接' : '添加链接'}
@@ -133,7 +136,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
                     <Input placeholder='格式：https://google.com'/>
                 </Form.Item>
                 <Form.Item name="icon" label="网站图标" rules={[{required: true, message: '图标不能为空'}]}>
-                    <UploadAliOSS form={form} icon={info?.icon}/>
+                    <UploadAliOSS setUrl={setUrl} icon={info?.icon} type='favicon'/>
                 </Form.Item>
                 <Form.Item name="desc" label="描述" rules={[{required: true, message: '描述不能为空'}]}>
                     <Input.TextArea placeholder='描述'/>

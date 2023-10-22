@@ -2,20 +2,19 @@ import React, {useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
 import {message, Upload} from 'antd';
 import type {RcFile } from 'antd/es/upload/interface';
-import {FormInstance} from "antd/es/form";
 const OSS = require('ali-oss');
 
 interface IProps {
     icon: string | undefined
-    form: FormInstance
+    type: string
+    setUrl: (url: string)=>void
 }
 
-const UploadAliOSS: React.FC<IProps> = ({icon, form}) => {
+const UploadAliOSS: React.FC<IProps> = ({icon, setUrl, type}) => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState<string>(icon || '');
 
     const beforeUpload = async (file: RcFile) => {
-        console.log(file.type);
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'|| file.type === 'image/x-icon';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG/ICO file!');
@@ -33,9 +32,9 @@ const UploadAliOSS: React.FC<IProps> = ({icon, form}) => {
             accessKeySecret: process.env.NEXT_PUBLIC_OSS_ALIYUN_SECRET,
             bucket: process.env.NEXT_PUBLIC_OSS_ALIYUN_BUCKET,
         });
-        const result = await oss.put(`/nav/favicon/${new Date().getTime()}.${file.type.split('/')[1]}`, file);
+        const result = await oss.put(`/nav/${type}/${new Date().getTime()}.${file.type.split('/')[1]}`, file);
         setImageUrl(result.url);
-        form.setFieldsValue({icon: result.url})
+        setUrl(result.url)
         setLoading(false)
     };
 

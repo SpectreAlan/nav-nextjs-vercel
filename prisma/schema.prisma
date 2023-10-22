@@ -10,14 +10,16 @@ datasource db {
 }
 
 model Post {
-  id        String   @id @default(cuid())
-  title     String
-  content   String?
-  scan      Int      @default(0)
-  published Boolean  @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  String?
-  updateAt  DateTime @default(now())
+  id       String  @id @default(cuid())
+  title    String
+  desc     String?
+  content  String
+  scan     Int     @default(0)
+  status   Int     @default(1)
+  author   User    @relation(fields: [authorId], references: [id])
+  authorId String
+  cover    String?
+  updateAt String
 }
 
 model Nav {
