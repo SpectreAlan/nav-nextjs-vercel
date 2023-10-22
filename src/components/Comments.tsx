@@ -1,4 +1,4 @@
-import {Avatar, List, Input, Divider, Space, Button, Empty} from 'antd';
+import {Avatar, List, Input, Divider, Space, Button, Empty, message} from 'antd';
 import React, {ReactNode, useState} from "react";
 import Icon from '@/components/Icon'
 import {useSession} from "next-auth/react";
@@ -15,6 +15,10 @@ const Comments: React.FC<IProps> = ({comments, relegation}) => {
     const [replay, setReplay] = useState<IReplay | null>(null)
     const handleSave = (content: string) => {
         if (loading) {
+            return
+        }
+        if(!session?.user.id){
+            message.warning('请登录后再执行该操作')
             return
         }
         setLoading(true)
