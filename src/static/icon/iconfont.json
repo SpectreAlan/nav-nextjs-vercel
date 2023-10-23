@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1031625",
+      "name": "ios",
+      "font_class": "ios",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "1305838",
+      "name": "网盘",
+      "font_class": "wangpan",
+      "unicode": "e655",
+      "unicode_decimal": 58965
+    },
+    {
+      "icon_id": "1908047",
+      "name": "45 iphone",
+      "font_class": "iphone",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "5387793",
+      "name": "设备搜索_o",
+      "font_class": "shebeisousuo_o",
+      "unicode": "eb58",
+      "unicode_decimal": 60248
+    },
+    {
+      "icon_id": "11799006",
+      "name": "运维管理",
+      "font_class": "yunweiguanli",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "14288951",
+      "name": "开店",
+      "font_class": "kaidian",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "19250218",
+      "name": "软件管理",
+      "font_class": "ruanjianguanli",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "34799597",
+      "name": "服务监控",
+      "font_class": "fuwujiankong",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
       "icon_id": "10168285",
       "name": "like",
       "font_class": "like1",
