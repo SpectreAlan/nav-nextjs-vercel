@@ -5,7 +5,7 @@ import Icon from '@/components/Icon'
 import type {MenuProps} from 'antd';
 import { useRouter } from 'next/router';
 
-const SideMenu: React.FC = () => {
+const SideMenu: React.FC<{theme: string}> = ({theme}) => {
     const router = useRouter();
     const {nav} = useContext(GlobalContext)
     const [menu, setMenu] = useState<MenuItem[]>([])
@@ -62,8 +62,9 @@ const SideMenu: React.FC = () => {
         }
     };
     return <Menu
+        style={{borderRight: `1px solid ${theme}`}}
         selectedKeys={[active]}
-        theme="dark"
+        theme="light"
         mode="inline"
         items={menu}
         onClick={handleClick}

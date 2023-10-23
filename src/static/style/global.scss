@@ -6,13 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.ant-btn-primary, .ant-switch-checked{
-    background-color: #6499E9!important;
-}
-.ant-switch{
-    background-color: #eee;
-}
-
 :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
@@ -30,13 +23,6 @@
 body {
     height: 100vh;
     overflow: hidden;
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-            to bottom,
-            transparent,
-            rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
     ::-webkit-scrollbar {
         width: 6px;
         height: 6px;
@@ -55,8 +41,8 @@ body {
 }
 
 .app-content{
-    margin: 84px 16px 0;
-    padding: 24px;
+    margin: 70px 0 0 5px;
+    padding: 0 14px;
     height: calc(100vh - 100px);
     overflow-y: scroll;
 }

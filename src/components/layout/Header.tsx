@@ -9,11 +9,11 @@ import {LoadingOutlined} from '@ant-design/icons';
 import Link from 'next/link';
 
 
-const Header: React.FC = () => {
+const Header: React.FC<{theme: string}> = ({theme}) => {
     const router = useRouter();
     const items: MenuProps['items'] = [
         {
-            icon: <Icon type='icon-blog-solid'/>,
+            icon: <Icon type='icon-jingxuan'/>,
             label: (<Link href='/post'>趣集精选</Link>),
             key: 'post',
         },
@@ -103,8 +103,8 @@ const Header: React.FC = () => {
         <>
             <Menu
                 selectedKeys={[]}
-                style={{minWidth: 0, flex: "auto", justifyContent: 'end'}}
-                theme={'dark'}
+                style={{minWidth: 0, flex: "auto", justifyContent: 'end', borderBottom: `1px solid ${theme}`}}
+                theme={'light'}
                 onClick={onClick}
                 mode="horizontal"
                 items={menu}
