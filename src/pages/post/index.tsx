@@ -1,8 +1,9 @@
 import React from 'react'
-import {Avatar, List, Empty} from 'antd';
+import {Pagination, Empty, Card, Image, Space} from 'antd';
 import prisma from "@/lib/prisma";
 import {useRouter} from "next/navigation";
 import Actions from "@/components/post/Actions";
+import Icon from "@/components/Icon";
 
 interface IProps {
     posts: Post[]
@@ -16,38 +17,40 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
     const handlePageChange = (page) => {
         router.push(`/post/list?page=${page}`)
     }
-    const pagination: any = {
-        position: 'bottom',
-        align: 'center',
-        onChange: handlePageChange,
-        current: page,
-        total,
-        showTotal: ()=>`共 ${total} 条`,
-        pageSize: 10
-    }
-    return <>
-        <List
-            pagination={pagination}
-            dataSource={posts}
-            renderItem={(item, index) => (
-                <List.Item
-                    actions={Actions(item)}
-                >
-                        <List.Item.Meta
-                            avatar={
-                                <Avatar src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}/>
-                            }
-                            title={<a href="https://ant.design">{item.title}</a>}
-                            description={item?.desc || item.content.slice(0, 40) + '...'}
-                        />
-                        <div>{item.updateAt}</div>
 
-                </List.Item>
-            )}
-            locale={{
-                emptyText: <Empty description='暂无数据'/>
-            }}
-        />
+    return <>
+        <div className="grid gap-x-4 gap-y-4 grid-cols-5">
+            {
+                posts.length ? posts.map(post => <Card
+                    hoverable
+                    key={post.id}
+                    style={{width: 300}}
+                    actions={Actions(post)}
+                    cover={<Image
+                        src={post?.cover || 'https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/cover.png'}/>}
+                >
+                    <Card.Meta
+                        title={<span onClick={() => router.push(`/post/${post.id}`)}>{post.title}</span>}
+                        description={<div>
+                            <div className='w-full line-clamp-2 h-10'>{post.desc}</div>
+                            <Space>
+                                <Icon type={'icon-xiaoxijilu'}/>
+                                <span>{post.updateAt}</span>
+                            </Space>
+                        </div>}
+                    />
+                </Card>) : <div><Icon type='icon-dialogue_sad'/> 暂无趣集</div>
+            }
+        </div>
+        <div className='text-center'>
+            <Pagination
+                onChange={handlePageChange}
+                current={page}
+                total={total}
+                showTotal={() => `共 ${total} 条`}
+                pageSize={10}
+            />
+        </div>
     </>
 }
 

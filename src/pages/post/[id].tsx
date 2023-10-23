@@ -8,6 +8,7 @@ import {markedHighlight} from "marked-highlight";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
 import config from '@/utils/markdown.conf'
+import {Space} from 'antd'
 
 interface IProps {
     post: Post
@@ -29,15 +30,18 @@ const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
     return <>
         <h3 className='text-center font-bold mb-1 text-xl'>{post.title}</h3>
         <div className="flex justify-center space-x-4 mb-2">
-            <span>{post.updateAt}</span>
-            <div>
+            <Space>
+                <Icon type={'icon-xiaoxijilu'}/>
+                <span>{post.updateAt}</span>
+            </Space>
+            <Space>
                 <LikeIcon target={post} type='post' refresh={() => window.location.reload()}/>
                 <span>{likes.length}</span>
-            </div>
-            <div>
+            </Space>
+            <Space>
                 <Icon type={'icon-pinglun'}/>
                 <span>{comments.length}</span>
-            </div>
+            </Space>
         </div>
         <div className="markdown" dangerouslySetInnerHTML={{__html: marked.parse(post.content) as string}}/>
         <Comments comments={comments} relegation={post.id}/>
@@ -51,8 +55,8 @@ export const getServerSideProps = async ({params, res}) => {
             id: String(params?.id),
         }
     });
-    if(!post){
-        res.writeHead(302, { Location: '/post' });
+    if (!post) {
+        res.writeHead(302, {Location: '/post'});
         res.end();
     }
     const comments = await prisma.comments.findMany({

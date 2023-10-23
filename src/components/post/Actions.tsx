@@ -1,10 +1,11 @@
 import React, {useContext, useCallback} from 'react'
 import Icon from '@/components/Icon'
-import {message, Modal} from "antd";
+import { Modal} from "antd";
 import httpRequest from "@/utils/httpRequest";
 import {GlobalContext} from "@/GlobalContext";
 import {useRouter} from "next/navigation";
 import {useSession} from "next-auth/react";
+import Like from "@/components/LikeIcon";
 
 const DeletePost = (post: Post) => {
     const {setGlobalLoading} = useContext(GlobalContext)
@@ -34,7 +35,9 @@ const DeletePost = (post: Post) => {
         })
     }, [router])
     let action = [
-        <Icon type='icon-xiangqing' onClick={detail}/>
+        <Icon type='icon-pinglun' key="comment" title='吐槽一下' onClick={detail}/>,
+        <Like target={post} type='post' />,
+        <Icon type='icon-xiangqing' onClick={detail} title='查看详情'/>
     ]
     if (session?.user.role === 'admin') {
         action = [

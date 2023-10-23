@@ -7,6 +7,7 @@ import Logo from '@/static/images/logo.png'
 import Icon from '@/components/Icon'
 import {GlobalContext} from "@/GlobalContext";
 import GlobalLoading from '@/components/GlobalLoading'
+import {useRouter} from "next/navigation";
 
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 const {Header, Sider, Content} = Layout;
 
 const App: React.FC<Props> = ({children}) => {
+    const router = useRouter();
     const {globalLoading} = useContext(GlobalContext)
     const [collapsed, setCollapsed] = useState(false);
     const {
@@ -34,7 +36,12 @@ const App: React.FC<Props> = ({children}) => {
                     className={'overflow-auto fixed left-0 top-0 bottom-0 h-screen'}
                 >
                     <div className='w-full text-center align-middle'>
-                        <img src='https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/logo.png' alt="" className={'w-20'}/>
+                        <img
+                            src='https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/logo.png'
+                            alt="logo"
+                            onClick={() => router.push(`/`)}
+                            className={'cursor-pointer w-20'}
+                        />
                     </div>
                     <SideMenu theme={colorBgContainer}/>
                 </Sider>

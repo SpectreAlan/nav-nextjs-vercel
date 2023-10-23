@@ -97,6 +97,7 @@ const NavPage: React.FC = () => {
                         <div className="grid gap-x-4 gap-y-4 grid-cols-5">
                             {
                                 item.links.length ? item.links.map(link => <Card
+                                    hoverable
                                     key={link.id}
                                     style={{width: 300}}
                                     actions={generateControls(link)}
@@ -104,7 +105,7 @@ const NavPage: React.FC = () => {
                                     <Card.Meta
                                         avatar={<Image width={40} src={link.icon}/>}
                                         title={<a href={link.link} target='_blank'>{link.name}</a>}
-                                        description={link.desc}
+                                        description={<div className='w-full line-clamp-2 h-10'>{link.desc}</div>}
                                     />
                                 </Card>) : <div><Icon type='icon-dialogue_sad'/> 暂无链接</div>
                             }

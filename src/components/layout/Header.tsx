@@ -9,7 +9,7 @@ import {LoadingOutlined} from '@ant-design/icons';
 import Link from 'next/link';
 
 
-const Header: React.FC<{theme: string}> = ({theme}) => {
+const Header: React.FC<{ theme: string }> = ({theme}) => {
     const router = useRouter();
     const items: MenuProps['items'] = [
         {
@@ -49,7 +49,7 @@ const Header: React.FC<{theme: string}> = ({theme}) => {
                         {
                             label: '创建趣集',
                             key: 'newPost',
-                            icon: <Icon type='icon-caidan'/>
+                            icon: <Icon type='icon-xinjiantiezi'/>
                         },
                         {
                             label: '注销登录',
