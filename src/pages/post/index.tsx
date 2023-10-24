@@ -19,7 +19,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
     }
 
     return <>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap post-page">
             {
                 posts.length ? posts.map(post => <Card
                     hoverable
@@ -27,7 +27,8 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
                     className='w-[300px] mr-5 mb-5'
                     actions={Actions(post)}
                     cover={<Image
-                        src={post?.cover || 'https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/cover.png'}/>}
+                        width={280}
+                        src={post?.cover}/>}
                 >
                     <Card.Meta
                         title={<span onClick={() => router.push(`/post/${post.id}`)}>{post.title}</span>}

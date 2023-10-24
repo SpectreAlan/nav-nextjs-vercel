@@ -34,6 +34,7 @@
   h6 {
     @apply text-xs;
   }
+
   blockquote {
     padding: 1rem;
     border-left: 0.2rem solid rgb(73, 177, 245);
@@ -41,7 +42,8 @@
     color: rgb(106, 115, 125);
     display: block;
   }
-  ul{
+
+  ul {
     list-style-type: disc;
     display: block;
     margin-block-start: 1em;
@@ -50,6 +52,7 @@
     margin-inline-end: 0px;
     padding-inline-start: 40px;
   }
+
   pre {
     display: block;
     overflow-y: auto;
@@ -70,11 +73,17 @@
       padding-left: 5px;
       padding-right: 5px;
       margin: 0 3px;
-      background-color: transparent!important;
+      background-color: transparent !important;
     }
   }
 
   a {
     @apply text-blue-600 underline;
+  }
+}
+
+.post-page {
+  .ant-image {
+    margin: 1px auto;
   }
 }
