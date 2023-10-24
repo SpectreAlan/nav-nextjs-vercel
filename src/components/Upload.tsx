@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
 import {message, Upload} from 'antd';
-import type {RcFile } from 'antd/es/upload/interface';
+import type {RcFile} from 'antd/es/upload/interface';
+
 const OSS = require('ali-oss');
 
 interface IProps {
     icon: string | undefined
     type: string
-    setUrl: (url: string)=>void
+    setUrl: (url: string) => void
 }
 
 const UploadAliOSS: React.FC<IProps> = ({icon, setUrl, type}) => {
@@ -15,12 +16,12 @@ const UploadAliOSS: React.FC<IProps> = ({icon, setUrl, type}) => {
     const [imageUrl, setImageUrl] = useState<string>(icon || '');
 
     const beforeUpload = async (file: RcFile) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'|| file.type === 'image/x-icon';
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/x-icon' || file.type === 'image/webp' || file.type === 'image/gif';
         if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG/ICO file!');
+            message.error('You can only upload jpg/png/ico/webp/gif file!');
             return
         }
-        const isLt2M = file.size / 1024  < 500;
+        const isLt2M = file.size / 1024 < 500;
         if (!isLt2M) {
             message.error('Image must smaller than 500k!');
             return
