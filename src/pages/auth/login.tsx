@@ -6,8 +6,8 @@ import Google from "@/components/Icon/google";
 import Twitter from "@/components/Icon/twitter";
 import Icon from '@/components/Icon'
 import {FormInstance} from "antd/es/form";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation"
+import {signIn} from "next-auth/react";
+import {useRouter} from "next/navigation"
 import {message} from "antd";
 
 export default ({csrfToken}) => {
@@ -16,8 +16,8 @@ export default ({csrfToken}) => {
     const [loading, setLoading] = useState<boolean>(false)
     const loginWithMail = async (values) => {
         setLoading(true);
-        signIn('credentials', {...values,  redirect: false} ).then(async (res)=>{
-            if(res?.error){
+        signIn('credentials', {...values, redirect: false}).then(async (res) => {
+            if (res?.error) {
                 setLoading(false);
                 message.error(res.error || '用户名/密码错误')
                 return
@@ -27,7 +27,7 @@ export default ({csrfToken}) => {
         })
     }
     return <Tabs
-        className='mx-auto login-page'
+        className='login-page'
         defaultActiveKey="login"
         centered
         items={[
@@ -56,30 +56,30 @@ export default ({csrfToken}) => {
                     </Form.Item>
                     <Form.Item
                         name="email"
-                        rules={[{required: true, message: 'Please input your Email!'}]}
+                        rules={[{required: true, message: '请输入用户名/邮箱!'}]}
                     >
-                        <Input prefix={<Icon type={'icon-icon-email'}/>} placeholder="Email"/>
+                        <Input prefix={<Icon type={'icon-jurassic_user'}/>} placeholder="用户名/邮箱"/>
                     </Form.Item>
                     <Form.Item
                         name="password"
-                        rules={[{required: true, message: 'Please input your Password!'}]}
+                        rules={[{required: true, message: '请输入密码!'}]}
                     >
                         <Input
                             prefix={<Icon type={'icon-tianchongxing-'}/>}
                             type="password"
-                            placeholder="Password"
+                            placeholder="密码"
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Button type={'primary'} htmlType="submit" className="login-form-button" loading={loading}>
+                        <Button type={'primary'} htmlType="submit" className="w-full" loading={loading}>
                             Login
                         </Button>
                     </Form.Item>
                 </Form>,
                     <Divider key={'mail-Divider'}>OR CONTINUE WITH</Divider>,
-                    <Github  key={'Github'} />,
-                    <Google  key={'Google'} />,
-                    <Twitter  key={'Twitter'} />
+                    <Github key={'Github'}/>,
+                    <Google key={'Google'}/>,
+                    <Twitter key={'Twitter'}/>
                 ],
 
             },

@@ -115,7 +115,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             <Button
                 type='primary'
                 icon={<Icon type='icon-tianjia'/>}
-                className='add'
+                className='mb-'
                 onClick={addNav}
             >添加菜单</Button>
             {

@@ -1,8 +1,8 @@
 import React, {useState, ReactNode, useContext, useEffect} from 'react';
-import {Layout, Button, theme, Spin} from 'antd';
+import {Layout, theme, Spin} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
-import Icon from '@/components/Icon'
+import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
 import {GlobalContext} from "@/GlobalContext";
 import GlobalLoading from '@/components/GlobalLoading'
 import {useRouter} from "next/navigation";
@@ -58,12 +58,12 @@ const App: React.FC<Props> = ({children}) => {
                                 backgroundColor: colorBgContainer
                             }}
                     >
-                        <Button
-                            type="text"
-                            icon={collapsed ? <Icon type={'icon-zhankai'}/> : <Icon type={'icon-zhedie-shouqi'}/>}
+                        <div
                             onClick={() => setCollapsed(!collapsed)}
-                            className={'text-xl text-white'}
-                        />
+                            className={'text-xl cursor-pointer'}
+                        >
+                            {collapsed ? <MenuUnfoldOutlined rev=''/> : <MenuFoldOutlined rev='' />}
+                        </div>
                         <CustomHeader theme={colorBgContainer}/>
                     </Header>
                     <Content
