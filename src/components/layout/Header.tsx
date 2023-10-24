@@ -13,7 +13,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
     const router = useRouter();
     const items: MenuProps['items'] = [
         {
-            icon: <Icon type='icon-jingxuan'/>,
+            icon: <Icon type='icon-zuanshix'/>,
             label: (<Link href='/post'>趣集精选</Link>),
             key: 'post',
         },
