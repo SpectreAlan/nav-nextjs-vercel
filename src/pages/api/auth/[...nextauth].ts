@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from '../../../lib/prisma';
+import bcrypt from "bcrypt";
 
 export const authOptions = {
     providers: [
@@ -30,9 +31,11 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 const { email, password } = credentials ?? {}
+                // const hashedPassword = await bcrypt.hash(password, 10);
                 const user = await prisma.user.findUnique({
                     where: {
                         email,
+                        // password: hashedPassword
                         password
                     },
                 });
@@ -57,6 +60,7 @@ export const authOptions = {
             if (user) {
                 token.id = user.id;
                 token.role = user.role;
+                token.password = !!user?.password;
             }
 
             return token;
@@ -65,6 +69,7 @@ export const authOptions = {
             if (session?.user && token) {
                 session.user.id = token.id as string;
                 session.user.role = token.role
+                session.user.password = token.password
             }
             return session;
         },

@@ -7,6 +7,7 @@ import NavModal from "../navModal";
 import {useRouter} from "next/navigation";
 import {LoadingOutlined} from '@ant-design/icons';
 import Link from 'next/link';
+import UpdatePassword from "@/components/UpdatePassword";
 
 
 const Header: React.FC<{ theme: string }> = ({theme}) => {
@@ -29,6 +30,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
     ];
     const [menu, setMenu] = useState<MenuProps['items']>(items)
     const [navModal, setNavModal] = useState<boolean>(false)
+    const [passwordModal, setPasswordModal] = useState<boolean>(false)
     const {data: session, status} = useSession();
 
     useEffect(() => {
@@ -50,6 +52,11 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                             label: '创建趣集',
                             key: 'newPost',
                             icon: <Icon type='icon-xinjiantiezi'/>
+                        },
+                        {
+                            label: session?.user.password ? '修改密码' : '设置密码',
+                            key: 'updatePassword',
+                            icon: <Icon type='icon-tianchongxing-'/>
                         },
                         {
                             label: '注销登录',
@@ -96,6 +103,9 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             case 'editMenu':
                 setNavModal(true)
                 break
+            case 'updatePassword':
+                setPasswordModal(true)
+                break
         }
     };
 
@@ -111,6 +121,9 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             />
             {
                 navModal ? <NavModal setNavModal={setNavModal}/> : null
+            }
+            {
+                passwordModal ? <UpdatePassword setPasswordModal={setPasswordModal}/> : null
             }
         </>
     );

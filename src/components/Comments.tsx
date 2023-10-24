@@ -103,7 +103,7 @@ const Comments: React.FC<IProps> = ({comments, relegation}) => {
                </>
             )}
             locale={{
-                emptyText: <Empty description='暂无数据'/>
+                emptyText: <Empty description='暂无评论'/>
             }}
         />
     </>
