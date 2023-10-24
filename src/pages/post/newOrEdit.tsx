@@ -47,8 +47,8 @@ const NewOrEditPost: React.FC<IProps> = ({post}) => {
             setGlobalLoading(false)
         })
     }
-    const setUrl = (icon: string) => {
-        form.setFieldsValue({icon})
+    const setUrl = (cover: string) => {
+        form.setFieldsValue({cover})
     }
     return <Form
         form={form}
@@ -82,6 +82,7 @@ const NewOrEditPost: React.FC<IProps> = ({post}) => {
         <Form.Item
             label="封面"
             name="cover"
+            rules={[{required: true, message: '封面不能为空'}]}
         >
             <UploadAliOSS setUrl={setUrl} icon={post?.cover} type='post'/>
         </Form.Item>
