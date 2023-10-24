@@ -9,6 +9,7 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
 import config from '@/utils/markdown.conf'
 import {Space} from 'antd'
+import Head  from "next/head";
 
 interface IProps {
     post: Post
@@ -28,6 +29,11 @@ const marked = new Marked(
 
 const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
     return <>
+        <Head>
+            <title>{post.title}</title>
+            <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
+            <meta name="Description" content={post.desc}/>
+        </Head>
         <h3 className='text-center font-bold mb-1 text-xl'>{post.title}</h3>
         <div className="flex justify-center space-x-4 mb-2">
             <Space>

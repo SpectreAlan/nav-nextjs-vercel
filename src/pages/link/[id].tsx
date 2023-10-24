@@ -6,6 +6,7 @@ import type {DescriptionsProps} from 'antd';
 import Comments from "@/components/Comments";
 import Link from '@/components/linkModal/link'
 import LikeIcon from "@/components/LikeIcon";
+import Head  from "next/head";
 
 interface IProps {
     link: Link
@@ -70,6 +71,11 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
         })
     }
     return <>
+        <Head>
+            <title>{link.name}</title>
+            <meta name="keywords" content={link.name}/>
+            <meta name="Description" content={link.desc}/>
+        </Head>
         <Descriptions
             title={<Space>
                 <span>{link.name}</span>

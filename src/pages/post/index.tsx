@@ -1,9 +1,10 @@
 import React from 'react'
-import {Pagination, Empty, Card, Image, Space} from 'antd';
+import {Pagination, Card, Image, Space} from 'antd';
 import prisma from "@/lib/prisma";
 import {useRouter} from "next/navigation";
 import Actions from "@/components/post/Actions";
 import Icon from "@/components/Icon";
+import Head  from "next/head";
 
 interface IProps {
     posts: Post[]
@@ -19,6 +20,11 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
     }
 
     return <>
+        <Head>
+            <title>趣集精选</title>
+            <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
+            <meta name="Description" content={process.env.NEXT_PUBLIC_META_DESCRIPTION}/>
+        </Head>
         <div className="flex flex-wrap post-page">
             {
                 posts.length ? posts.map(post => <Card

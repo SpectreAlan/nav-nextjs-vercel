@@ -7,6 +7,7 @@ import DeleteLink from "@/components/navModal/deleteLink";
 import Like from "@/components/LikeIcon";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
+import Head  from "next/head";
 
 const NavPage: React.FC = () => {
     const router = useRouter();
@@ -83,6 +84,11 @@ const NavPage: React.FC = () => {
     }
     return (
         <>
+            <Head>
+                <title>{process.env.NEXT_PUBLIC_META_TITLE}</title>
+                <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
+                <meta name="Description" content={process.env.NEXT_PUBLIC_META_DESCRIPTION}/>
+            </Head>
             {
                 grid.map((item: NavGrid) =>
                     <div key={item.key} className={'nav-page'} id={item.key}>

@@ -9,6 +9,7 @@ import {FormInstance} from "antd/es/form";
 import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation"
 import {message} from "antd";
+import Head  from "next/head";
 
 export default ({csrfToken}) => {
     const formRef = React.useRef<FormInstance>(null);
