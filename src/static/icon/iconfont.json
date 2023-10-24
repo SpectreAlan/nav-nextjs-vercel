@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "6652237",
+      "name": "macos",
+      "font_class": "macos",
+      "unicode": "e6bb",
+      "unicode_decimal": 59067
+    },
+    {
+      "icon_id": "20194688",
+      "name": "macOS",
+      "font_class": "macOS",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "27528273",
+      "name": "云主机-iOS单色_24",
+      "font_class": "yunzhuji-iOSdanse_24",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
       "icon_id": "10593835",
       "name": "用户-角色-用户名-单人_jurassic",
       "font_class": "jurassic_user",
