@@ -19,12 +19,12 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
     }
 
     return <>
-        <div className="grid gap-x-4 gap-y-4 grid-cols-5">
+        <div className="flex flex-wrap">
             {
                 posts.length ? posts.map(post => <Card
                     hoverable
                     key={post.id}
-                    style={{width: 300}}
+                    className='w-[300px] mr-5 mb-5'
                     actions={Actions(post)}
                     cover={<Image
                         src={post?.cover || 'https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/cover.png'}/>}

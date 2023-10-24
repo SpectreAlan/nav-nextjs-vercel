@@ -94,12 +94,12 @@ const NavPage: React.FC = () => {
                                 {item.label}
                             </Space>
                         </Divider>
-                        <div className="grid gap-x-4 gap-y-4 grid-cols-5">
+                        <div className="flex flex-wrap">
                             {
                                 item.links.length ? item.links.map(link => <Card
                                     hoverable
                                     key={link.id}
-                                    style={{width: 300}}
+                                    className='w-[300px] mr-5 mb-5'
                                     actions={generateControls(link)}
                                 >
                                     <Card.Meta
