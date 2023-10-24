@@ -1,4 +1,4 @@
-import React, {useState, ReactNode, useContext} from 'react';
+import React, {useState, ReactNode, useContext, useEffect} from 'react';
 import {Layout, Button, theme, Spin} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
@@ -18,6 +18,9 @@ const App: React.FC<Props> = ({children}) => {
     const router = useRouter();
     const {globalLoading} = useContext(GlobalContext)
     const [collapsed, setCollapsed] = useState(false);
+    useEffect(()=>{
+        setCollapsed((global?.window?.innerWidth || 699) < 700)
+    }, [])
     const {
         token: {colorBgContainer},
     } = theme.useToken();
