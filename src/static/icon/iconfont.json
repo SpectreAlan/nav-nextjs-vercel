@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "13084023",
+      "name": "钻石@2x",
+      "font_class": "zuanshix",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
       "icon_id": "6652237",
       "name": "macos",
       "font_class": "macos",
