@@ -38,7 +38,7 @@ const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
         <div className="flex justify-center space-x-4 mb-2">
             <Space>
                 <Icon type={'icon-xiaoxijilu'}/>
-                <span>{post.updateAt}</span>
+                <span className='text-[#45474B]'>{post.updateAt}</span>
             </Space>
             <Space>
                 <LikeIcon target={post} type='post' refresh={() => window.location.reload()}/>

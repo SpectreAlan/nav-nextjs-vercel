@@ -42,7 +42,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
                             <div className='w-full line-clamp-2 h-10'>{post.desc}</div>
                             <Space>
                                 <Icon type={'icon-xiaoxijilu'}/>
-                                <span>{post.updateAt}</span>
+                                <span className='text-[#45474B]'>{post.updateAt}</span>
                             </Space>
                         </div>}
                     />
