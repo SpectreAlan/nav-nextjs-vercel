@@ -73,8 +73,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                             <Button type={'link'} onClick={() => setPasswordModal(true)}>立即设置</Button>
                         </Space>,
                         icon: <Icon type={'icon-wutuijian2'}/>,
-                        placement: 'topRight',
-                        duration: 60
+                        placement: 'topRight'
                     });
                 }
                 break

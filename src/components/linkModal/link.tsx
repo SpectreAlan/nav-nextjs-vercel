@@ -1,5 +1,4 @@
 import React from 'react'
-import {Button} from 'antd'
 import httpRequest from "@/utils/httpRequest";
 
 const Link: React.FC<{ link: Link }> = ({link}) => {
@@ -10,7 +9,7 @@ const Link: React.FC<{ link: Link }> = ({link}) => {
             id: link.id
         })
     }
-    return <Button type='text' onClick={handleJump}>{link.link}</Button>
+    return <span className='cursor-pointer hover:text-blue-400' onClick={handleJump}>{link.link}</span>
 }
 
 export default Link
