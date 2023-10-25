@@ -115,12 +115,12 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
             <Button
                 type='primary'
                 icon={<Icon type='icon-tianjia'/>}
-                className='mb-'
+                className='mb-2'
                 onClick={addNav}
             >添加菜单</Button>
             {
                 treeData.length ? <Tree
-                    className='rounded-lg border border-black-600 border-solid'
+                    className='rounded-lg border border-[#f0f0f0] border-solid'
                     treeData={treeData}
                     fieldNames={{
                         title: 'label',
@@ -135,7 +135,7 @@ const NavDrawer: React.FC<IProps> = ({setNavModal}) => {
                             <span>{nav.label}</span>
                         </Dropdown>
                     }
-                /> : <Empty description='暂无数据'/>
+                /> : <Empty description='暂无个人菜单'/>
             }
 
         </Spin>
