@@ -50,7 +50,7 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
     return (
         <Modal
             width={400}
-            title={hasPassword ? '修改密码' : '设置密码'}
+            title={hasPassword ? '修改密码' : '设置邮箱/密码'}
             open={true}
             onOk={handleOk}
             onCancel={() => setPasswordModal(false)}

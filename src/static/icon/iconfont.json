@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "19914134",
+      "name": "wutuijian2",
+      "font_class": "wutuijian2",
+      "unicode": "e6b5",
+      "unicode_decimal": 59061
+    },
+    {
       "icon_id": "13084023",
       "name": "钻石@2x",
       "font_class": "zuanshix",
