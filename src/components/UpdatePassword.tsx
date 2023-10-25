@@ -1,6 +1,7 @@
-import React from 'react';
-import {Form, Modal, Input} from 'antd';
-import {useSession} from "next-auth/react";
+import React, {useState} from 'react';
+import {Form, Modal, Input, message} from 'antd';
+import {useSession, signOut} from "next-auth/react";
+import httpRequest from "@/utils/httpRequest";
 
 interface IProps {
     setPasswordModal: (key: boolean) => void
@@ -10,9 +11,38 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
     const {data: session, status} = useSession();
     const [form] = Form.useForm();
     const hasPassword = session?.user.password
+    const [loading, setLoading] = useState<boolean>(false)
     const handleOk = () => {
         form.validateFields().then((values) => {
-            console.log(values);
+            setLoading(true)
+            const data = {
+                ...values,
+                id: session?.user.id,
+            }
+            if (hasPassword) {
+                httpRequest.post('/api/user/updatePassword', data).then(async (res) => {
+                    if (res.ok) {
+                        setPasswordModal(false)
+                        message.success('修改成功,请重新登录')
+                        await signOut()
+                    } else {
+                        message.error(res.msg)
+                    }
+
+                    setLoading(false)
+                }).catch(e => {
+                    setLoading(false)
+                })
+            } else {
+                httpRequest.post('/api/user/setPassword', data).then(async (res) => {
+                    setLoading(false)
+                    setPasswordModal(false)
+                    message.success('设置成功,请重新登录')
+                    await signOut()
+                }).catch(e => {
+                    setLoading(false)
+                })
+            }
         })
     }
     return (
@@ -22,6 +52,9 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
             open={true}
             onOk={handleOk}
             onCancel={() => setPasswordModal(false)}
+            okText={'保存'}
+            cancelText={'取消'}
+            okButtonProps={{loading}}
         >
             <Form
                 labelCol={{span: 6}}

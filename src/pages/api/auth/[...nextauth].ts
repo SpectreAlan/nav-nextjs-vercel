@@ -31,12 +31,11 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 const { email, password } = credentials ?? {}
-                // const hashedPassword = await bcrypt.hash(password, 10);
+                const hashedPassword = await bcrypt.hash(password, 10);
                 const user = await prisma.user.findUnique({
                     where: {
                         email,
-                        // password: hashedPassword
-                        password
+                        password: hashedPassword
                     },
                 });
                 if (!user) {
