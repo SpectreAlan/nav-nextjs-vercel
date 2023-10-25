@@ -3,7 +3,7 @@ import {Descriptions, Image, Space} from 'antd';
 import prisma from '@/lib/prisma';
 import Copy from "@/components/Icon/copy";
 import type {DescriptionsProps} from 'antd';
-import Comments from "@/components/Comments";
+import Comments from "@/components/comments";
 import Link from '@/components/linkModal/link'
 import LikeIcon from "@/components/LikeIcon";
 import Head  from "next/head";

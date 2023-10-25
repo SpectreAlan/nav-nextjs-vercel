@@ -19,6 +19,7 @@ interface Comment {
     userAvatar: string
     content: string
     updateAt: string
+    userId: string
     replyUser?: string
     replyId?: string
     replyAvatar?: string

@@ -79,7 +79,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                         </div>,
                         icon: <Icon type={'icon-wutuijian2'}/>,
                         placement: 'topRight',
-                        duration: 60
+                        duration: 10
                     });
                 }
                 break

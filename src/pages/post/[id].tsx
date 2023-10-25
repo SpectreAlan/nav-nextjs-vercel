@@ -1,6 +1,6 @@
 import React from 'react';
 import prisma from '@/lib/prisma';
-import Comments from "@/components/Comments";
+import Comments from "@/components/comments";
 import Icon from '@/components/Icon'
 import LikeIcon from "@/components/LikeIcon";
 import {Marked} from "marked";

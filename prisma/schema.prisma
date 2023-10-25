@@ -65,6 +65,7 @@ model Comments {
   id          String  @id @default(cuid())
   userName    String
   userAvatar  String
+  userId      String
   content     String
   updateAt    String
   replyId     String?
