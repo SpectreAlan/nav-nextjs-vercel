@@ -31,14 +31,13 @@ export const authOptions = {
             },
             async authorize(credentials) {
                 const { email, password } = credentials ?? {}
-                const hashedPassword = await bcrypt.hash(password, 10);
                 const user = await prisma.user.findUnique({
                     where: {
-                        email,
-                        password: hashedPassword
+                        email
                     },
                 });
-                if (!user) {
+                const result = await bcrypt.compare(password, user?.password)
+                if (!result) {
                     return null
                 }
                 return user;

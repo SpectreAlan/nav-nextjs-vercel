@@ -1,20 +1,24 @@
-import React, {useState} from "react";
-import {getCsrfToken, useSession, getSession} from "next-auth/react";
+import React, {useEffect, useState} from "react";
+import {getCsrfToken, getSession, signOut, signIn, useSession} from "next-auth/react";
 import {Tabs, Form, Input, Button, Divider} from 'antd';
 import Github from "@/components/Icon/github";
 import Google from "@/components/Icon/google";
 import Twitter from "@/components/Icon/twitter";
 import Icon from '@/components/Icon'
 import {FormInstance} from "antd/es/form";
-import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation"
 import {message} from "antd";
-import Head  from "next/head";
 
 export default ({csrfToken}) => {
+    const {data: session} = useSession();
     const formRef = React.useRef<FormInstance>(null);
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(false)
+    useEffect(()=>{
+        if(session?.user){
+            signOut()
+        }
+    }, [])
     const loginWithMail = async (values) => {
         setLoading(true);
         signIn('credentials', {...values, redirect: false}).then(async (res) => {

@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {Form, Modal, Input, message} from 'antd';
-import {useSession, signOut} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import httpRequest from "@/utils/httpRequest";
+import {useRouter} from "next/navigation";
 
 interface IProps {
     setPasswordModal: (key: boolean) => void
 }
 
 const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
-    const {data: session, status} = useSession();
+    const router = useRouter();
+    const {data: session} = useSession();
     const [form] = Form.useForm();
     const hasPassword = session?.user.password
     const [loading, setLoading] = useState<boolean>(false)
@@ -24,7 +26,7 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
                     if (res.ok) {
                         setPasswordModal(false)
                         message.success('修改成功,请重新登录')
-                        await signOut()
+                        router.push('/auth/login')
                     } else {
                         message.error(res.msg)
                     }
@@ -38,7 +40,7 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
                     setLoading(false)
                     setPasswordModal(false)
                     message.success('设置成功,请重新登录')
-                    await signOut()
+                    router.push('/auth/login')
                 }).catch(e => {
                     setLoading(false)
                 })
@@ -79,15 +81,24 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
                 <Form.Item
                     name="password"
                     label="新密码"
+                    tooltip="密码是数字、字母的组合，6~12位!"
                     rules={[
                         {
                             required: true,
-                            message: '请输入你的新密码!',
+                            message: '请输入新密码',
                         },
+                        () => ({
+                            validator(_, value) {
+                                if (!value || /^(?=.*\d)(?=.*[a-zA-Z]).{6,12}$/.test(value)) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('密码是数字、字母的组合，6~12位!'));
+                            },
+                        }),
                     ]}
                     hasFeedback
                 >
-                    <Input.Password placeholder={'请输入你的新密码'}/>
+                    <Input.Password placeholder={'密码是数字、字母的组合，6~12位!'}/>
                 </Form.Item>
 
                 <Form.Item
