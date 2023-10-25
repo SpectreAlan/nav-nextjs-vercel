@@ -63,6 +63,7 @@ const SideMenu: React.FC<{theme: string}> = ({theme}) => {
     };
     return <Menu
         style={{borderRight: `1px solid ${theme}`}}
+        className='select-none'
         selectedKeys={[active]}
         theme="light"
         mode="inline"

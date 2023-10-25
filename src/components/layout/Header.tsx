@@ -130,7 +130,8 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
         <>
             <Menu
                 selectedKeys={[]}
-                style={{minWidth: 0, flex: "auto", justifyContent: 'end', borderBottom: `1px solid ${theme}`}}
+                style={{ borderBottom: `1px solid ${theme}`}}
+                className='select-none justify-end flex-auto min-w-0'
                 theme={'light'}
                 onClick={onClick}
                 mode="horizontal"

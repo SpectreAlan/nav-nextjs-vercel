@@ -25,7 +25,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
             <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
             <meta name="Description" content={process.env.NEXT_PUBLIC_META_DESCRIPTION}/>
         </Head>
-        <div className="flex flex-wrap post-page">
+        <div className="flex flex-wrap post-page select-none">
             {
                 posts.length ? posts.map(post => <Card
                     hoverable
@@ -49,7 +49,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
                 </Card>) : <div><Icon type='icon-dialogue_sad'/> 暂无趣集</div>
             }
         </div>
-        <div className='text-center'>
+        <div className='text-center select-none'>
             <Pagination
                 onChange={handlePageChange}
                 current={page}

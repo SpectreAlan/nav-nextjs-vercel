@@ -91,7 +91,7 @@ const NavPage: React.FC = () => {
             </Head>
             {
                 grid.map((item: NavGrid) =>
-                    <div key={item.key} className={'nav-page'} id={item.key}>
+                    <div key={item.key} className={'nav-page select-none'} id={item.key}>
                         <Divider orientation="left" orientationMargin="0">
                             <Space>
                                 {
