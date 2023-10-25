@@ -28,6 +28,7 @@ const Index: React.FC<IProps> = ({comments, relegation}) => {
             content,
             relegation,
             userName: session?.user.name,
+            userId: session?.user.id,
             userAvatar: session?.user.image
         }).then((res) => {
             window.location.reload()
