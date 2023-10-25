@@ -65,15 +65,21 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                         }
                     ]
                 })
-                if (!session?.user.email || !session?.user.password) {
+                if (session?.user && (!session.user.email || !session.user.password) && !sessionStorage.getItem('notification')) {
                     notification.open({
                         message: `温馨提示`,
-                        description: <Space>
-                            <span className='text-xs'>您的账号还没有设置{session?.user.email ? '' : 'Email和'}密码，设置以后可以使用 邮箱+密码 登录</span>
-                            <Button type={'link'} onClick={() => setPasswordModal(true)}>立即设置</Button>
-                        </Space>,
+                        description: <div>
+                            <div className='text-xs mb-2'>您的账号还没有设置{session?.user.email ? '' : 'Email和'}密码，设置以后可以使用
+                                邮箱+密码 登录
+                            </div>
+                            <div className="flex justify-between">
+                                <Button type={'dashed'} onClick={() => sessionStorage.setItem('notification', 'mute')}>不再提醒</Button>
+                                <Button type={'primary'} onClick={() => setPasswordModal(true)}>立即设置</Button>
+                            </div>
+                        </div>,
                         icon: <Icon type={'icon-wutuijian2'}/>,
-                        placement: 'topRight'
+                        placement: 'topRight',
+                        duration: 60
                     });
                 }
                 break
