@@ -77,7 +77,28 @@ const UpdatePassword: React.FC<IProps> = ({setPasswordModal}) => {
                         <Input.Password placeholder={'请输入你的原密码'}/>
                     </Form.Item> : null
                 }
-
+                {
+                    session?.user.email ? null : <Form.Item
+                        name="email"
+                        label="邮箱"
+                        rules={[
+                            {
+                                required: true,
+                                message: '请输入邮箱',
+                            },
+                            () => ({
+                                validator(_, value) {
+                                    if (!value || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(value)) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error('邮箱格式不正确!'));
+                                },
+                            }),
+                        ]}
+                    >
+                        <Input placeholder={'请输入邮箱'}/>
+                    </Form.Item>
+                }
                 <Form.Item
                     name="password"
                     label="新密码"

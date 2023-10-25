@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import type {MenuProps} from 'antd';
-import {Menu, message} from 'antd';
+import {Menu, message, notification, Space, Button} from 'antd';
 import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
 import NavModal from "../navModal";
@@ -11,6 +11,7 @@ import UpdatePassword from "@/components/UpdatePassword";
 
 
 const Header: React.FC<{ theme: string }> = ({theme}) => {
+    const [api, contextHolder] = notification.useNotification();
     const router = useRouter();
     const items: MenuProps['items'] = [
         {
@@ -44,7 +45,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                     icon: <img src={image!} alt={'avatar'} className={'max-h-4'}/>,
                     children: [
                         {
-                            label: '编辑导航条',
+                            label: '编辑菜单',
                             key: 'editMenu',
                             icon: <Icon type='icon-caidan'/>
                         },
@@ -65,6 +66,16 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                         }
                     ]
                 })
+                if(!session?.user.email || !session?.user.password){
+                    api.info({
+                        message: `温馨提示`,
+                        description: <Space>
+                            <span>您的账号还没有设置{session?.user.email ? '' : 'Email和'}密码，设置以后可以使用 邮箱+密码 登录</span>
+                            <Button type={'link'} onClick={()=>setPasswordModal(true)}>立即设置</Button>
+                        </Space>,
+                        placement: 'topRight',
+                    });
+                }
                 break
             case "loading":
                 userMenu.push({
