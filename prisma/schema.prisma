@@ -61,6 +61,17 @@ model Like {
   type       String
 }
 
+model Clipboard {
+  id       String  @id @default(cuid())
+  authorId String?
+  title    String?
+  content  String
+  type     Int
+  code     String  @unique
+  updateAt String
+  count    Int     @default(0)
+}
+
 model Comments {
   id          String  @id @default(cuid())
   userName    String

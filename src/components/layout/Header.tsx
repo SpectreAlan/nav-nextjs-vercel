@@ -19,6 +19,11 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             key: 'post',
         },
         {
+            icon: <Icon type='icon-yunshuju'/>,
+            label: (<Link href='/clipboard'>云剪切板</Link>),
+            key: 'clipboard',
+        },
+        {
             icon: <Icon type='icon-blog-solid'/>,
             label: (
                 <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">

@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3640170",
+      "name": "成功",
+      "font_class": "chenggong",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "3784611",
+      "name": "云数据",
+      "font_class": "yunshuju",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
       "icon_id": "19914134",
       "name": "wutuijian2",
       "font_class": "wutuijian2",
