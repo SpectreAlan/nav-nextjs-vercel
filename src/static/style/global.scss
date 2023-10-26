@@ -46,3 +46,23 @@ body {
     height: calc(100vh - 100px);
     overflow-y: scroll;
 }
+
+.ant-layout{
+    background-color: transparent!important;
+}
+.border-r-grey{
+    border-right: 1px solid rgba(7, 17, 27, 0.1);
+}
+.border-b-grey{
+    box-shadow: rgba(7, 17, 27, 0.1) 0 4px 5px 0
+}
+.card-bg{
+    background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
+}
+canvas{
+    background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+}
+
+.menu-bg{
+    background-image: linear-gradient(to left, #dfe9f3 0%, white 100%);
+}

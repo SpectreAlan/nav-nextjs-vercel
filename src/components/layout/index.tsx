@@ -34,7 +34,7 @@ const App: React.FC<Props> = ({children}) => {
                     trigger={null}
                     collapsible
                     collapsed={collapsed}
-                    className={'overflow-auto fixed left-0 top-0 bottom-0 h-screen'}
+                    className={'overflow-auto fixed left-0 top-0 bottom-0 h-screen border-r-grey'}
                 >
                     <div className='w-full text-center align-middle'>
                         <img
@@ -50,7 +50,7 @@ const App: React.FC<Props> = ({children}) => {
                     paddingLeft: collapsed ? '80px' : '200px',
                 }}>
                     <Header
-                        className={`p-0 fixed top-0 flex items-center justify-between`}
+                        className={`p-0 pl-5 fixed top-0 flex items-center justify-between border-b-grey`}
                         style=
                             {{
                                 left: collapsed ? '80px' : '200px',

@@ -30,7 +30,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
                 posts.length ? posts.map(post => <Card
                     hoverable
                     key={post.id}
-                    className='w-[300px] mr-5 mb-5'
+                    className='w-[300px] mr-5 mb-5 bg-white'
                     actions={Actions(post)}
                     cover={<Image
                         width={280}

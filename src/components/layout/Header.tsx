@@ -54,7 +54,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                             icon: <Icon type='icon-xinjiantiezi'/>
                         },
                         {
-                            label: session?.user.password ? '修改密码' : '设置密码',
+                            label: session?.user.password ? '修改密码' : '设置邮箱/密码',
                             key: 'updatePassword',
                             icon: <Icon type='icon-tianchongxing-'/>
                         },
@@ -131,7 +131,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             <Menu
                 selectedKeys={[]}
                 style={{ borderBottom: `1px solid ${theme}`}}
-                className='select-none justify-end flex-auto min-w-0'
+                className='select-none justify-end flex-auto min-w-0 menu-bg'
                 theme={'light'}
                 onClick={onClick}
                 mode="horizontal"

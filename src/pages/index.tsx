@@ -8,6 +8,7 @@ import Like from "@/components/LikeIcon";
 import {useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import Head  from "next/head";
+import Link from '@/components/linkModal/link'
 
 const NavPage: React.FC = () => {
     const router = useRouter();
@@ -105,12 +106,12 @@ const NavPage: React.FC = () => {
                                 item.links.length ? item.links.map(link => <Card
                                     hoverable
                                     key={link.id}
-                                    className='w-[300px] mr-5 mb-5'
+                                    className='w-[300px] mr-5 mb-5 card-bg'
                                     actions={generateControls(link)}
                                 >
                                     <Card.Meta
                                         avatar={<Image width={40} src={link.icon}/>}
-                                        title={<a href={link.link} target='_blank'>{link.name}</a>}
+                                        title={<Link link={link} title={link.name}/>}
                                         description={<div className='w-full line-clamp-2 h-10'>{link.desc}</div>}
                                     />
                                 </Card>) : <div><Icon type='icon-dialogue_sad'/> 暂无链接</div>
