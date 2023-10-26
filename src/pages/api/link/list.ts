@@ -26,6 +26,7 @@ export default async (req, res)=> {
             desc: true,
             type: true,
             icon: true,
+            scan: true,
             hot: true,
             navId: true,
             authorId: true,

@@ -9,5 +9,5 @@ export default async (req, res)=> {
             icon
         },
     });
-    return res.json(result);
+    return res.json(result ? {ok: true} : null);
 }

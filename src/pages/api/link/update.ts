@@ -6,5 +6,5 @@ export default async (req, res) => {
         where: {id},
         data,
     });
-    return res.json(result);
+    return res.json(result ? {ok: true} : null);
 }
