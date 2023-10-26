@@ -6,7 +6,7 @@ import '../static/style/global.scss'
 import Layout from "@/components/layout";
 import theme from '../../theme/themeConfig';
 import {ConfigProvider} from 'antd';
-import '@/static/js/canvas'
+import '@/static/js/ribbons'
 
 const App = ({Component, pageProps}: AppProps) => {
 

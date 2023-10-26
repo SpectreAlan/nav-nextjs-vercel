@@ -1,12 +1,11 @@
-import React, {useState, ReactNode, useContext, useEffect} from 'react';
-import {Layout, theme, Spin} from 'antd';
+import React, {useState, ReactNode, useEffect} from 'react';
+import {Layout, theme} from 'antd';
 import CustomHeader from './Header'
 import SideMenu from './SideMenu'
 import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
-import {GlobalContext} from "@/GlobalContext";
 import GlobalLoading from '@/components/GlobalLoading'
 import {useRouter} from "next/navigation";
-
+import Loading from '@/components/Loading'
 
 type Props = {
     children: ReactNode;
@@ -16,7 +15,7 @@ const {Header, Sider, Content} = Layout;
 
 const App: React.FC<Props> = ({children}) => {
     const router = useRouter();
-    const {globalLoading} = useContext(GlobalContext)
+
     const [collapsed, setCollapsed] = useState(false);
     useEffect(()=>{
         setCollapsed((global?.window?.innerWidth || 699) < 700)
@@ -26,8 +25,9 @@ const App: React.FC<Props> = ({children}) => {
     } = theme.useToken();
 
     return (
-        <Spin spinning={globalLoading}>
+        <>
             <GlobalLoading/>
+            <Loading/>
             <Layout>
                 <Sider
                     theme={'light'}
@@ -76,7 +76,7 @@ const App: React.FC<Props> = ({children}) => {
                     </Content>
                 </Layout>
             </Layout>
-        </Spin>
+        </>
     );
 };
 
