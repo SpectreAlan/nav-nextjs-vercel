@@ -34,8 +34,8 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
         httpRequest.get('/api/link/search', {
             id: info.id,
         }).then((res) => {
-            const {link, name, desc, icon, userName, password, hot, navId} = res
-            form.setFieldsValue({link, name, desc, icon, userName, password, hot, navId})
+            const {link, name, desc, icon, userName, password, hot, navId, code} = res
+            form.setFieldsValue({link, name, desc, icon, userName, password, hot, navId, code})
             setLoading(false)
         }).catch(e => {
             setLoading(false)
@@ -121,7 +121,7 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
                     <Input placeholder='请输入名称'/>
                 </Form.Item>
 
-                <Form.Item name="navId" label="链接归属" rules={[{required: true, message: '链接归属不能为空'}]}>
+                <Form.Item name="navId" label="链接分类" rules={[{required: true, message: '链接分类不能为空'}]}>
                     <TreeSelect
                         fieldNames={{
                             value: 'key'
@@ -129,10 +129,27 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
                         style={{width: '100%'}}
                         dropdownStyle={{maxHeight: 400, overflow: 'auto'}}
                         treeData={treeData}
-                        placeholder="请选择链接归属"
+                        placeholder="请选择链接分类"
                     />
                 </Form.Item>
-                <Form.Item name="link" label="链接地址" rules={[{required: true, message: '链接不能为空'}]}>
+                <Form.Item
+                    name="link"
+                    label="链接地址"
+                    rules={[
+                        {
+                            required: true,
+                            message: '请输入链接地址',
+                        },
+                        () => ({
+                            validator(_, value) {
+                                if (!value || /^(https?:\/\/)?([a-zA-Z0-9.-]+\.[a-zA-Z]{2,})(:[0-9]+)?(\/[^\s]*)?$/.test(value)) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('链接格式不正确!'));
+                            },
+                        }),
+                    ]}
+                >
                     <Input placeholder='格式：https://google.com'/>
                 </Form.Item>
                 <Form.Item name="icon" label="网站图标" rules={[{required: true, message: '图标不能为空'}]}>
@@ -147,11 +164,12 @@ const AddOrEditLink: React.FC<IProps> = ({setLinkModalVisible, info, navId, refr
                         <Radio value={true}>是</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item name="userName" label="网站用户名">
-                    <Input placeholder='网站用户名'/>
-                </Form.Item>
-                <Form.Item name="password" label="网站密码">
-                    <Input placeholder='网站密码'/>
+                <Form.Item
+                    name="code"
+                    label="网站账号提取码"
+                    tooltip= {`请先在 ${location.origin}/clipboard 创建`}
+                >
+                    <Input placeholder='请输入提取码'/>
                 </Form.Item>
             </Form>
         </Spin>

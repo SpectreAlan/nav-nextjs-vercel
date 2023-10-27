@@ -4,8 +4,7 @@ interface Link {
     name: string
     desc: string
     icon?: string
-    userName?: string
-    password?: string
+    code?: string
     hot: boolean
     navId: string
     authorId: string

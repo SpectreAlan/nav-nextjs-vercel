@@ -32,6 +32,7 @@ const setClipboard: React.FC = () => {
                 form.resetFields()
             }).catch(e => {
                 setGlobalLoading(false)
+                getCode()
             })
         })
     };

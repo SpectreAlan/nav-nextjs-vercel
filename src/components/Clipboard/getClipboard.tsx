@@ -1,11 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Input, Alert, Button, message} from 'antd';
 import httpRequest from "@/utils/httpRequest";
 import Copy from "@/components/Icon/copy";
 
-const getClipboard: React.FC = () => {
+const getClipboard: React.FC<{code: string}> = ({code}) => {
     const [loading, setLoading] = useState(false)
     const [clipboard, setClipboard] = useState<Clipboard | null>(null)
+    const [value, setValue] = useState('')
+    useEffect(()=>{
+        if(code){
+            setValue(code)
+            onSearch(code)
+        }
+    }, [])
     const onSearch = (code) => {
         if (!/^\d{6}$/.test(code)) {
             message.error('提取码为6为数字')
@@ -41,6 +48,8 @@ const getClipboard: React.FC = () => {
             loading={loading}
             enterButton="提取"
             className='mb-4'
+            value={value}
+            onChange={e=>setValue(e.target.value)}
         />
         {
             clipboard ? <Alert

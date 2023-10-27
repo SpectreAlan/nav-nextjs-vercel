@@ -43,8 +43,7 @@ model Links {
   scan     Int     @default(0)
   type     String
   icon     String?
-  userName String?
-  password String?
+  code     String?
   hot      Boolean
   navId    String
   updateAt String

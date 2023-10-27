@@ -1,18 +1,19 @@
 import React from 'react';
-import {Descriptions, Image, Space} from 'antd';
+import {Button, Descriptions, Image, Space} from 'antd';
 import prisma from '@/lib/prisma';
 import Copy from "@/components/Icon/copy";
 import type {DescriptionsProps} from 'antd';
 import Comments from "@/components/comments";
 import Link from '@/components/linkModal/link'
 import LikeIcon from "@/components/LikeIcon";
-import Head  from "next/head";
+import Head from "next/head";
 
 interface IProps {
     link: Link
     likes: Like[]
     comments: Comment[]
 }
+
 const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
     let items: DescriptionsProps['items'] = [
         {
@@ -31,10 +32,6 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
             children: link.updateAt
         },
         {
-            label: '最后更新',
-            children: link.updateAt
-        },
-        {
             label: '跳转量',
             children: link.scan
         },
@@ -50,26 +47,26 @@ const LinkDetail: React.FC<IProps> = ({link, comments, likes}) => {
             children: comments.length
         },
         {
+            label: '最后更新',
+            children: link.updateAt
+        },
+        {
+            label: '共享账号',
+            children:
+                link.code ? <Button
+                    type={'primary'}
+                    size={'small'}
+                    onClick={() => {
+                        window.open(`${location.origin}/clipboard?active=get&code=${link.code}`)
+                    }}
+                >点我获取</Button> : <span>暂无</span>
+        },
+        {
             label: '描述',
             span: 1,
             children: link.desc
         }
     ]
-    if (link.userName) {
-        items.splice(4, 0, {
-            label: '用户名',
-            children: <Space>
-                <span>{link.userName}</span>
-                <Copy title='用户名' val={link?.userName}/>
-            </Space>
-        }, {
-            label: '密码',
-            children: <Space>
-                <span>{link.password}</span>
-                <Copy title='密码' val={link?.password}/>
-            </Space>
-        })
-    }
     return <>
         <Head>
             <title>{link.name}</title>
@@ -93,8 +90,8 @@ export const getServerSideProps = async ({params, res}) => {
             id: String(params?.id),
         }
     });
-    if(!link){
-        res.writeHead(302, { Location: '/' });
+    if (!link) {
+        res.writeHead(302, {Location: '/'});
         res.end();
     }
     const comments = await prisma.comments.findMany({
