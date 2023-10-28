@@ -60,6 +60,16 @@ model Like {
   type       String
 }
 
+model Statistics {
+  id         String @id @default(cuid())
+  updateAt   String
+  country    String
+  regionName String
+  city       String
+  ip         String
+  platform   String
+}
+
 model Clipboard {
   id       String  @id @default(cuid())
   authorId String?

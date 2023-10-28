@@ -17,3 +17,19 @@ export const getRandomCode = (num: number = 6): string => {
     }
     return str
 }
+
+export const getPlatform = (): string => {
+    const ua = navigator.userAgent
+    if (/(Android)/i.test(ua)) {
+        return 'Android'
+    } else if (/(iPhone|iPad|iPod|iOS)/i.test(ua)) {
+        return 'iPhone'
+    } else { // @ts-ignore
+        if (ua.toLowerCase().match(/MicroMessenger/i) == "micromessenger") {
+            return 'wechat'
+        } else {
+            return 'pc'
+        }
+    }
+
+}
