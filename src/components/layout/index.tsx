@@ -6,6 +6,7 @@ import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
 import GlobalLoading from '@/components/GlobalLoading'
 import {useRouter} from "next/navigation";
 import Loading from '@/components/Loading'
+import Footer from './footer'
 
 type Props = {
     children: ReactNode;
@@ -67,12 +68,13 @@ const App: React.FC<Props> = ({children}) => {
                         <CustomHeader theme={colorBgContainer}/>
                     </Header>
                     <Content
-                        className={'app-content'}
+                        className={'app-content flex justify-between overflow-y-auto p-[14px]'}
                         style={{
                             background: colorBgContainer,
                         }}
                     >
                         {children}
+                        <Footer/>
                     </Content>
                 </Layout>
             </Layout>

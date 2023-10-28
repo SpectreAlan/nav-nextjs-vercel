@@ -42,10 +42,9 @@ body {
 }
 
 .app-content{
-    margin: 70px 0 0 5px;
-    padding: 14px;
-    height: calc(100vh - 100px);
-    overflow-y: scroll;
+    margin: 40px 0 0 5px;
+    height: calc(100vh - 55px);
+    flex-direction: column;
 }
 
 .ant-layout{
@@ -53,6 +52,9 @@ body {
 }
 .border-r-grey{
     border-right: 1px solid rgba(7, 17, 27, 0.1);
+}
+.border-t-grey{
+    border-top: 1px solid rgba(7, 17, 27, 0.1);
 }
 .border-b-grey{
     box-shadow: rgba(7, 17, 27, 0.1) 0 4px 5px 0

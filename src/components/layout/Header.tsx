@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import type {MenuProps} from 'antd';
-import {Menu, message, notification, Space, Button} from 'antd';
+import {Menu, message, notification, Button} from 'antd';
 import {signOut, useSession} from 'next-auth/react';
 import Icon from '@/components/Icon'
 import NavModal from "../navModal";
