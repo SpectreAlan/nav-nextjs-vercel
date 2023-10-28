@@ -1,4 +1,38 @@
 .markdown {
+  table{
+    border-color: grey;
+    overflow: auto;
+    margin: 0px 0px 1rem;
+    width: 100%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    thead{
+      background-image: linear-gradient(to left, #dfe9f3 0%, white 100%);
+      th{
+        padding: 0.3rem 0.6rem;
+        border: 1px solid rgb(214, 214, 214);
+        vertical-align: top;
+        text-align: center;
+      }
+    }
+    tbody{
+      display: table-row-group;
+      vertical-align: middle;
+      border-color: inherit;
+      tr{
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+        td{
+          padding: 0.3rem 0.6rem;
+          border: 1px solid rgb(214, 214, 214);
+          vertical-align: top;
+          text-align: center;
+          background-color: #fff;
+        }
+      }
+    }
+  }
   h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     transition: all 0.2s ease-out 0s;
