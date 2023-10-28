@@ -18,7 +18,7 @@ export default () => {
     const saveStatistics = async () => {
         const now = new Date().getTime()
         const last = sessionStorage.getItem('statistics') || '0'
-        if (now - Number(last) > 600000) {
+        if (process.env.NEXT_PUBLIC_ENV !== 'dev' && now - Number(last) > 600000) {
             const response = await fetch(`http://ip-api.com/json?lang=zh-CN`)
             const json = await response.json()
             const {country, regionName, city, query: ip} = json
