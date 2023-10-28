@@ -7,6 +7,7 @@ import GlobalLoading from '@/components/GlobalLoading'
 import {useRouter} from "next/navigation";
 import Loading from '@/components/Loading'
 import Footer from './footer'
+import { Analytics } from '@vercel/analytics/react';
 
 type Props = {
     children: ReactNode;
@@ -28,6 +29,7 @@ const App: React.FC<Props> = ({children}) => {
     return (
         <>
             <GlobalLoading/>
+            <Analytics />
             <Loading/>
             <Layout>
                 <Sider
