@@ -25,7 +25,7 @@ const Posts: React.FC<IProps> = ({posts, page, total}) => {
             <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
             <meta name="Description" content={process.env.NEXT_PUBLIC_META_DESCRIPTION}/>
         </Head>
-        <div className="flex flex-wrap post-page select-none">
+        <div className="flex flex-wrap post-page select-none pt-4">
             {
                 posts.length ? posts.map(post => <Card
                     hoverable
