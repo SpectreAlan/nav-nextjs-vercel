@@ -4,14 +4,13 @@ import dayjs from "dayjs";
 export default async (req, res) => {
     const {save, platform} = req.query
     if (save && process.env.NEXT_PUBLIC_ENV !== 'dev') {
-        const ip = req.connection.remoteAddress
         const updateAt = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        const response = await fetch(`http://ip-api.com/json/${ip}?lang=zh-CN`)
+        const response = await fetch(`http://ip-api.com/json?lang=zh-CN`)
         const json = await response.json()
-        const {country, regionName, city} = json
+        const {country, regionName, city, query} = json
         await prisma.statistics.create({
             data: {
-                country, regionName, city, updateAt, platform, ip
+                country, regionName, city, updateAt, platform, ip: query
             },
         });
     }
