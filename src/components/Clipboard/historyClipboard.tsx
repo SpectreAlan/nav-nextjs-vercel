@@ -84,7 +84,7 @@ const HistoryClipboard: React.FC = () => {
                 <Skeleton avatar title={false} loading={globalLoading} active>
                     <List.Item.Meta
                         title={clipboard.title}
-                        description={clipboard.content}
+                        description={clipboard.content.length > 30 ? clipboard.content.slice(0,30) + '...' : clipboard.content}
                     />
                     <div>提取码: <span className='text-red-400'>{clipboard.code}</span></div>
                 </Skeleton>
