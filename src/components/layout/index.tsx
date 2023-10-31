@@ -6,7 +6,6 @@ import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
 import GlobalLoading from '@/components/GlobalLoading'
 import {useRouter} from "next/navigation";
 import Loading from '@/components/Loading'
-import Footer from './footer'
 import { Analytics } from '@vercel/analytics/react';
 
 type Props = {
@@ -76,7 +75,6 @@ const App: React.FC<Props> = ({children}) => {
                         }}
                     >
                         {children}
-                        <Footer/>
                     </Content>
                 </Layout>
             </Layout>
