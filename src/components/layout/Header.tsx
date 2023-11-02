@@ -70,24 +70,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                         }
                     ]
                 })
-                if (session?.user && (!session.user.email || !session.user.password) && !sessionStorage.getItem('notification')) {
-                    notification.open({
-                        message: `温馨提示`,
-                        description: <div>
-                            <div className='text-xs mb-2'>您的账号还没有设置{session?.user.email ? '' : 'Email和'}密码，设置以后可以使用
-                                邮箱+密码 登录
-                            </div>
-                            <div className="flex justify-between">
-                                <Button type={'dashed'}
-                                        onClick={() => sessionStorage.setItem('notification', 'mute')}>不再提醒</Button>
-                                <Button type={'primary'} onClick={() => setPasswordModal(true)}>立即设置</Button>
-                            </div>
-                        </div>,
-                        icon: <Icon type={'icon-wutuijian2'}/>,
-                        placement: 'topRight',
-                        duration: 10
-                    });
-                }
+                openNotification()
                 break
             case "loading":
                 userMenu.push({
@@ -107,18 +90,43 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
         setMenu([...items, ...userMenu])
     }, [status, session])
 
+    const openNotification = () => {
+        if (session?.user && (!session.user.email || !session.user.password) && !sessionStorage.getItem('notification')) {
+            notification.open({
+                message: `温馨提示`,
+                description: <div>
+                    <div className='text-xs mb-2'>您的账号还没有设置{session?.user.email ? '' : 'Email和'}密码，设置以后可以使用
+                        邮箱+密码 登录
+                    </div>
+                    <div className="flex justify-between">
+                        <Button type={'dashed'}
+                                onClick={hideNotification}>不再提醒</Button>
+                        <Button type={'primary'} onClick={goToSet}>立即设置</Button>
+                    </div>
+                </div>,
+                icon: <Icon type={'icon-wutuijian2'}/>,
+                placement: 'topRight',
+                duration: 10
+            });
+        }
+    }
+    const goToSet = () => {
+        setPasswordModal(true)
+        notification.destroy()
+    }
+
+    const hideNotification = () => {
+        sessionStorage.setItem('notification', 'mute')
+        notification.destroy()
+    }
+
     const onClick: MenuProps['onClick'] = async ({key}) => {
         switch (key) {
             case 'login':
                 router.push('/auth/login');
                 break;
             case 'newPost':
-                if (session?.user.role === 'admin') {
-                    router.push('/post/newOrEdit');
-                } else {
-                    message.warning('暂未开放此权限')
-                }
-
+                session?.user.role === 'admin' ? router.push('/post/newOrEdit') : message.warning('暂未开放此权限')
                 break;
             case 'logout':
                 await signOut()
