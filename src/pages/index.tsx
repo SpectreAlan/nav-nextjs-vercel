@@ -84,7 +84,7 @@ const NavPage: React.FC = () => {
         return controls
     }
     return (
-        <div>
+        <>
             <Head>
                 <title>{process.env.NEXT_PUBLIC_META_TITLE}</title>
                 <meta name="keywords" content={process.env.NEXT_PUBLIC_META_KEYWORDS}/>
@@ -120,7 +120,7 @@ const NavPage: React.FC = () => {
                     </div>
                 )
             }
-        </div>
+        </>
     )
 }
 
