@@ -14,17 +14,17 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
     const router = useRouter();
     const items: MenuProps['items'] = [
         {
-            icon: <Icon type='icon-zuanshix'/>,
+            icon: <Icon type='icon-zuanshix' className={'text-2xl'}/>,
             label: (<Link href='/post'>趣集精选</Link>),
             key: 'post',
         },
         {
-            icon: <Icon type='icon-yunshuju'/>,
+            icon: <Icon type='icon-fuzhi1' className={'text-2xl'}/>,
             label: (<Link href='/clipboard'>云剪切板</Link>),
             key: 'clipboard',
         },
         {
-            icon: <Icon type='icon-blog-solid'/>,
+            icon: <Icon type='icon-blog-solid' className={'text-2xl'}/>,
             label: (
                 <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
                     站长博客
@@ -78,7 +78,8 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                                 邮箱+密码 登录
                             </div>
                             <div className="flex justify-between">
-                                <Button type={'dashed'} onClick={() => sessionStorage.setItem('notification', 'mute')}>不再提醒</Button>
+                                <Button type={'dashed'}
+                                        onClick={() => sessionStorage.setItem('notification', 'mute')}>不再提醒</Button>
                                 <Button type={'primary'} onClick={() => setPasswordModal(true)}>立即设置</Button>
                             </div>
                         </div>,
@@ -135,7 +136,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
         <>
             <Menu
                 selectedKeys={[]}
-                style={{ borderBottom: `1px solid ${theme}`}}
+                style={{borderBottom: `1px solid ${theme}`}}
                 className='select-none justify-end flex-auto min-w-0 menu-bg'
                 theme={'light'}
                 onClick={onClick}

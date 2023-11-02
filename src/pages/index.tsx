@@ -96,7 +96,7 @@ const NavPage: React.FC = () => {
                         <Divider orientation="left" orientationMargin="0">
                             <Space>
                                 {
-                                    item?.icon ? <Icon type={item.icon as string} key={item.label}/> : null
+                                    item?.icon ? <Icon type={item.icon as string} key={item.label}  className={'text-2xl'}/> : null
                                 }
                                 {item.label}
                             </Space>

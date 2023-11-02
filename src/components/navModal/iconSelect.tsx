@@ -11,7 +11,7 @@ const IconSelect: React.FC = () => {
         options={iconfont.glyphs.map(item => {
             const icon = 'icon-' + item.font_class
             return {
-                label: <Icon type={icon}/>,
+                label: <Icon type={icon} className='text-lg'/>,
                 value: icon
             }
         })}

@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1263397",
+      "name": "多媒体",
+      "font_class": "duomeiti",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "1305834",
+      "name": "网盘-激活",
+      "font_class": "wangpan-jihuo",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "7450585",
+      "name": "H5",
+      "font_class": "H",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "9626936",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e87e",
+      "unicode_decimal": 59518
+    },
+    {
+      "icon_id": "16137356",
+      "name": "开放平台",
+      "font_class": "kaifangpingtai",
+      "unicode": "e7c9",
+      "unicode_decimal": 59337
+    },
+    {
       "icon_id": "3640170",
       "name": "成功",
       "font_class": "chenggong",
@@ -284,13 +319,6 @@
       "font_class": "dialogue_sad",
       "unicode": "e714",
       "unicode_decimal": 59156
-    },
-    {
-      "icon_id": "5735175",
-      "name": "多媒体-92",
-      "font_class": "duomeiti-",
-      "unicode": "e71e",
-      "unicode_decimal": 59166
     },
     {
       "icon_id": "6337455",

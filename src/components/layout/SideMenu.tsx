@@ -26,14 +26,14 @@ const SideMenu: React.FC<{theme: string}> = ({theme}) => {
                 sort: 0,
                 key: 'hot',
                 label: '热门推荐',
-                icon: <Icon type={'icon-paihangbang'}/>
+                icon: <Icon type={'icon-paihangbang'} className={'text-lg'}/>
             }
         ]
         const subMenu: MenuItem[] = []
         for (let i = 0; i < nav.length; i++) {
             const {parentId, key, icon: iconType, label, sort, authorId} = nav[i]
             // @ts-ignore
-            const icon = iconType ? <Icon type={iconType} className={'text-lg'}/> : null
+            const icon = iconType ? <Icon type={iconType} className={'text-xl'}/> : null
             const target: MenuItem = {sort, key, label, icon}
             parentId === '0' ? list.push(target) : subMenu.push({...target, parentId, authorId})
         }
