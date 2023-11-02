@@ -52,12 +52,15 @@ const App: React.FC<Props> = ({children}) => {
                     paddingLeft: collapsed ? '80px' : '200px',
                 }}>
                     <Header
-                        className={`p-0 pl-5 fixed top-0 flex items-center justify-between border-b-grey`}
+                        className={`p-0 pl-5 fixed top-0  border-b-grey`}
                         style=
                             {{
                                 left: collapsed ? '80px' : '200px',
                                 width: `calc(100% - ${collapsed ? '80px' : '200px'})`,
-                                backgroundColor: colorBgContainer
+                                backgroundColor: colorBgContainer,
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center'
                             }}
                     >
                         <div
