@@ -20,7 +20,9 @@ const App: React.FC<Props> = ({children}) => {
     useEffect(() => {
         const mobile = (global?.window?.innerWidth || 699) < 700
         setIsMobile(mobile)
-        setCollapsed(!mobile)
+        if(mobile){
+            setCollapsed(!mobile)
+        }
     }, [])
 
     const {
