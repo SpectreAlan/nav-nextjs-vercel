@@ -3,9 +3,15 @@ import {Menu} from 'antd';
 import {GlobalContext} from '@/GlobalContext'
 import Icon from '@/components/Icon'
 import type {MenuProps} from 'antd';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 
-const SideMenu: React.FC<{theme: string}> = ({theme}) => {
+interface IProps {
+    theme: string
+    isMobile: boolean
+    setCollapsed: (boolean) => void
+}
+
+const SideMenu: React.FC<IProps> = ({theme, setCollapsed, isMobile}) => {
     const router = useRouter();
     const {nav} = useContext(GlobalContext)
     const [menu, setMenu] = useState<MenuItem[]>([])
@@ -14,8 +20,8 @@ const SideMenu: React.FC<{theme: string}> = ({theme}) => {
         setMenu(generateMenu())
     }, [nav])
 
-    useEffect(()=>{
-        if(router.pathname!== '/'){
+    useEffect(() => {
+        if (router.pathname !== '/') {
             setActive('')
         }
     }, [router.pathname])
@@ -53,23 +59,34 @@ const SideMenu: React.FC<{theme: string}> = ({theme}) => {
     const handleClick: MenuProps['onClick'] = (e) => {
         const key = e.key
         setActive(key)
-        if(router.pathname !== '/'){
-            router.push('/').then(()=>{
+        if (router.pathname !== '/') {
+            router.push('/').then(() => {
                 document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
             })
-        }else{
+        } else {
             document.getElementById(key)?.scrollIntoView({behavior: 'smooth'})
         }
+        isMobile && setCollapsed(false)
     };
-    return <Menu
-        style={{borderRight: `1px solid ${theme}`}}
-        className='select-none'
-        selectedKeys={[active]}
-        theme="light"
-        mode="inline"
-        items={menu}
-        onClick={handleClick}
-    />
+    return <>
+        <div className='w-full text-center align-middle'>
+            <img
+                src='https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/logo.png'
+                alt="logo"
+                onClick={() => router.push(`/`)}
+                className={'cursor-pointer w-20'}
+            />
+        </div>
+        <Menu
+            style={{borderRight: `1px solid ${theme}`}}
+            className='select-none'
+            selectedKeys={[active]}
+            theme="light"
+            mode="inline"
+            items={menu}
+            onClick={handleClick}
+        />
+    </>
 };
 
 export default SideMenu;
