@@ -24,7 +24,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             key: 'clipboard',
         },
         {
-            icon: <Icon type='icon-blog-solid' className={'text-2xl'}/>,
+            icon: <Icon type='icon-zhuye-' className={'text-2xl'}/>,
             label: (
                 <a href="https://jszoo.com" target="_blank" rel="noopener noreferrer">
                     站长博客
@@ -84,7 +84,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
                 userMenu.push({
                     label: '登录',
                     key: 'login',
-                    icon: <Icon type='icon-denglu'/>
+                    icon: <Icon type='icon-denglu1' className={'text-2xl'}/>
                 })
         }
         setMenu([...items, ...userMenu])
@@ -145,7 +145,7 @@ const Header: React.FC<{ theme: string }> = ({theme}) => {
             <Menu
                 selectedKeys={[]}
                 style={{borderBottom: `1px solid ${theme}`}}
-                className='select-none justify-end flex-auto min-w-0 menu-bg'
+                className='select-none justify-end flex-auto min-w-0 menu-bg header-menu'
                 theme={'light'}
                 onClick={onClick}
                 mode="horizontal"

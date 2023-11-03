@@ -94,7 +94,7 @@ const HistoryClipboard: React.FC = () => {
             </List.Item>
         )}
         locale={{
-            emptyText:  <div><Icon type='icon-dialogue_sad' className='text-xl'/> 暂无剪切板</div>
+            emptyText:  <div className='flex items-center justify-center'><Icon type='icon-dialogue_sad' className='text-4xl mr-2'/> 暂无剪切板</div>
         }}
     />
 };

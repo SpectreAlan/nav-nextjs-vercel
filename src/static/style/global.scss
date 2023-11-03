@@ -69,3 +69,10 @@ canvas{
 .menu-bg{
     background-image: linear-gradient(to left, #dfe9f3 0%, white 100%);
 }
+
+.header-menu{
+    .ant-menu-item{
+        display: flex;
+        align-items: center;
+    }
+}
