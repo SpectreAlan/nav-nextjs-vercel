@@ -32,7 +32,7 @@ export default ({csrfToken}) => {
         })
     }
     return <Tabs
-        className='login-page select-none'
+        className='login-page select-none mx-auto w-full max-w-[500px]'
         defaultActiveKey="login"
         centered
         items={[
