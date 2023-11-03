@@ -18,6 +18,9 @@ const HistoryClipboard: React.FC = () => {
     }, []);
 
     const queryList = (page) => {
+        if(!session?.user.id){
+            return
+        }
         setGlobalLoading(true);
         httpRequest.get('/api/clipboard/list', {
             authorId: session?.user.id,
