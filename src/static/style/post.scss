@@ -121,3 +121,11 @@
     margin: 1px auto;
   }
 }
+@media (max-width: 390px) {
+  .post-page {
+    justify-content: center;
+    .ant-card{
+      margin-right: 0!important;
+    }
+  }
+}
