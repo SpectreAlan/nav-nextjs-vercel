@@ -82,3 +82,9 @@ canvas{
         align-items: center;
     }
 }
+body,a,.pointer{
+    cursor:url(../images/pointer.cur),default;
+}
+input:hover {
+    cursor:url(../images/input.cur),text;
+}

@@ -74,7 +74,7 @@ const App: React.FC<Props> = ({children}) => {
                     >
                         <div
                             onClick={() => setCollapsed(!collapsed)}
-                            className={'text-xl cursor-pointer'}
+                            className={'text-xl pointer'}
                         >
                             {collapsed ? <MenuUnfoldOutlined rev=''/> : <MenuFoldOutlined rev=''/>}
                         </div>

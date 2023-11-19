@@ -74,7 +74,7 @@ const SideMenu: React.FC<IProps> = ({theme, setCollapsed, isMobile}) => {
                 src='https://nav-vercel.oss-cn-hongkong.aliyuncs.com/base/logo.png'
                 alt="logo"
                 onClick={() => router.push(`/`)}
-                className={'cursor-pointer w-20'}
+                className={'pointer w-20'}
             />
         </div>
         <Menu

@@ -11,7 +11,7 @@ const Copy: React.FC<IProps> = ({val, title}) => {
     return val ? <Icon
         type='icon-fuzhi'
         title={'复制' + (title || '')}
-        className='cursor-pointer'
+        className='pointer'
         onClick={() => copy(val)}
     /> : null
 }

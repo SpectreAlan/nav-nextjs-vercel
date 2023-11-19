@@ -9,7 +9,7 @@ const Link: React.FC<{ link: Link, title?: string }> = ({link, title}) => {
             id: link.id
         })
     }
-    return <span className='cursor-pointer hover:text-blue-400' onClick={handleJump}>{title || link.link}</span>
+    return <span className='pointer hover:text-blue-400' onClick={handleJump}>{title || link.link}</span>
 }
 
 export default Link
