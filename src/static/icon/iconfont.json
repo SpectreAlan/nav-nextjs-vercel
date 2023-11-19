@@ -6,6 +6,48 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "37305472",
+      "name": "ChatGPT",
+      "font_class": "ChatGPT",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "3266060",
+      "name": "12抠鼻",
+      "font_class": "koubi",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "5403151",
+      "name": "主页-is",
+      "font_class": "zhuye-",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
+      "icon_id": "20574640",
+      "name": "斗鸡眼-滑稽",
+      "font_class": "doujiyan-huaji",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "30417949",
+      "name": "好吃",
+      "font_class": "haochi",
+      "unicode": "e6d8",
+      "unicode_decimal": 59096
+    },
+    {
+      "icon_id": "33439906",
+      "name": "[机智]",
+      "font_class": "a-jizhi",
+      "unicode": "e6b2",
+      "unicode_decimal": 59058
+    },
+    {
       "icon_id": "34816285",
       "name": "登录",
       "font_class": "denglu1",
