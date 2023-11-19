@@ -33,6 +33,7 @@ const NavPage: React.FC = () => {
                 navType: 1
             }
         ]
+        console.log(gridList);
         const list: NavGrid[] = []
         const subList: NavGrid[] = []
         const temp = JSON.parse(JSON.stringify(nav))
