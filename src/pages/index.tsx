@@ -33,7 +33,6 @@ const NavPage: React.FC = () => {
                 navType: 1
             }
         ]
-        console.log(gridList);
         const list: NavGrid[] = []
         const subList: NavGrid[] = []
         const temp = JSON.parse(JSON.stringify(nav))
@@ -107,7 +106,7 @@ const NavPage: React.FC = () => {
                                 item.links.length ? item.links.map(link => <Card
                                     hoverable
                                     key={link.id}
-                                    className='w-[300px] mr-5 mb-5 card-bg'
+                                    className='w-[280px] mr-4 mb-4 card-bg'
                                     actions={generateControls(link)}
                                 >
                                     <Card.Meta
