@@ -29,7 +29,7 @@ const NavPage: React.FC = () => {
                 icon: 'icon-paihangbang',
                 parentId: '0',
                 authorId: 'admin',
-                links: links.filter(link => link.hot).sort((a:Link,b:Link)=>new Date(a.updateAt).getTime() - new Date(b.updateAt).getTime()),
+                links: links.filter(link => link.hot).sort((a:Link,b:Link)=>new Date(b.updateAt).getTime() - new Date(a.updateAt).getTime()),
                 navType: 1
             }
         ]
