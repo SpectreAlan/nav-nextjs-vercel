@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import prisma from '@/lib/prisma';
 import Comments from "@/components/comments";
 import Icon from '@/components/Icon'
@@ -8,8 +8,9 @@ import {markedHighlight} from "marked-highlight";
 import hljs from 'highlight.js';
 import 'highlight.js/styles/monokai-sublime.css';
 import config from '@/utils/markdown.conf'
-import {Space} from 'antd'
+import { Space} from 'antd'
 import Head  from "next/head";
+import httpRequest from "@/utils/httpRequest";
 
 interface IProps {
     post: Post
@@ -28,6 +29,12 @@ const marked = new Marked(
 );
 
 const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
+    useEffect(()=>{
+        httpRequest.post('/api/post/update', {
+            id: post.id,
+            scan: post.scan + 1
+        }).then(()=>{})
+    }, [])
     return <>
         <Head>
             <title>{post.title}</title>
