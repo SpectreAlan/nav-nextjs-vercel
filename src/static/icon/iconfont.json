@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "26770259",
+      "name": "查看",
+      "font_class": "icon-07",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "37305472",
       "name": "ChatGPT",
       "font_class": "ChatGPT",

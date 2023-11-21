@@ -55,6 +55,10 @@ const LinkDetail: React.FC<IProps> = ({post, comments, likes}) => {
                 <Icon type={'icon-pinglun'}/>
                 <span>{comments.length}</span>
             </Space>
+            <Space>
+                <Icon type={'icon-icon-07'}/>
+                <span>{post.scan}</span>
+            </Space>
         </div>
         <div className="markdown" dangerouslySetInnerHTML={{__html: marked.parse(post.content) as string}}/>
         <Comments comments={comments} relegation={post.id}/>
