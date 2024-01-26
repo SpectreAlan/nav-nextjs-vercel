@@ -106,7 +106,7 @@ const NavPage: React.FC = () => {
                                 item.links.length ? item.links.map(link => <Card
                                     hoverable
                                     key={link.id}
-                                    className='w-[280px] mr-3 mb-3 card-bg'
+                                    className='lg:w-[280px] sm:w-full mr-3 mb-3 card-bg'
                                     actions={generateControls(link)}
                                 >
                                     <Card.Meta
