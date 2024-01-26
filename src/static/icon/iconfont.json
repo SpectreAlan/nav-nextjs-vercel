@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "34090077",
+      "name": "xitongweihu",
+      "font_class": "xitongweihu",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "35656931",
+      "name": "媒体资源",
+      "font_class": "meitiziyuan",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
       "icon_id": "26770259",
       "name": "查看",
       "font_class": "icon-07",
