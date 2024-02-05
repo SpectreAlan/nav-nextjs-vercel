@@ -47,6 +47,9 @@ dependencies:
   next-auth:
     specifier: ^4.23.2
     version: 4.23.2(next@13.4.13)(react-dom@18.2.0)(react@18.2.0)
+  next-sitemap:
+    specifier: ^4.2.3
+    version: 4.2.3(next@13.4.13)
   postcss:
     specifier: ^8.4.28
     version: 8.4.28
@@ -168,6 +171,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
+    dev: false
+
+  /@corex/deepmerge@4.0.43:
+    resolution: {integrity: sha512-N8uEMrMPL0cu/bdboEWpQYb/0i2K5Qn8eCsxzOmxSggJbbQte7ljMRoXm917AbntqTGOzdTu+vP3KOOzoC70HQ==}
     dev: false
 
   /@ctrl/tinycolor@3.6.1:
@@ -1691,6 +1698,20 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       uuid: 8.3.2
+    dev: false
+
+  /next-sitemap@4.2.3(next@13.4.13):
+    resolution: {integrity: sha512-vjdCxeDuWDzldhCnyFCQipw5bfpl4HmZA7uoo3GAaYGjGgfL4Cxb1CiztPuWGmS+auYs7/8OekRS8C2cjdAsjQ==}
+    engines: {node: '>=14.18'}
+    hasBin: true
+    peerDependencies:
+      next: '*'
+    dependencies:
+      '@corex/deepmerge': 4.0.43
+      '@next/env': 13.4.13
+      fast-glob: 3.3.1
+      minimist: 1.2.8
+      next: 13.4.13(react-dom@18.2.0)(react@18.2.0)(sass@1.69.3)
     dev: false
 
   /next@13.4.13(react-dom@18.2.0)(react@18.2.0)(sass@1.69.3):
