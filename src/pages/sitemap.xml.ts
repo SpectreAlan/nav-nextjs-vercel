@@ -5,9 +5,13 @@ import {ISitemapField} from "next-sitemap/dist/@types/interface";
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const now = new Date()
+    const month: number = now.getMonth() + 1
+    const day: number = now.getDate()
+    const lastmod = `${now.getFullYear()}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`
     const fields: ISitemapField[] = [
-        {loc: `${baseUrl}`, lastmod: new Date().toISOString(), changefreq: 'always'},
-        {loc: `${baseUrl}/clipboard`, lastmod: new Date().toISOString(), changefreq: 'always'}
+        {loc: `${baseUrl}`, lastmod, changefreq: 'daily'},
+        {loc: `${baseUrl}/clipboard`, lastmod, changefreq: 'daily'}
     ];
 
     const links = await prisma.links.findMany({
