@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     links.map(link => {
         fields.push({
-            loc: `${baseUrl}/link/${link.id}`, lastmod: link.updateAt.split(' ')[0] changefreq: 'monthly'
+            loc: `${baseUrl}/link/${link.id}`, lastmod: link.updateAt.split(' ')[0], changefreq: 'monthly'
         })
     })
 
