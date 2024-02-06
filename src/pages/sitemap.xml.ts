@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     links.map(link => {
         fields.push({
-            loc: `${baseUrl}/link/${link.id}`, lastmod: new Date(link.updateAt).toISOString(), changefreq: 'monthly'
+            loc: `${baseUrl}/link/${link.id}`, lastmod: link.updateAt.split(' ')[0] changefreq: 'monthly'
         })
     })
 
@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     posts.map(post => {
         fields.push({
-            loc: `${baseUrl}/post/${post.id}`, lastmod: new Date(post.updateAt).toISOString(), changefreq: 'monthly'
+            loc: `${baseUrl}/post/${post.id}`, lastmod: post.updateAt.split(' ')[0], changefreq: 'monthly'
         })
     })
 
